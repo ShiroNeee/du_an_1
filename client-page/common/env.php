@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL', 'http://localhost/client/');
+define('BASE_URL', 'http://localhost/client-page/');
 
 define('DB_HOST', 'localhost');
 define('DB_USERNAME', 'root');
