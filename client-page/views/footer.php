@@ -33,7 +33,7 @@
     <i class="fa-brands fa-cc-paypal"></i>
   </div>
 </footer>
-<script src="/client/public/script.js"></script>
+<script src="/client/client-page/public/script.js"></script>
 </body>
 
 </html>
