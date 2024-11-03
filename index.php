@@ -7,9 +7,9 @@ require_once './common/env.php'; // Khai báo các biến môi trường
 require_once './common/function.php'; // Khai báo các hàm dùng chung
 
 // connectDB();
-require_once './views/header.php';
-require_once './views/main.php';
-require_once './views/footer.php';
+require_once './client-page/views/header.php';
+require_once './client-page/views/main.php';
+require_once './client-page/views/footer.php';
 // Phải require các file controller mà ta muốn sử dụng
 require_once './router.php';
 $router = new Router();
