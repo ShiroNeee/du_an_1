@@ -18,4 +18,4 @@ $router = new Router();
 $act = $_GET['act'] ?? '/';
 // Định nghĩa các route
 // Dẫn tới controller tương ứng
-$router->dispatch($act
+$router->dispatch($act);
