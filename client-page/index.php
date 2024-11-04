@@ -6,22 +6,18 @@ session_start();
 require_once '../common/env.php'; // Khai báo các biến môi trường
 require_once '../common/function.php'; // Khai báo các hàm dùng chung
 
-// connectDB();
-require_once '../client-page/views/header.php';
-require_once '../client-page/views/main.php';
-require_once '../client-page/views/footer.php';
+// Kết nối cơ sở dữ liệu
+$conn = connectDB();
 
-// Phải require các file controller mà ta muốn sử dụng
 require_once '../router.php';
 $router = new Router();
-
-// Phải require các file model mà controller sử dụng
+require_once '../controllers/PageController.php';
+require_once '../controllers/LoginController.php';
 
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
-
-// Định nghĩa các route
-
-// Dẫn tới controller tương ứng
+$router->add('/', 'PageController', 'index');
+// Login
+require_once '../routes/login.php';
 $router->dispatch($act);
