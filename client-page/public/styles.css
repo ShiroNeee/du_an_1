@@ -21,6 +21,17 @@ body {
 .container a:hover {
   color: red;
 }
+.button-container {
+  display: flex; 
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+.see-more {
+  padding: 10px 20px; 
+  font-size: 16px; 
+  color: red;
+}
 
 .top-header {
   background-color: white;

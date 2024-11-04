@@ -10,7 +10,7 @@ class Router {
         if (isset($this->routes[$path])) {
             call_user_func([new $this->routes[$path][0], $this->routes[$path][1]]);
         } else {
-            echo "404 - Route not found!";
+            echo("404 - Route not found!");
         }
     }
 }
