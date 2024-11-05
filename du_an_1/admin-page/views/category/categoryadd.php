@@ -17,7 +17,7 @@
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="/du_an_1/admin-page/views/category/categorylist.php">
+                <a href="/du_an_1/admin-page">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Trang Chủ</span>
                 </a>
