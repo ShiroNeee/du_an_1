@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/du_an_1/admin-page/public/style.css">
-    <title>Admin - thêm danh mục (category add)</title>
+<<<<<<< HEAD:admin-page/views/product/productlist.php
+    <link rel="stylesheet" href="/du_an_1/admin-page/public/styles.css">
+=======
+    <link rel="stylesheet" href="/du_an_1/admin-page/views/product/styles.css">
+>>>>>>> 1c3543c783c0c30e362e771099ba7974a8952342:du_an_1/admin-page/views/product/productlist.php
+    <title>Admin - danh sách sản phẩm(product)</title>
 </head>
-
 <body>
     <section id="sidebar">
-        <a href="/admin/index.php" class="brand">
+        <a href="/du_an_1/admin-page/views/product/productlist.php" class="brand">
             <i class='bx bxs-user'></i>
             <span class="text">Admin Unique Style</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="/du_an_1/admin-page">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Trang Chủ</span>
                 </a>
             </li>
             <li>
-                <a href="/client">
+                <a href="/du_an_1/client-page/index.php">
                     <i class='bx bxs-shopping-bag-alt'></i>
                     <span class="text">Cửa hàng của tôi</span>
                 </a>
@@ -41,7 +43,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/admin-page/views/product/productlist.php">
+                <a href="">
                     <i class='bx bx-list-ul'></i>
                     <span class="text">Danh sách sản phẩm</span>
                 </a>
@@ -65,7 +67,7 @@
     <section id="content">
         <nav>
             <i class='bx bx-menu'></i>
-            <a href="/admin/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+            <a href="/du_an_1/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Tìm kiếm...">
@@ -79,18 +81,51 @@
                 <span class="num">10</span>
             </a>
             <a href="#" class="profile">
-                <img src="/admin/admin-page/img/logo.png">
+                <img src="/du_an_1/admin-page/img/logo.jpg">
             </a>
         </nav>
-        <script src="/admin/admin-page/public/script.js"></script>
-        <!-- add_product -->
-        <div class="admin-product-form-container">
-            <form method="post" enctype="multipart/form-data">
-                <h3>Thêm danh mục (category)</h3>
-                <input type="text" placeholder="Nhập tên danh mục....." name="" class="box"/>
-                <button type="submit" class="add">Thêm danh mục</button>
-            </form>
-        </div>
+        <script src="/du_an_1/admin-page/public/script.js"></script>
+        <!-- main -->
+         <!-- table -->
+          <div class="table--wrapper">
+            <h3 class="title">Danh sách sản phẩm (product)</h3>
+            <a href="/du_an_1/admin-page/views/product/productadd.php"><button class="add">Thêm sản phẩm</button></a>
+            <div class="table-container">
+                <table style="text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Ảnh</th>
+                            <th>Giá</th>
+                            <th>Màu sắc</th>
+                            <th>Size</th>
+                            <th>Mô tả</th>
+                            <th>Danh mục</th>
+                            <th>Tính năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>name</td>
+                            <td>
+                                <img src="" alt="er img" width="50" height="50"/>
+                            </td>
+                            <td>123</td>
+                            <td>color</td>
+                            <td>XL</td>
+                            <td>desc</td>
+                            <td>cate</td>
+                            <td>
+                                <a href="/du_an_1/admin-page/views/product/productedit.php"><button class="edit">Sửa</button></a> || 
+                                <button class="delete">Xóa</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          </div>
         <!-- footer -->
         <footer class="footer">
             <div class="footer-content">

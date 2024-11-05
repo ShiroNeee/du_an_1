@@ -5,25 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/admin/admin-page/public/style.css">
-    <title>Admin - sửa danh mục (category edit)</title>
+    <link rel="stylesheet" href="/du_an_1/admin-page/views/category/styles.css">
+    <title>Admin - thêm danh mục (category add)</title>
 </head>
 
 <body>
     <section id="sidebar">
-        <a href="/admin/index.php" class="brand">
+        <a href="/du_an_1/admin-page/views/product/productlist.php" class="brand">
             <i class='bx bxs-user'></i>
             <span class="text">Admin Unique Style</span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="/du_an_1/admin-page">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Trang Chủ</span>
                 </a>
             </li>
             <li>
-                <a href="/client">
+                <a href="/du_an_1/client-page/index.php">
                     <i class='bx bxs-shopping-bag-alt'></i>
                     <span class="text">Cửa hàng của tôi</span>
                 </a>
@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/admin-page/views/product/productlist.php">
+                <a href="/du_an_1/admin-page/views/product/productlist.php">
                     <i class='bx bx-list-ul'></i>
                     <span class="text">Danh sách sản phẩm</span>
                 </a>
@@ -65,7 +65,7 @@
     <section id="content">
         <nav>
             <i class='bx bx-menu'></i>
-            <a href="/admin/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+            <a href="/du_an_1/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Tìm kiếm...">
@@ -79,16 +79,16 @@
                 <span class="num">10</span>
             </a>
             <a href="#" class="profile">
-                <img src="/admin/admin-page/img/logo.png">
+                <img src="/du_an_1/admin-page/img/logo.jpg">
             </a>
         </nav>
-        <script src="/admin/admin-page/public/script.js"></script>
-        <!-- add_product -->
+        <script src="/du_an_1/admin-page/public/script.js"></script>
+        <!-- add_cate -->
         <div class="admin-product-form-container">
             <form method="post" enctype="multipart/form-data">
-                <h3>Sửa danh mục (category)</h3>
+                <h3>Thêm danh mục (category)</h3>
                 <input type="text" placeholder="Nhập tên danh mục....." name="" class="box"/>
-                <button type="submit" class="add">Sửa danh mục</button>
+                <button type="submit" class="add">Thêm danh mục</button>
             </form>
         </div>
         <!-- footer -->

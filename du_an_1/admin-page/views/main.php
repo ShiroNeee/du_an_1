@@ -59,7 +59,7 @@
 						<tbody>
 							<tr>
 								<td>
-									<img src="/du_an_1/admin-page/img/logo.png">
+									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>John Doe</p>
 								</td>
 								<td>01-10-2024</td>
@@ -67,7 +67,7 @@
 							</tr>
 							<tr>
 								<td>
-									<img src="/du_an_1/admin-page/img/logo.png">
+									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>John Doe</p>
 								</td>
 								<td>01-10-2023</td>
@@ -75,7 +75,7 @@
 							</tr>
 							<tr>
 								<td>
-									<img src="/du_an_1/admin-page/img/logo.png">
+									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>John Doe</p>
 								</td>
 								<td>01-10-2022</td>
@@ -83,7 +83,7 @@
 							</tr>
 							<tr>
 								<td>
-									<img src="/du_an_1/admin-page/img/logo.png">
+									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>John Doe</p>
 								</td>
 								<td>01-10-2021</td>
@@ -91,7 +91,7 @@
 							</tr>
 							<tr>
 								<td>
-									<img src="/du_an_1/admin-page/img/logo.png">
+									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>John Doe</p>
 								</td>
 								<td>01-10-2021</td>

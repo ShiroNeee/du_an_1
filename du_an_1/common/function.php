@@ -4,7 +4,6 @@ function connectDB()
 {
     $host   = DB_HOST;
     $dbname = DB_NAME;
-
     try {
         $conn = new PDO(
             "mysql:host=$host; dbname=$dbname", 

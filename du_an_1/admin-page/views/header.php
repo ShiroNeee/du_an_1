@@ -78,7 +78,7 @@
 				<span class="num">10</span>
 			</a>
 			<a href="#" class="profile">
-				<img src="/du_an_1/admin-page/img/logo.png">
+				<img src="/du_an_1/admin-page/img/logo.jpg">
 			</a>
 		</nav>
 		<script src="/du_an_1/admin-page/public/script.js"></script>

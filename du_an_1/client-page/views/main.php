@@ -34,7 +34,6 @@
         </div>
     </div>
 </section>
-
 <section class="products">
     <div class="container">
         <h2>Sản phẩm nổi bật</h2>

@@ -6,5 +6,4 @@ class LoginController
     {
         require_once '../client-page/login_form.php'; 
     }
-
 }
