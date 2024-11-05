@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/admin/admin-page/public/style.css">
+    <link rel="stylesheet" href="/du_an_1/admin-page/public/styles.css">
     <title>Admin - danh sách sản phẩm(product)</title>
 </head>
 
@@ -65,7 +65,7 @@
     <section id="content">
         <nav>
             <i class='bx bx-menu'></i>
-            <a href="/admin/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+            <a href="/du_an_1/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Tìm kiếm...">

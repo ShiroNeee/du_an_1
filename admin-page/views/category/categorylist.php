@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/du_an_1/admin-page/public/style.css">
+    <link rel="stylesheet" href="/du_an_1/admin-page/public/styles.css">
     <title>Admin - danh sách danh mục(category)</title>
 </head>
 
 <body>
     <section id="sidebar">
-        <a href="/admin/index.php" class="brand">
+        <a href="#" class="brand">
             <i class='bx bxs-user'></i>
             <span class="text">Admin Unique Style</span>
         </a>
@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li>
-                <a href="/client">
+                <a href="/du_an_1/client-page">
                     <i class='bx bxs-shopping-bag-alt'></i>
                     <span class="text">Cửa hàng của tôi</span>
                 </a>
@@ -41,7 +41,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/admin-page/views/product/productlist.php">
+                <a href="/du_an_1/admin-page/views/product/productlist.php">
                     <i class='bx bx-list-ul'></i>
                     <span class="text">Danh sách sản phẩm</span>
                 </a>
@@ -65,7 +65,7 @@
     <section id="content">
         <nav>
             <i class='bx bx-menu'></i>
-            <a href="/admin/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+            <a href="/du_an_1/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
             <form action="#">
                 <div class="form-input">
                     <input type="search" placeholder="Tìm kiếm...">
@@ -79,15 +79,15 @@
                 <span class="num">10</span>
             </a>
             <a href="#" class="profile">
-                <img src="/admin/admin-page/img/logo.png">
+                <img src="/du_an_1/admin-page/img/logo.png">
             </a>
         </nav>
-        <script src="/admin/admin-page/public/script.js"></script>
+        <script src="/du_an_1/admin-page/public/script.js"></script>
         <!-- main -->
          <!-- table -->
           <div class="table--wrapper">
             <h3 class="title">Danh mục sản phẩm (category)</h3>
-            <a href="/admin/admin-page/views/category/categoryadd.php"><button class="add">Thêm danh mục</button></a>
+            <a href="/du_an_1/admin-page/views/category/categoryadd.php"><button class="add">Thêm danh mục</button></a>
             <div class="table-container">
                 <table style="text-align: left;">
                     <thead>
@@ -102,7 +102,7 @@
                             <td>1</td>
                             <td>Tên danh mục 1</td>
                             <td>
-                                <a href="/admin/admin-page/views/category/categoryedit.php"><button class="edit">Sửa</button></a> || 
+                                <a href="/du_an_1/admin-page/views/category/categoryedit.php"><button class="edit">Sửa</button></a> || 
                                 <button class="delete">Xóa</button>
                             </td>
                         </tr>
