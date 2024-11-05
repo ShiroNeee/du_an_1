@@ -35,5 +35,4 @@
 </footer>
 <script src="/client/client-page/public/script.js"></script>
 </body>
-
 </html>
