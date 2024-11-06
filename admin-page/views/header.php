@@ -9,7 +9,7 @@
 </head>
 <body>
 	<section id="sidebar">
-		<a href="#" class="brand">
+		<a href="index.php" class="brand">
 			<i class='bx bxs-user'></i>
 			<span class="text">Admin Unique Style</span>
 		</a>
@@ -39,7 +39,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="?act=list">
+				<a href="?act=listproduct">
 					<i class='bx bx-list-ul' ></i>
 					<span class="text">Danh sách sản phẩm</span>
 				</a>
@@ -64,7 +64,7 @@
 	<section id="content">
 		<nav>
 			<i class='bx bx-menu' ></i>
-			<a href="../admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+			<a href="?act=listcategory" class="nav-link">Danh mục (category)</a>
 			<form action="#">
 				<div class="form-input">
 					<input type="search" placeholder="Tìm kiếm...">

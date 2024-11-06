@@ -1,7 +1,7 @@
       <!-- table -->
         <div class="table--wrapper">
             <h3 class="title">Danh sách sản phẩm (product)</h3>
-            <a href="../admin-page/views/product/productadd.php"><button class="add">Thêm sản phẩm</button></a>
+            <a href="?act=addproduct"><button class="add">Thêm sản phẩm</button></a>
             <div class="table-container">
                 <table style="text-align: left;">
                     <thead>
@@ -30,7 +30,7 @@
                             <td>desc</td>
                             <td>cate</td>
                             <td>
-                                <a href="../admin-page/views/product/productedit.php"><button class="edit">Sửa</button></a> ||
+                                <a href="?act=editproduct"><button class="edit">Sửa</button></a> ||
                                 <button class="delete">Xóa</button>
                             </td>
                         </tr>
