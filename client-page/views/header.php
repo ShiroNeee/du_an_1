@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UNIQUE STYLE</title>
-  <link rel="stylesheet" href="/du_an_1/client-page/public/styles.css">
+  <link rel="stylesheet" href="../client-page/public/styles.css">
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -15,7 +15,7 @@
   <header class="top-header">
     <div class="container">
       <div class="logo">
-        <img src="/du_an_1/client-page/images/logo.png" />
+        <img src="../client-page/images/logo.png" />
       </div>
       <nav class="navbar">
         <ul class="nav-links">
