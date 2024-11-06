@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="/du_an_1/admin-page/public/styles.css">
+	<link rel="stylesheet" href="../admin-page/public/styles.css">
 	<title>Admin Dashboard</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/du_an_1/client-page">
+				<a href="../client-page">
 					<i class='bx bxs-shopping-bag-alt' ></i>
 					<span class="text">Cửa hàng của tôi</span>
 				</a>
@@ -39,7 +39,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="/du_an_1/admin-page/views/product/productlist.php">
+				<a href="?act=list">
 					<i class='bx bx-list-ul' ></i>
 					<span class="text">Danh sách sản phẩm</span>
 				</a>
@@ -64,7 +64,7 @@
 	<section id="content">
 		<nav>
 			<i class='bx bx-menu' ></i>
-			<a href="/du_an_1/admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
+			<a href="../admin-page/views/category/categorylist.php" class="nav-link">Danh mục (category)</a>
 			<form action="#">
 				<div class="form-input">
 					<input type="search" placeholder="Tìm kiếm...">
@@ -78,7 +78,7 @@
 				<span class="num">10</span>
 			</a>
 			<a href="#" class="profile">
-				<img src="/du_an_1/admin-page/img/logo.jpg">
+				<img src="../admin-page/img/logo.jpg">
 			</a>
 		</nav>
-		<script src="/du_an_1/admin-page/public/script.js"></script>
+		<script src="../admin-page/public/script.js"></script>

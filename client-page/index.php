@@ -13,7 +13,6 @@ require_once './router.php';
 $router = new Router();
 require_once '../controllers/PageController.php';
 require_once '../controllers/LoginController.php';
-
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 

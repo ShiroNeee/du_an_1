@@ -12,10 +12,12 @@ $conn = connectDB();
 require_once './router.php';
 $router = new Router();
 require_once '../controllers/AdminController.php';
+require_once '../controllers/ListProductController.php';
 
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
 $router->add('/', 'AdminController', 'index');
-
+require_once '../routes/list.php';
+// list product
 $router->dispatch($act);
