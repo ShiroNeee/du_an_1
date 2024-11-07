@@ -15,7 +15,7 @@
   <header class="top-header">
     <div class="container">
       <div class="logo">
-        <img src="../client-page/images/logo.png" />
+        <a href="../client-page"><img src="../client-page/images/logo.png" /></a>
       </div>
       <nav class="navbar">
         <ul class="nav-links">
@@ -35,7 +35,7 @@
               placeholder="Tìm kiếm"
               id="search-input"
               required />
-            <button class="fa-solid fa-magnifying-glass" name="search" type="submit">
+            <button class="fa-solid fa-magnifying-glass mt-2 mb-2" name="search" type="submit">
             </button>
           </form>
         </div>
