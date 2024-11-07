@@ -9,6 +9,7 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -39,7 +40,7 @@
             </button>
           </form>
         </div>
-        <a href="#" class="fa fa-shopping-cart"></a>
+        <a href="?act=cart" class="fa fa-shopping-cart"></a>
         <a href="?act=login" class="fa fa-user"></a>
         <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>

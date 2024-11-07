@@ -13,6 +13,7 @@ require_once './router.php';
 $router = new Router();
 require_once '../controllers/PageController.php';
 require_once '../controllers/LoginController.php';
+require_once '../controllers/RegisterController.php';
 // shop_introduce
 require_once '../controllers/ShopIntroduceController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
@@ -21,6 +22,8 @@ $act = $_GET['act'] ?? '/';
 $router->add('/', 'PageController', 'index');
 // Login
 require_once '../routes/login.php';
+// Register
+require '../routes/register.php';
 //shop_introduce
 require_once '../routes/shopintroduce.php';
 $router->dispatch($act);
