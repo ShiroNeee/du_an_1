@@ -41,7 +41,7 @@
         </div>
         <a href="#" class="fa fa-shopping-cart"></a>
         <a href="?act=login" class="fa fa-user"></a>
-        <a href="#" class="fa fa-home"></a>
+        <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
     </div>
   </header>

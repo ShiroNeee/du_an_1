@@ -275,3 +275,9 @@ a {
 footer p {
   color: black;
 }
+.banner-shopintroduce{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
