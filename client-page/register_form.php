@@ -11,6 +11,10 @@
                 <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn" required>
             </div>
             <div class="mb-3">
+                <label for="phone" class="form-label">Số điện thoại</label>
+                <input type="tel" class="form-control" id="phone" placeholder="Nhập số điện thoại" required>
+            </div>
+            <div class="mb-3">
                 <label for="password" class="form-label">Mật khẩu</label>
                 <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
             </div>
