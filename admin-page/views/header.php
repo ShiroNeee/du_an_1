@@ -9,7 +9,7 @@
 </head>
 <body>
 	<section id="sidebar">
-		<a href="index.php" class="brand">
+		<a href="../admin-page" class="brand">
 			<i class='bx bxs-user'></i>
 			<span class="text">Admin Unique Style</span>
 		</a>

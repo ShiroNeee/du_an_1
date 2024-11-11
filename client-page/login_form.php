@@ -1,28 +1,19 @@
-<body>
-    <div class="banner-content">
-        <div>
-            <h2>Đăng nhập</h2>
+<main class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+    <div class="col-md-2">
+        <h3 class="text-center mb-2">Đăng Nhập</h3>
+        <form>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Nhập email của bạn" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+        </form>
+        <div class="text-center mt-3">
+            <p>Bạn chưa có tài khoản? <a href="?act=register">Đăng ký tại đây</a></p>
         </div>
-        <div>
-            <form action="?act=handle-login" method="POST">
-
-                <label for="email">Email:</label>
-                <input type="email" name="email" placeholder="Nhập email">
-                <span style="color: red;">
-                    <?= !empty($_SESSION['error']['email']) ? $_SESSION['error']['email'] : '' ?>
-                </span>
-                <br>
-
-                <label for="mat_khau">Mật khẩu:</label>
-                <input type="password" name="mat_khau" placeholder="Nhập mật khẩu">
-                <span style="color: red;">
-                    <?= !empty($_SESSION['error']['mat_khau']) ? $_SESSION['error']['mat_khau'] : '' ?>
-                </span>
-                <br>
-
-                <button type="submit">Đăng nhập</button>
-            </form>
-        </div>
-
     </div>
-</body>
+</main>
