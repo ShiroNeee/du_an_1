@@ -41,7 +41,7 @@
 			<li>
 				<a href="?act=listproduct">
 					<i class='bx bx-list-ul' ></i>
-					<span class="text">Danh sách sản phẩm</span>
+					<span class="text">Danh sách sản phẩm (product)</span>
 				</a>
 			</li>
 		</ul>
@@ -49,7 +49,7 @@
 			<li>
 				<a href="#">
 					<i class='bx bxs-cog' ></i>
-					<span class="text">Cài đặt</span>
+					<span class="text">Setting</span>
 				</a>
 			</li>
 			<li>
