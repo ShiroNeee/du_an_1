@@ -16,6 +16,7 @@ require_once '../controllers/LoginController.php';
 require_once '../controllers/RegisterController.php';
 // shop_introduce
 require_once '../controllers/ShopIntroduceController.php';
+require_once '../controllers/CartShopController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -26,4 +27,5 @@ require_once '../routes/login.php';
 require '../routes/register.php';
 //shop_introduce
 require_once '../routes/shopintroduce.php';
+require_once '../routes/cartshop.php';
 $router->dispatch($act);

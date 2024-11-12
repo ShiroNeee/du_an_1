@@ -42,25 +42,25 @@
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />

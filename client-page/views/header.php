@@ -40,7 +40,7 @@
             </button>
           </form>
         </div>
-        <a href="?act=cart" class="fa fa-shopping-cart"></a>
+        <a href="?act=cartshop" class="fa fa-shopping-cart"></a>
         <a href="?act=login" class="fa fa-user"></a>
         <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
