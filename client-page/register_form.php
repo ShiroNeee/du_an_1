@@ -1,4 +1,4 @@
-<main class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+<main class="d-flex align-items-center justify-content-center mb-5 mt-5" style="height: 60vh;">
     <div class="col-md-2">
         <h3 class="text-center mb-2">Đăng Ký</h3>
         <form>
@@ -20,7 +20,7 @@
             </div>
             <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
         </form>
-        <div class="text-center mt-3">
+        <div class="text-center">
             <p>Bạn đã có tài khoản? <a href="?act=login">Đăng nhập tại đây</a></p>
         </div>
     </div>

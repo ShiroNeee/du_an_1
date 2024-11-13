@@ -8,7 +8,6 @@ CREATE TABLE Roles (
 -- Thêm dữ liệu mẫu cho bảng Roles
 INSERT INTO Roles (RoleName) VALUES ('Admin'), ('User'), ('Moderator'), ('Supplier');  -- Thêm các vai trò mẫu vào bảng Roles
 
-
 -- Users: Lưu trữ thông tin người dùng, bao gồm tên, email, mật khẩu và vai trò
 -- Tạo bảng Users với cột RoleID
 CREATE TABLE Users (
@@ -63,7 +62,6 @@ CREATE TABLE OrderDetails (
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),  -- Ràng buộc khóa ngoại với bảng Orders
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)  -- Ràng buộc khóa ngoại với bảng Products
 );
-
 
 -- Tạo bảng Reviews
 CREATE TABLE Reviews (

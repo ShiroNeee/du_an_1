@@ -60,7 +60,7 @@
                 <div>
                     <div class="d-flex ">
                         <h4 class="mt-2">Tạm tính:</h4>
-                        <h4 class="ms-auto">?.000.000đ</h4>
+                        <h4 class="ms-auto text-danger">?.000.000đ</h4>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                     <h4>Thanh toán đơn hàng:</h4>
                     <div class="d-flex">
                         <p>Tổng số tiền:</p>
-                        <strong class="ms-auto">?.000.000đ</strong>
+                        <strong class="ms-auto text-danger">?.000.000đ</strong>
                     </div>
                     <div class="payment-method">
                         <div class="form-check">
