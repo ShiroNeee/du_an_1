@@ -15,6 +15,7 @@ require_once '../controllers/AdminController.php';
 require_once '../controllers/product/ListProductController.php';
 require_once '../controllers/product/AddProductController.php';
 require_once '../controllers/product/EditProductController.php';
+require_once '../controllers/product/DetailProductController.php';
 // category
 require_once '../controllers/category/ListCategoryController.php';
 require_once '../controllers/category/AddCategoryController.php';
@@ -27,6 +28,7 @@ $router->add('/', 'AdminController', 'index');
 require_once '../routes/product/listproduct.php';
 require_once '../routes/product/addproduct.php';
 require_once '../routes/product/editproduct.php';
+require_once '../routes/product/detailproduct.php';
 // category
 require_once '../routes/category/listcategory.php';
 require_once '../routes/category/addcategory.php';
@@ -52,27 +54,4 @@ if (isset($_GET['act']) && $_GET['act'] === 'deleteproduct' && isset($_GET['id']
             echo "không xóa được sản phẩm";
         }
     }
-}
-
-//thêm product - xử lí dữ liệu (post)
-if($_SERVER['REQUEST_METHOD']==='POST'){
-    // lấy dữ liệu form
-    $name_product          =$_POST['name_product'];
-    $price_product         =$_POST['price_product'];
-    $description_product   =$_POST['description_product'];
-    $color_product         =$_POST['color_product'];
-    $size_product          =$_POST['size_product'];
-    $category_product      =$_POST['category_product'];
-    // img
-    $file_image=$_FILES['image_product'];
-    if(!empty($file_image)){
-        $image_product=time(). '_' . $file_image['name'];
-        $target_file_image= '"/image/"' . $image_product;
-        // move_uploaded_file($file_image['tmp_name'], $target_file_image);  
-    }
-    // add product (đúng tt thì mới k bị đổ nhầm dữ liệu)
-    $sql_add_product="INSERT INTO products(name,price,id_color,id_size,description,image,id_category) VALUES ('$name_product','$price_product','$color_product','$size_product','$description_product','$image_product','$category_product')";
-    $stmt_add_product=$conn->prepare($sql_add_product);
-    $stmt_add_product->execute();
-    // thêm dc nma chuyển sang list thì đang fix..
 }

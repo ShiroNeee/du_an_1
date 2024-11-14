@@ -43,7 +43,7 @@ $products = $stmt_product->fetchAll();
                         <td><?= ++$key ?></td>
                         <td><?= $value['name'] ?></td>
                         <td>
-                            <img src="../product/img/<?= empty($value['image']) || !isset($value['image']) ? 'logo.jpg' : $value['image']?>" alt="er img" width="50" height="50" />
+                        <img src="img/<?= empty($value['image']) || !isset($value['image']) ? 'logo.png' : $value['image']?>" alt="er img" width="50" height="50"/>
                         </td>
                         <td style="color:red"><?= $value['price'] ?> vnđ</td>
                         <td><?= $value['color_name'] ?></td>
@@ -52,7 +52,8 @@ $products = $stmt_product->fetchAll();
                         <td><?= $value['category_name'] ?></td>
                         <td>
                             <a href="?act=editproduct&id=<?= $value['id']?>"><button class="edit">Sửa</button></a>
-                            <a href="?act=deleteproduct&id=<?= $value['id']?>" ><button onclick="return confirm('Bạn muốn xóa sản phẩm này?')" class="delete">Xóa</button></a>
+                            <a href="?act=deleteproduct&id=<?= $value['id']?>" ><button onclick="return confirm('Bạn muốn xóa sản phẩm này?')" class="delete">Xóa</button></a> ||
+                            <a href="?act=detailproduct&id=<?= $value['id']?>" ><button class="add">Chi Tiết</button></a>
                         </td>
                     </tr>
                 <?php } ?>
