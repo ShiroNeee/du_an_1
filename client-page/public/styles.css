@@ -39,9 +39,6 @@ body {
   justify-content: space-between;
 }
 
-.logo img {
-  height: 70px;
-}
 .navbar {
   flex-grow: 1;
   margin-left: 20px;
@@ -50,6 +47,7 @@ body {
   list-style-type: none;
   display: flex;
   gap: 20px;
+  margin: 0 auto;
 }
 
 .navbar .nav-links li a {
