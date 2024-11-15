@@ -28,6 +28,9 @@
             <a href="#">
                 <div class="category-item"><img src="../client-page/images/cate-1.png" /></div>
             </a>
+            <a href="#">
+                <div class="category-item"><img src="../client-page/images/cate-1.png" /></div>
+            </a>
         </div>
     </div>
 </section>
@@ -39,54 +42,54 @@
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+                <a href="?act=cartshop"><button class="btn btn-primary">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+                <a href="?act=cartshop"><button class="btn btn-primary">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+                <a href="?act=cartshop"><button class="btn btn-primary">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+                <a href="?act=cartshop"><button class="btn btn-primary">Thêm vào giỏ</button></a>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <button class="btn btn-primary">Thêm vào giỏ</button>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <button class="btn btn-primary">Thêm vào giỏ</button>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />
                 <h3>Áo sơ mi</h3>
                 <p>Giá: 299,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <button class="btn btn-primary">Thêm vào giỏ</button>
             </div>
             <div class="product-item">
                 <img src="../client-page/images/anh-2.png" />
                 <h3>Quần jeans</h3>
                 <p>Giá: 499,000₫</p>
-                <button class="cta-button">Thêm vào giỏ</button>
+                <button class="btn btn-primary">Thêm vào giỏ</button>
             </div>
         </div>
         <div class="button-container" >
             <a href="#">
-            <button class="see-more">Xem thêm</button>
+            <button class="btn btn-secondary">Xem thêm</button>
             </a>
             
         </div>

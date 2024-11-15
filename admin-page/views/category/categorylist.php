@@ -19,11 +19,11 @@
                                     <td><?= $categories['categoryName']; ?></td>
                                     <td>
                                         <a href="?act=edit-category&id=<?= $categories['id']; ?>">
-                                            <button>Sửa</button>
+                                            <button class="btn btn-primary">Sửa</button>
                                         </a>
                                         <form action="?act=delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
                                             <input type="hidden" name="id" value="<?= $categories['id']; ?>">
-                                            <button type="submit">Xóa</button>
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
                                         </form>
                                     </td>
                                 </tr>

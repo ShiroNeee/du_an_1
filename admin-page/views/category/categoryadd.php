@@ -7,7 +7,7 @@
       <a href="?act=list-category">
         <button type="button" class="add">Danh sách</button>
       </a>
-      <button type="submit" class="add">Thêm danh mục</button>
+      <button type="submit" class="add">Thêm</button>
 
     </form>
   </div>

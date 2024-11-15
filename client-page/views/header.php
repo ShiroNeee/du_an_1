@@ -9,7 +9,7 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -35,7 +35,8 @@
               placeholder="Tìm kiếm"
               id="search-input"
               required />
-            <button class="fa-solid fa-magnifying-glass mt-2 mb-2" name="search" type="submit">
+            <button class="btn btn-link" name="search" type="submit">
+              <a class="fa fa-search"></a>
             </button>
           </form>
         </div>
