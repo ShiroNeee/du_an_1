@@ -37,7 +37,7 @@ require_once '../routes/product/detailproduct.php';
 require_once '../routes/category/listcategory.php';
 require_once '../routes/category/addcategory.php';
 require_once '../routes/category/editcategory.php';
-<<<<<<< HEAD
+
 
 if (isset($_GET['act']) && ($_GET['act'] != "")) {
     $act = $_GET['act'];
@@ -118,10 +118,10 @@ if (isset($_GET['act']) && ($_GET['act'] != "")) {
     include "index.php";
 }
 // list product
-=======
+
 // mesage
 require_once '../routes/messageshop.php';
->>>>>>> 8f83f52a641fef4e518dac8c66f19ea93a904efa
+
 $router->dispatch($act);
 
 // xóa product (delete)
