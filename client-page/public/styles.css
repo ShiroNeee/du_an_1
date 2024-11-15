@@ -38,7 +38,9 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
+.logo img {
+  height: 50px;
+}
 .navbar {
   flex-grow: 1;
   margin-left: 20px;
