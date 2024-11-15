@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 15, 2024 at 09:18 AM
+-- Generation Time: Nov 15, 2024 at 11:34 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -37,7 +37,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `categoryName`) VALUES
-(2, 'heheha');
+(2, 'heheha'),
+(3, 'abc');
 
 -- --------------------------------------------------------
 
@@ -114,8 +115,6 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 (1, 'Admin'),
-(3, 'Moderator'),
-(4, 'Supplier'),
 (2, 'User');
 
 -- --------------------------------------------------------
@@ -125,13 +124,13 @@ INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 --
 
 CREATE TABLE `users` (
-  `UserID` int NOT NULL,
-  `UserName` varchar(100) NOT NULL,
-  `Email` varchar(100) NOT NULL,
-  `PasswordHash` varchar(255) NOT NULL,
-  `Address` varchar(255) DEFAULT NULL,
-  `PhoneNumber` varchar(15) DEFAULT NULL,
-  `RoleID` int DEFAULT NULL
+  `id` int NOT NULL,
+  `userName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `phoneNumber` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `roleID` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -185,9 +184,9 @@ ALTER TABLE `roles`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`UserID`),
-  ADD UNIQUE KEY `Email` (`Email`),
-  ADD KEY `RoleID` (`RoleID`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `Email` (`email`),
+  ADD KEY `RoleID` (`roleID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -197,7 +196,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
@@ -233,7 +232,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `UserID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -250,7 +249,7 @@ ALTER TABLE `orderdetails`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `products`
@@ -263,13 +262,13 @@ ALTER TABLE `products`
 --
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
-  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`);
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`RoleID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
