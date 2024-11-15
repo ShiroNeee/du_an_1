@@ -20,11 +20,13 @@ require_once '../controllers/product/DetailProductController.php';
 require_once '../controllers/category/ListCategoryController.php';
 require_once '../controllers/category/AddCategoryController.php';
 require_once '../controllers/category/EditCategoryController.php';
-
+// mesage
+require_once '../controllers/MessageShopController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
 $router->add('/', 'AdminController', 'index');
+// list product
 require_once '../routes/product/listproduct.php';
 require_once '../routes/product/addproduct.php';
 require_once '../routes/product/editproduct.php';
@@ -33,7 +35,8 @@ require_once '../routes/product/detailproduct.php';
 require_once '../routes/category/listcategory.php';
 require_once '../routes/category/addcategory.php';
 require_once '../routes/category/editcategory.php';
-// list product
+// mesage
+require_once '../routes/messageshop.php';
 $router->dispatch($act);
 
 // xóa product (delete)
