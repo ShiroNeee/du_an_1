@@ -2,7 +2,7 @@
 <div class="container">
     <h1 class="text-center">Giới thiệu về hệ thống Shop Unique Style</h1>
     <div class="d-flex">
-        <img src="../client-page/images/shop1.jpg" alt="er" width="1120" height="600" class="mx-auto" style="border: 0.05px solid black; border-radius:10px" />
+        <img src="../client-page/images/shopbackgroundok.jpg" alt="er" width="1120" height="600" class="mx-auto" style="border: 0.05px solid black; border-radius:10px" />
     </div>
     <div class="row text-center">
     <div class="col d-flex flex-column justify-content-center align-items-center">

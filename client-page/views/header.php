@@ -20,11 +20,10 @@
       </div>
       <nav class="navbar">
         <ul class="nav-links">
-          <li><a href="#">Sản Phẩm Mới</a></li>
-          <li><a href="#">Nữ</a></li>
-          <li><a href="#">Nam</a></li>
-          <li><a href="#">Bé Gái</a></li>
-          <li><a href="#">Bé Trai</a></li>
+          <li><a href="?act=danhmucspmoi">Sản Phẩm Mới</a></li>
+          <li><a href="?act=danhmucnu">Nữ</a></li>
+          <li><a href="?act=danhmucnam">Nam</a></li>
+          <li><a href="?act=danhmuctreem">Trẻ Em</a></li>
         </ul>
       </nav>
       <div class="header-icons">

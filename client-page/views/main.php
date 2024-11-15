@@ -17,7 +17,7 @@
 
 <section class="categories">
     <div class="container">
-        <h2>Sản phẩm mới</h2>
+        <h2>Sản phẩm mới (new product)</h2>
         <div class="category-list">
             <a href="#">
                 <div class="category-item"><img src="../client-page/images/cate-2.png" /></div>
@@ -36,7 +36,7 @@
 </section>
 <section class="products">
     <div class="container">
-        <h2>Sản phẩm nổi bật</h2>
+        <h2>Sản phẩm nổi bật (hot product)</h2>
         <div class="product-list">
             <div class="product-item">
                 <img src="../client-page/images/anh-1.png" />

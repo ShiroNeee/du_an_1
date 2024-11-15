@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="../admin-page/public/styles.css">
-	<title>Admin Dashboard</title>
+	<title>Admin Dashboard - Unique style</title>
 </head>
 <body>
 	<section id="sidebar">
@@ -42,6 +42,12 @@
 				<a href="?act=listproduct">
 					<i class='bx bx-list-ul' ></i>
 					<span class="text">Danh sách sản phẩm (product)</span>
+				</a>
+			</li>
+			<li>
+				<a href="?act=listcategory">
+					<i class='bx bx-list-ul' ></i>
+					<span class="text">Danh mục sản phẩm (category)</span>
 				</a>
 			</li>
 		</ul>
