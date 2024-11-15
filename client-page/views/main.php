@@ -28,9 +28,6 @@
             <a href="#">
                 <div class="category-item"><img src="../client-page/images/cate-1.png" /></div>
             </a>
-            <a href="#">
-                <div class="category-item"><img src="../client-page/images/cate-2.png" /></div>
-            </a>
         </div>
     </div>
 </section>
