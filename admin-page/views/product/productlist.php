@@ -15,7 +15,7 @@ $stmt_product = $conn->prepare($sql_product);
 $stmt_product->execute();
 $products = $stmt_product->fetchAll();
 
-// xóa để bên index.php
+// xóa để bên index.php lỗi env 
 ?>
 
 <!-- table product -->
@@ -42,11 +42,9 @@ $products = $stmt_product->fetchAll();
                     <tr>
                         <td><?= ++$key ?></td>
                         <td><?= $value['name'] ?></td>
-                        <td>
-                        <img src="img/<?= empty($value['image']) || !isset($value['image']) ? 'logo.png' : $value['image']?>" alt="er img" width="50" height="50"/>
-                        </td>
+                        <td><img src="img/<?= empty($value['image']) || !isset($value['image']) ? 'logo.png' : $value['image']?>" alt="er img" width="50" height="50"/></td>
                         <td style="color:red"><?= $value['price'] ?> vnđ</td>
-                        <td><?= $value['color_name'] ?></td>
+                        <td style="background-color:aqua"><?= $value['color_name'] ?></td>
                         <td style="color:blue"><?= $value['size_name'] ?></td>
                         <td><?= $value['description'] ?></td>
                         <td><?= $value['category_name'] ?></td>
