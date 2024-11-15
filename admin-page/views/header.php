@@ -44,6 +44,12 @@
 					<span class="text">Danh sách sản phẩm (product)</span>
 				</a>
 			</li>
+			<li>
+				<a href="?act=listcategory">
+					<i class='bx bx-list-ul' ></i>
+					<span class="text">Danh mục sản phẩm (category)</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
