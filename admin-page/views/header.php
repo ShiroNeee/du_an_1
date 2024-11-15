@@ -45,7 +45,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="?act=listcategory">
+				<a href="?act=list-category">
 					<i class='bx bx-list-ul' ></i>
 					<span class="text">Danh mục sản phẩm (category)</span>
 				</a>
@@ -70,7 +70,7 @@
 	<section id="content">
 		<nav>
 			<i class='bx bx-menu' ></i>
-			<a href="?act=listcategory" class="nav-link">Danh mục (category)</a>
+			<a href="?act=list-category" class="nav-link">Danh mục (category)</a>
 			<form action="#">
 				<div class="form-input">
 					<input type="search" placeholder="Tìm kiếm...">
