@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 15, 2024 at 11:34 AM
+-- Generation Time: Nov 16, 2024 at 06:32 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -38,7 +38,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `categoryName`) VALUES
 (2, 'heheha'),
-(3, 'abc');
+(3, 'abcd');
 
 -- --------------------------------------------------------
 
@@ -125,13 +125,22 @@ INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `userName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `phoneNumber` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `roleID` int DEFAULT NULL
+  `phoneNumber` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `roleID` int NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `phoneNumber`, `address`, `roleID`, `image`) VALUES
+(18, 'Giap', 'giapnvph34346@fpt.edu.vn', '$2y$10$U53Q0qrmAq4GV1eKH/Ji6OZKE1p6uWqou4hI0NS8w.bkG8x1VGcpm', '0332070403', 'Hà Nội', 1, '../admin-page/img/user/user_673801a1c27aa5.71493870.jpg'),
+(24, 'shiro', 'shiro@gmail.com', '$2y$10$JkohaO8SY6q5Q2OGIPVp2.YkelkeGvEK9gwFAKyFY/uKwQOi5tx4C', '0344192381', 'Hà Nội', 2, '../admin-page/img/user/user_6738380cedd630.67905386.jpg');
 
 --
 -- Indexes for dumped tables
@@ -232,7 +241,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
