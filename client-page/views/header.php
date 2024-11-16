@@ -1,3 +1,9 @@
+<?php if (!empty($_SESSION['success'])): ?>
+  <div class="alert alert-success">
+    <?= $_SESSION['success']; ?>
+  </div>
+  <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,21 +15,21 @@
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
   <header class="top-header">
     <div class="container">
       <div class="logo">
-        <img src="../client-page/images/logo.png" />
+        <a href="../client-page"><img src="../client-page/images/logo.png" /></a>
       </div>
       <nav class="navbar">
         <ul class="nav-links">
-          <li><a href="#">Sản Phẩm Mới</a></li>
-          <li><a href="#">Nữ</a></li>
-          <li><a href="#">Nam</a></li>
-          <li><a href="#">Bé Gái</a></li>
-          <li><a href="#">Bé Trai</a></li>
+          <li><a href="?act=danhmucspmoi">Sản Phẩm Mới</a></li>
+          <li><a href="?act=danhmucnu">Nữ</a></li>
+          <li><a href="?act=danhmucnam">Nam</a></li>
+          <li><a href="?act=danhmuctreem">Trẻ Em</a></li>
         </ul>
       </nav>
       <div class="header-icons">
@@ -35,13 +41,37 @@
               placeholder="Tìm kiếm"
               id="search-input"
               required />
-            <button class="fa-solid fa-magnifying-glass" name="search" type="submit">
+            <button class="btn btn-link" name="search" type="submit">
+              <a class="fa fa-search"></a>
             </button>
           </form>
         </div>
-        <a href="#" class="fa fa-shopping-cart"></a>
-        <a href="?act=login" class="fa fa-user"></a>
-        <a href="#" class="fa fa-home"></a>
+        <a href="?act=cartshop" class="fa fa-shopping-cart"></a>
+        <?php if (isset($_SESSION['user'])): ?>
+          <!-- Dropdown User Settings -->
+          <div class="dropdown">
+            <!-- Icon người dùng, có thể click để mở dropdown -->
+            <a href="javascript:void(0);" class="fa fa-user dropdown-toggle" id="user-icon" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+            <!-- Menu dropdown (ẩn/show khi click vào icon) -->
+            <ul class="dropdown-menu" aria-labelledby="user-icon">
+              <li><span class="dropdown-item">Xin chào, <?= $_SESSION['user']['name']; ?></span></li>
+              <?php if ($_SESSION['user']['roleID'] == 1): ?>
+                <li><a href="/du_an_1/admin-page/" class="dropdown-item">Admin</a></li>
+              <?php endif; ?>
+              <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
+              <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
+              
+              <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
+            </ul>
+          </div>
+        <?php else: ?>
+          <a href="?act=login" class="fa fa-user"></a>
+        <?php endif; ?>
+
+        <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
     </div>
   </header>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

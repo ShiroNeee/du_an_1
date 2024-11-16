@@ -10,10 +10,10 @@
     </div>
     <div class="container">
       <h4>THƯƠNG HIỆU</h4>
-      <a href="#">Giới thiệu</a>
+      <a href="?act=shopintroduce">Giới thiệu</a>
       <a href="#">Tin Tức</a>
       <a href="#">Tuyển dụng</a>
-      <a href="#">Hệ thống cửa hàng</a>
+      <a href="?act=shopintroduce">Hệ thống cửa hàng</a>
       <a href="#">Liên hệ</a>
     </div>
     <div class="container">
@@ -35,7 +35,7 @@
     </div>
 
 </footer>
-<script src="../client-page/public/script.js"></script>
+
 </body>
 
 </html>

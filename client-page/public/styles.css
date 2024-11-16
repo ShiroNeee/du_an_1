@@ -27,12 +27,6 @@ body {
   margin-top: 20px; 
 }
 
-.see-more {
-  padding: 10px 20px; 
-  font-size: 16px; 
-  color: red;
-}
-
 .top-header {
   background-color: white;
   padding: 10px 0;
@@ -44,9 +38,8 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-
 .logo img {
-  height: 70px;
+  height: 50px;
 }
 .navbar {
   flex-grow: 1;
@@ -56,6 +49,7 @@ body {
   list-style-type: none;
   display: flex;
   gap: 20px;
+  margin: 0 auto;
 }
 
 .navbar .nav-links li a {
@@ -235,22 +229,7 @@ body {
 .product-item p {
   font-size: 1rem;
   margin: 5px 0;
-}
-
-.cta-button {
-  padding: 10px 20px;
-  background-color: #19478a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-.cta-button:hover {
-  background-color: #333;
-}
+} 
 footer {
   display: flex;
   padding: 20px;

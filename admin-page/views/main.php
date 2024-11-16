@@ -2,19 +2,19 @@
 <main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Dashboard Admin</h1>
+					<h1>Dashboard Admin - Unique style</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#">Dashboard</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#">Trang chủ</a>
+							<a class="active" href="../admin-page">Trang chủ</a>
 						</li>
 					</ul>
 				</div>
 				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
+					<i class='bx bxs-cloud-download'></i>
 					<span class="text">Tải PDF</span>
 				</a>
 			</div>
@@ -29,14 +29,14 @@
 				<li>
 					<i class='bx bxs-group' ></i>
 					<span class="text">
-						<h3>1234</h3>
+						<h3>1000+</h3>
 						<p>Người truy cập website</p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
 					<span class="text">
-						<h3>????</h3>
+						<h3>???.000đ</h3>
 						<p>Doanh thu</p>
 					</span>
 				</li>
@@ -60,7 +60,7 @@
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>John Doe</p>
+									<p>Khách hàng vip 010</p>
 								</td>
 								<td>01-10-2024</td>
 								<td><span class="status process">Process</span></td>
@@ -68,33 +68,33 @@
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>John Doe</p>
+									<p>Khách hàng vip 005</p>
 								</td>
-								<td>01-10-2023</td>
+								<td>30-4-2024</td>
 								<td><span class="status pending">Pending</span></td>
 							</tr>
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>John Doe</p>
+									<p>Khách hàng vip 003</p>
 								</td>
-								<td>01-10-2022</td>
+								<td>08-03-2024</td>
 								<td><span class="status pending">Pending</span></td>
 							</tr>
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>John Doe</p>
+									<p>Khách hàng vip 002</p>
 								</td>
-								<td>01-10-2021</td>
+								<td>01-02-2024</td>
 								<td><span class="status completed">Completed</span></td>
 							</tr>
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>John Doe</p>
+									<p>Khách hàng vip 001</p>
 								</td>
-								<td>01-10-2021</td>
+								<td>01-01-2024</td>
 								<td><span class="status completed">Completed</span></td>
 							</tr>
 						</tbody>
@@ -116,15 +116,15 @@
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
-							<p>crud category</p>
+							<p>category (sản phẩm mới,nam,nữ,trẻ em,)</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="completed">
-							<p>việc</p>
+							<p>kháo sát fom</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
-							<p>việc</p>
+							<p>thống kê </p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 					</ul>
