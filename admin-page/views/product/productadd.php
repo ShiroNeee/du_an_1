@@ -20,7 +20,8 @@ $stmt_categories = $conn->prepare($sql_categories);
 $stmt_categories->execute();
 $categories = $stmt_categories->fetchAll(PDO::FETCH_ASSOC);
 //thêm product - xử lí dữ liệu (post) 
-$errors = [];
+$success = '';
+$errors=[];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // lấy dữ liệu form
     $name_product          = trim($_POST['name_product']);
@@ -33,12 +34,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($name_product)) $errors[] = 'Tên sản phẩm không được để trống.';
     if (empty($price_product)) $errors[] = 'Giá sản phẩm không được để trống.';
     if (empty($description_product)) $errors[] = 'Mô tả sản phẩm không được để trống.';
+    if (empty($color_product) || $color_product === "Chọn màu sản phẩm (color)") {
+        $errors[] = 'Màu của sản phẩm không được để trống.';
+    }
+    if (empty($size_product) || $size_product === "Chọn size sản phẩm") {
+        $errors[] = 'Size sản phẩm không được để trống.';
+    }
+    if (empty($category_product) || $category_product === "Chọn danh mục sản phẩm (category)") {
+        $errors[] = 'Danh mục sản phẩm không được để trống.';
+    }
     // img
     $file_image = $_FILES['image_product'];
-    if (!empty($file_image)) {
-        $image_product = $file_image['name'];
-        $target_file_image = '"/img/"' . $image_product;
-        // move_uploaded_file($file_image['tmp_name'], $target_file_image);  
+    if ($file_image['error'] === UPLOAD_ERR_NO_FILE) {
+        $errors[] = 'Vui lòng chọn ảnh sản phẩm.';
+    } else {
+        $allowed_types = ['image/jpeg', 'image/png', 'image/jpg'];
+        $max_size = 2 * 1024 * 1024; // 2MB
+        if (!in_array($file_image['type'], $allowed_types)) {
+            $errors[] = 'Chỉ cho ảnh JPEG, PNG, JPG';
+        }
+        if ($file_image['size'] > $max_size) {
+            $errors[] = 'File ảnh k dc quá 2MB';
+        }
+        if (empty($errors)) {
+            $image_product = basename($file_image['name']);
+            $target_file_image = './img/' . $image_product;
+            if (!move_uploaded_file($file_image['tmp_name'], $target_file_image)) {
+                $errors[] = 'Ảnh k tải đc lên.';
+            }
+        }
     }
     // add product (đúng tt thì mới k bị đổ nhầm dữ liệu)
     if (empty($errors)) {
@@ -46,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_add_product = $conn->prepare($sql_add_product);
         $stmt_add_product->execute();
         if ($stmt_add_product) {
-            header('Location:index.php');
+            $success = 'Thêm sản phẩm product thanh công';
         } else {
             echo "k thêm dc sản phẩm";
         }
@@ -55,6 +79,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!-- add_product -->
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap");
+    :root{
+        --poppins: "Poppins", sans-serif;
+        --lato: "Lato", sans-serif;
+    }
     .errors {
         border: 1px solid #f5c6cb;
         background-color: lightblue;
@@ -69,6 +98,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         margin-bottom: 5px;
         font-size: 16px;
         color: red;
+        font-family: var(--lato);
+    }
+    .success {
+        border: 1px solid #c3e6cb;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        margin-left: 20px;
+        font-family: var(--lato);
     }
 </style>
 <div class="admin-product-form-container">
@@ -77,32 +117,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (!empty($errors)):?>
             <div class="errors">
                 <?php foreach ($errors as $error):?>
-                    <span class="error-item"><?= htmlspecialchars($error) ?><span/>
+                    <span class="error-item"><?= $error?><span/>
                 <?php endforeach; ?>
             </div>
         <?php endif;?>
-        <input type="text" placeholder="Nhập tên sản phẩm....." name="name_product" class="box" />
-        <input type="number" placeholder="Nhập giá sản phẩm....." name="price_product" class="box" />
-        <input type="text" placeholder="Mô tả sản phẩm....." name="description_product" class="box" />
+        <?php if (!empty($success)): ?>
+            <div class="success">
+                <span><?= $success?></span>
+            </div>
+        <?php endif; ?>
+        <input type="text" placeholder="Nhập tên sản phẩm....." name="name_product" class="box" value="<?= htmlspecialchars($name_product) ?>"  />
+        <input type="number" placeholder="Nhập giá sản phẩm....." name="price_product" class="box" value="<?= htmlspecialchars($price_product) ?>" />
+        <input type="text" placeholder="Mô tả sản phẩm....." name="description_product" class="box" value="<?= htmlspecialchars($description_product) ?>" />
         <select class="box" name="color_product">
-            <option selected >Chọn màu sản phẩm (color)</option>
+            <option selected>Chọn màu sản phẩm (color)</option>
             <?php foreach ($colors as $color) { ?>
-                <option value="<?= $color['id'] ?>"><?= $color['name'] ?></option>
+                <option value="<?= $color['id'] ?>" <?= $color['id'] == $color_product ? 'selected' : ''?>>
+                    <?= $color['name'] ?>
+                </option>
             <?php } ?>
         </select>
         <select class="box" name="size_product">
-            <option selected >Chọn size sản phẩm</option>
+            <option selected>Chọn size sản phẩm</option>
             <?php foreach ($sizes as $size) { ?>
-                <option value="<?= $size['id'] ?>"><?= $size['name'] ?></option>
+                <option value="<?= $size['id'] ?>" <?= $size['id'] == $size_product ? 'selected' : ''?>>
+                    <?= $size['name'] ?>
+                </option>
             <?php } ?>
         </select>
         <select class="box" name="category_product">
             <option selected>Chọn danh mục sản phẩm (category)</option>
             <?php foreach ($categories as $category) { ?>
-                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                <option value="<?= $category['id'] ?>" <?= $category['id'] == $category_product ? 'selected' : ''?>>
+                    <?= $category['name'] ?>
+                </option>
             <?php } ?>
         </select>
-        <input type="file" accept="img/png,img/jpeg,img/jpg" class="box" name="image_product"/>
+        <input type="file" accept="img/png,img/jpeg,img/jpg" class="box" name="image_product" value="<?= htmlspecialchars($image_product) ?>"/>
         <button type="submit" class="add">Thêm sản phẩm</button>
     </form>
 </div>

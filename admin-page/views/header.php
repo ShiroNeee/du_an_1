@@ -31,8 +31,12 @@
 			</li>
 			<li>
 				<a href="../client-page">
+
 					<i class='bx bxs-shopping-bag-alt'></i>
 					<span class="text">Cửa hàng của tôi</span>
+
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">Trang cửa hàng</span>
 				</a>
 			</li>
 			<li>

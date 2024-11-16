@@ -15,7 +15,6 @@ $stmt_product = $conn->prepare($sql_product);
 $stmt_product->execute();
 $products = $stmt_product->fetchAll();
 
-// xóa để bên index.php lỗi env 
 ?>
 
 <!-- table product -->
