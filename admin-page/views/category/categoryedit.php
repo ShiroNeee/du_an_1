@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <!-- Form sửa danh mục -->
 <div class="table--wrapper">
     <h3>Sửa danh mục (category)</h3>
@@ -12,7 +12,7 @@
             <button type="submit" class="add" value="CẬP NHẬT">Cập nhật</button>
         </form>
     </div>
-=======
+
 <?php
 require_once '../common/env.php';
 require_once '../common/function.php';
@@ -103,5 +103,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" placeholder="Nhập tên danh mục sản phẩm....." name="name_category" class="box" value="<?= $detail_category['name'] ?>" />
         <button type="submit" class="add">Sửa danh mục sản phẩm</button>
     </form>
->>>>>>> 0290402bea250885fc829a020504e963b6342d36
 </div>

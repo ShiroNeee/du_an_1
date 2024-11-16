@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div class="table--wrapper">
   <h3>Thêm danh mục (category)</h3>
   <div class="admin-product-form-container">
@@ -12,7 +12,7 @@
 
     </form>
   </div>
-=======
+
 <?php
 require_once '../common/env.php';
 require_once '../common/function.php';
@@ -89,5 +89,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" placeholder="Nhập tên danh mục sản phẩm....." name="name_category" value="<?= htmlspecialchars($name_category) ?>" class="box"/>
         <button type="submit" class="add">Thêm danh mục sản phẩm</button>
     </form>
->>>>>>> 0290402bea250885fc829a020504e963b6342d36
+
 </div>
