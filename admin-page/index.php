@@ -78,4 +78,3 @@ if (isset($_GET['act']) && $_GET['act'] === 'deletecategory' && isset($_GET['id'
         }
     }
 }
-// er message
