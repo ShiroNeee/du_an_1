@@ -26,7 +26,6 @@
                 <a href="#"><div class="category-item"><img src="../client-page/images/cate-1.png" /></div></a>
             </div>
         </div>
-
     </section>
 
     <section class="products">
@@ -62,6 +61,7 @@
             <div class="button-container">
                 <a href="?act=productmore"><button class="btn btn-secondary">Xem thêm</button></a>
             </div>
+        </div>
     </section>
 </main>
 <script src="../client-page/public/script.js"></script>
