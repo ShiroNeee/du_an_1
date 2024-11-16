@@ -1,4 +1,9 @@
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap");
+    :root{
+        --poppins: "Poppins", sans-serif;
+        --lato: "Lato", sans-serif;
+    }
     .chat-container {
         width: 1200px;
         height: 600px;
@@ -7,6 +12,7 @@
         border-radius: 10px;
         display: flex;
         flex-direction: column;margin-left: 30px;
+        font-family: var(--lato);
     }
     .header {
         background-color: #3c91e6;

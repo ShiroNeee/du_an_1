@@ -87,8 +87,61 @@
                 <button class="cta-button">Thêm vào giỏ</button>
             </div>
         </div>
-        <div class="button-container" >
-            <a href="?act=productmore"><button class="see-more">Xem thêm</button></a>   
+    </div>
+    <div class="container">
+        <h2>Sản phẩm giá siêu sale (sale product)</h2>
+        <div class="product-list">
+            <div class="product-item">
+                <img src="../client-page/images/anh-1.png" />
+                <h3>Áo sơ mi</h3>
+                <p>Giá: 299,000₫</p>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-2.png" />
+                <h3>Quần jeans</h3>
+                <p>Giá: 499,000₫</p>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-1.png" />
+                <h3>Áo sơ mi</h3>
+                <p>Giá: 299,000₫</p>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-2.png" />
+                <h3>Quần jeans</h3>
+                <p>Giá: 499,000₫</p>
+                <a href="?act=cartshop"><button class="cta-button">Thêm vào giỏ</button></a>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-1.png" />
+                <h3>Áo sơ mi</h3>
+                <p>Giá: 299,000₫</p>
+                <button class="cta-button">Thêm vào giỏ</button>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-2.png" />
+                <h3>Quần jeans</h3>
+                <p>Giá: 499,000₫</p>
+                <button class="cta-button">Thêm vào giỏ</button>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-1.png" />
+                <h3>Áo sơ mi</h3>
+                <p>Giá: 299,000₫</p>
+                <button class="cta-button">Thêm vào giỏ</button>
+            </div>
+            <div class="product-item">
+                <img src="../client-page/images/anh-2.png" />
+                <h3>Quần jeans</h3>
+                <p>Giá: 499,000₫</p>
+                <button class="cta-button">Thêm vào giỏ</button>
+            </div>
         </div>
+    </div>
+    <div class="button-container" >
+        <a href="../client-page/"><button class="see-more">Ẩn bớt</button></a>   
     </div>
 </section>

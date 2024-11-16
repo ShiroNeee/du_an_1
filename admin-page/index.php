@@ -51,6 +51,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'deleteproduct' && isset($_GET['id']
 
         // thực hiện xóa sp
         if ($stmt_delete_product->execute()) {
+            echo "<script>alert('Xóa sản phẩm thành công'); window.location.href = 'index.php';</script>";
             header('Location:index.php');
             exit();
         } else {
@@ -58,3 +59,23 @@ if (isset($_GET['act']) && $_GET['act'] === 'deleteproduct' && isset($_GET['id']
         }
     }
 }
+// xóa danh mục
+if (isset($_GET['act']) && $_GET['act'] === 'deletecategory' && isset($_GET['id'])) {
+    $id_category = $_GET['id'];
+    // Kiểm tra nếu id hợp lệ
+    if (is_numeric($id_category)) {
+        $conn = connectDB();
+        $sql_delete_category = "DELETE FROM categories WHERE id = :id";
+        $stmt_delete_category = $conn->prepare($sql_delete_category);
+        $stmt_delete_category->bindParam(':id', $id_category, PDO::PARAM_INT);
+
+        // thực hiện xóa sp
+        if ($stmt_delete_category->execute()){
+            echo "<script> alert('Xóa danh mục sản phẩm thành công'); window.location.href = 'index.php';</script>";
+            exit();
+        } else {
+            echo "không xóa được danh mục sản phẩm";
+        }
+    }
+}
+// er message
