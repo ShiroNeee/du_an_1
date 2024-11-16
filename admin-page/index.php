@@ -2,12 +2,12 @@
 session_start();
 
 // Kiểm tra quyền truy cập admin
-require_once './checkAdmin.php'; // Đảm bảo rằng hàm kiểm tra quyền admin có sẵn
+require_once './checkAdmin.php'; 
 if (!checkAdminAccess()) {
-    exit(); // Dừng lại ngay nếu không phải admin, không cần thực hiện thêm mã phía dưới
+    exit(); // Dừng lại ngay nếu không phải admin
 }
 
-// Đây là file chạy chính, 
+// Đây là file chạy chính
 // là nơi ta require tất cả các file mà hệ thống sử dụng
 require_once '../common/env.php'; // Khai báo các biến môi trường
 require_once '../common/function.php'; // Khai báo các hàm dùng chung
@@ -51,7 +51,6 @@ require_once '../routes/user/user.php';
 // Xử lí router
 $router->dispatch($act);
 
-$router->dispatch($act);
 
 // xóa product (delete)
 if (isset($_GET['act']) && $_GET['act'] === 'deleteproduct' && isset($_GET['id'])) {
