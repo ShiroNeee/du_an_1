@@ -13,7 +13,7 @@ class LoginController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Lấy dữ liệu từ form
-            $email = $_POST['email'];
+            $email    = $_POST['email'];
             $password = $_POST['password'];
 
             // Kiểm tra lỗi
@@ -23,6 +23,8 @@ class LoginController
             }
             if (empty($password)) {
                 $errors['password'] = 'Mật khẩu không được để trống.';
+            } elseif (strlen($password) < 8) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 8 ký tự.';
             }
 
             // Nếu có lỗi, lưu lại lỗi vào session và quay lại trang đăng nhập

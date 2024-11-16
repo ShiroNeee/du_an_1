@@ -13,14 +13,14 @@ class RegisterController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Lấy dữ liệu từ form
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $name            = $_POST['name'];
+            $email           = $_POST['email'];
+            $password        = $_POST['password'];
             $confirmPassword = $_POST['confirm_password'];
-            $phoneNumber = $_POST['phoneNumber'];
-            $address = $_POST['address'];
-            $roleID = $_POST['roleID'];
-            $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $phoneNumber     = $_POST['phoneNumber'];
+            $address         = $_POST['address'];
+            $roleID          = isset($_POST['roleID']) ? $_POST['roleID'] : '2';
+            $image           = isset($_FILES['image']) ? $_FILES['image'] : null;
 
             // Kiểm tra lỗi
             $errors = [];
@@ -60,13 +60,6 @@ class RegisterController
                 $errors['address'] = 'Địa chỉ không được để trống.';
             }
 
-            // Kiểm tra vai trò
-            if (empty($roleID)) {
-                $errors['roleID'] = 'Vai trò không được để trống.';
-            } elseif ($roleID != '1' && $roleID != '2') {
-                $errors['roleID'] = 'Vai trò không hợp lệ.';
-            }
-
             // Xử lý upload ảnh
             $imagePath = null;
             if ($image && $image['error'] == 0) {
@@ -94,9 +87,9 @@ class RegisterController
 
             // Gọi model để đăng ký người dùng
             require_once __DIR__ . '/../models/users/user.php';
-            $modelUser = new User();
+            $userModel = new User();
 
-            $isUserAdded = $modelUser->postData($name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
+            $isUserAdded = $userModel->postData($name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
 
             if ($isUserAdded) {
                 // Nếu đăng ký thành công, lưu thông báo thành công vào SESSION
