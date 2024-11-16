@@ -1,18 +1,39 @@
 <?php
-class RegisterController
+
+class UserController
 {
-    // Hiển thị form đăng ký
-    public function registerForm()
+    private $userModel;
+
+    // Khởi tạo model User
+    public function __construct()
     {
-        require_once '../client-page/views/header.php';
-        require_once '../client-page/register_form.php';
-        require_once '../client-page/views/footer.php';
+        $this->userModel = new User(); // Khởi tạo đối tượng User
     }
-    // Xử lý đăng ký
-    public function handleRegister()
+
+    // Hàm xử lý việc hiển thị danh sách người dùng
+    public function index()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Lấy dữ liệu từ form
+        // Lấy danh sách người dùng từ model
+        $listUsers = $this->userModel->getAll();
+
+        // Hiển thị danh sách người dùng lên trang web
+        require_once '../admin-page/views/header.php';
+        require_once '../admin-page/views/user/userList.php';
+        require_once '../admin-page/views/footer.php';
+    }
+    public function edit()
+    {
+        $id = $_GET['id'];
+        //lấy ra thông tin chi tiết của ng dùng theo id
+        $userDetail = $this->userModel->getDetail($id);
+        require_once '../admin-page/views/header.php';
+        require_once '../admin-page/views/user/editUser.php';
+        require_once '../admin-page/views/footer.php';
+    }
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $id = $_POST['id'];
             $name = $_POST['name'];
             $email = $_POST['email'];
             $password = $_POST['password'];
@@ -22,7 +43,7 @@ class RegisterController
             $roleID = $_POST['roleID'];
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
 
-            // Kiểm tra lỗi
+            $userDetail = $this->userModel->getDetail($id);
             $errors = [];
             if (empty($name)) {
                 $errors['name'] = 'Họ tên không được để trống.';
@@ -68,8 +89,7 @@ class RegisterController
             }
 
             // Xử lý upload ảnh
-            $imagePath = null;
-            if ($image && $image['error'] == 0) {
+            if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
                 $uploadDir = '../admin-page/img/user/';
                 // Lấy phần mở rộng của file ảnh
                 $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
@@ -77,38 +97,44 @@ class RegisterController
                 $fileName = uniqid('user_', true) . '.' . $fileExtension;
                 $imagePath = $uploadDir . $fileName;
 
-                // Di chuyển file đến thư mục
-                if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
-                    $errors['image'] = 'Không thể upload ảnh.';
-                    $_SESSION['error'] = $errors;
-                    header("Location: ?act=register");
-                    exit();
+                if (move_uploaded_file($image['tmp_name'], $imagePath)) {
+                    // nếu tạo img thành công thì phải xoá ảnh cũ
+                    if ($userDetail['image'] && file_exists($userDetail['image'])) {
+                        unlink($userDetail['image']);
+                    }
                 }
+            } else {
+                $imagePath = $userDetail['image'];
             }
-            // Kiểm tra nếu có lỗi
-            if (!empty($errors)) {
-                $_SESSION['error'] = $errors;
-                header("Location: ?act=register");
-                exit();
-            }
-
-            // Gọi model để đăng ký người dùng
-            require_once __DIR__ . '/../models/users/user.php';
-            $modelUser = new User();
-
-            $isUserAdded = $modelUser->postData($name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
-
-            if ($isUserAdded) {
-                // Nếu đăng ký thành công, lưu thông báo thành công vào SESSION
-                $_SESSION['success'] = 'Đăng ký thành công! Vui lòng đăng nhập.';
-                header("Location: ?act=login");
+            if (empty($error)) {
+                $this->userModel->updateData($id, $name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
+                unset($_SESSION['error']);
+                header("Location: ?act=list-user");
                 exit();
             } else {
-                // Thông báo đăng ký thất bại
-                $_SESSION['error']['general'] = 'Đăng ký không thành công. Vui lòng thử lại.';
-                header("Location: ?act=register");
+                $_SESSION['error'] = $error;
+                header("Location: ?act=edit-user&id=$id");
+                exit();
+            }
+        }
+    }
+    public function destroy()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['id'];
+            // lấy ra thông tin của ng xoá
+            $userDetail = $this->userModel->getDetail($id);
+            // Xoá ng dung
+            $deleteUser = $this->userModel->deleteData($id);
+            if ($deleteUser) {
+                // Nếu xoá thành công thì sẽ xoá
+                if ($userDetail['image'] && file_exists($userDetail['image'])) {
+                    unlink($userDetail['image']);
+                }
+                header("Location: ?act=list-user");
                 exit();
             }
         }
     }
 }
+?>

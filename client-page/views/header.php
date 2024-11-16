@@ -1,3 +1,9 @@
+<?php if (!empty($_SESSION['success'])): ?>
+  <div class="alert alert-success">
+    <?= $_SESSION['success']; ?>
+  </div>
+  <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,8 +47,31 @@
           </form>
         </div>
         <a href="?act=cartshop" class="fa fa-shopping-cart"></a>
-        <a href="?act=login" class="fa fa-user"></a>
+        <?php if (isset($_SESSION['user'])): ?>
+          <!-- Dropdown User Settings -->
+          <div class="dropdown">
+            <!-- Icon người dùng, có thể click để mở dropdown -->
+            <a href="javascript:void(0);" class="fa fa-user dropdown-toggle" id="user-icon" data-bs-toggle="dropdown" aria-expanded="false"></a>
+
+            <!-- Menu dropdown (ẩn/show khi click vào icon) -->
+            <ul class="dropdown-menu" aria-labelledby="user-icon">
+              <li><span class="dropdown-item">Xin chào, <?= $_SESSION['user']['name']; ?></span></li>
+              <?php if ($_SESSION['user']['roleID'] == 1): ?>
+                <li><a href="/du_an_1/admin-page/" class="dropdown-item">Admin</a></li>
+              <?php endif; ?>
+              <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
+              <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
+              
+              <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
+            </ul>
+          </div>
+        <?php else: ?>
+          <a href="?act=login" class="fa fa-user"></a>
+        <?php endif; ?>
+
         <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
     </div>
   </header>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>

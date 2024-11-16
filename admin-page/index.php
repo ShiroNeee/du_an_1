@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+// Kiểm tra quyền truy cập admin
+require_once './checkAdmin.php'; // Đảm bảo rằng hàm kiểm tra quyền admin có sẵn
+if (!checkAdminAccess()) {
+    exit(); // Dừng lại ngay nếu không phải admin, không cần thực hiện thêm mã phía dưới
+}
+
 // Đây là file chạy chính, 
 // là nơi ta require tất cả các file mà hệ thống sử dụng
 require_once '../common/env.php'; // Khai báo các biến môi trường
@@ -17,11 +24,13 @@ require_once '../controllers/product/EditProductController.php';
 require_once '../controllers/product/DetailProductController.php';
 // category
 require_once '../controllers/category/CategoryController.php';
+//user
+require_once '../controllers/user/UserController.php';
 // mesage
 require_once '../controllers/MessageShopController.php';
-
 // Phải require các file model mà controller sử dụng
 require_once '../models/category.php';
+require_once '../models/users/user.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -36,5 +45,7 @@ require_once '../routes/category/category.php';
 
 // mesage
 require_once '../routes/messageshop.php';
+// user
+require_once '../routes/user/user.php';
 // Xử lí router
 $router->dispatch($act);

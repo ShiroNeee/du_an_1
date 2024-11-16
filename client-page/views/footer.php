@@ -35,7 +35,7 @@
     </div>
 
 </footer>
-<script src="../client-page/public/script.js"></script>
+
 </body>
 
 </html>
