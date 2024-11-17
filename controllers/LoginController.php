@@ -20,6 +20,8 @@ class LoginController
             $errors = [];
             if (empty($email)) {
                 $errors['email'] = 'Email không được để trống.';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email không hợp lệ.';
             }
             if (empty($password)) {
                 $errors['password'] = 'Mật khẩu không được để trống.';
@@ -28,12 +30,11 @@ class LoginController
             }
 
             // Nếu có lỗi, lưu lại lỗi vào session và quay lại trang đăng nhập
-            if (!empty($errors)) {
+            if (!empty($errors)) { 
                 $_SESSION['error'] = $errors;
                 header("Location: ?act=login");
                 exit();
             }
-
             // Kiểm tra thông tin người dùng (giả sử bạn có một hàm kiểm tra đăng nhập trong model)
             require_once __DIR__ . '/../models/users/user.php';
             $userModel = new User();

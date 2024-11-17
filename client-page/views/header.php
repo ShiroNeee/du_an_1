@@ -1,9 +1,3 @@
-<?php if (!empty($_SESSION['success'])): ?>
-  <div class="alert alert-success">
-    <?= $_SESSION['success']; ?>
-  </div>
-  <?php unset($_SESSION['success']); ?>
-<?php endif; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,33 +10,58 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <body>
-  <header class="top-header">
-    <div class="container">
+  <?php if (!empty($_SESSION['success']) || !empty($_SESSION['error'])): ?>
+    <div class="alert <?= !empty($_SESSION['success']) ? 'alert-success' : 'alert-danger'; ?> d-flex flex-column align-items-start p-3 position-fixed top-0 end-0 m-3" role="alert">
+      <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+      <small>
+        <?php if (!empty($_SESSION['success'])): ?>
+          <?= $_SESSION['success']; ?>
+          <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_SESSION['error'])): ?>
+          <?php
+          foreach ($_SESSION['error'] as $key => $error) {
+            if (!empty($error)) {
+              echo htmlspecialchars($error) . '<br>';
+            }
+          }
+          unset($_SESSION['error']);
+          ?>
+        <?php endif; ?>
+      </small>
+    </div>
+  <?php endif; ?>
+
+  <header class="top-header bg-white py-3 border-bottom">
+    <div class="container d-flex justify-content-between align-items-center">
+      <!-- Logo -->
       <div class="logo">
-        <a href="../client-page"><img src="../client-page/images/logo.png" /></a>
+        <a href="../client-page">
+          <img src="../client-page/images/logo.png" alt="Logo" class="img-fluid" style="height: 50px;">
+        </a>
       </div>
+
       <nav class="navbar">
-        <ul class="nav-links">
-          <li><a href="?act=danhmucspmoi">Sản Phẩm Mới</a></li>
-          <li><a href="?act=danhmucnu">Nữ</a></li>
-          <li><a href="?act=danhmucnam">Nam</a></li>
-          <li><a href="?act=danhmuctreem">Trẻ Em</a></li>
+        <ul class="nav">
+          <li class="nav-item"><a href="?act=danhmucspmoi" class="nav-link">Sản Phẩm Mới</a></li>
+          <li class="nav-item"><a href="?act=danhmucnu" class="nav-link">Nữ</a></li>
+          <li class="nav-item"><a href="?act=danhmucnam" class="nav-link">Nam</a></li>
+          <li class="nav-item"><a href="?act=danhmuctreem" class="nav-link">Trẻ Em</a></li>
         </ul>
       </nav>
-      <div class="header-icons">
+      <!-- Header Icons -->
+      <div class="header-icons d-flex align-items-center gap-3">
+        <!-- Search Form -->
         <div class="search-container">
-          <form class="d-flex " role="search" method="POST" action="?act=search">
-            <input
-              type="text"
-              class="search-bar"
-              placeholder="Tìm kiếm"
-              id="search-input"
-              required />
+          <form class="d-flex" role="search" method="POST" action="?act=search">
+            <input type="text" class="form-control" placeholder="Tìm kiếm" id="search-input" required />
             <button class="btn btn-link" name="search" type="submit">
-              <a class="fa fa-search"></a>
+              <i class="fa fa-search"></i>
             </button>
           </form>
         </div>
@@ -61,7 +80,7 @@
               <?php endif; ?>
               <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
               <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
-              
+
               <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
             </ul>
           </div>
@@ -71,6 +90,7 @@
 
         <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
+    </div>
     </div>
   </header>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
