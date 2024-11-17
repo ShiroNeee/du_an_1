@@ -32,7 +32,7 @@
                             <a href="?act=edit-user&id=<?= $user['id']; ?>">
                                 <button class="btn btn-primary">Sửa</button>
                             </a>
-                            <form action="?act=delete" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                            <form action="?act=delete-user" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
                                 <input type="hidden" name="id" value="<?= $user['id']; ?>">
                                 <button type="submit" class="btn btn-danger">Xóa</button>
                             </form>
