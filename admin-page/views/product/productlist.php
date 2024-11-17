@@ -8,26 +8,26 @@
                 <tr>
                     <th>ID</th>
                     <th>Ảnh</th>
-                    <th>Tên sản phẩm</th>  
+                    <th>Tên sản phẩm</th>
                     <th>Giá</th>
                     <th>Danh mục</th>
                     <th>Mô tả sản phẩm</th>
-                    <th>Trang thai</th>
+                    <th>Trang thái</th>
                     <th>Tính năng</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($listProducts as $index => $product) : ?>
                     <tr>
-                        <td><?= $index + 1; ?></td>
+                        <td style="font-size:20px"><?= $index + 1; ?></td>
                         <td>
                             <img src="<?= $product['image']; ?>" width="80px">
                         </td>
-                        <td><?= $product['ProductName']; ?></td>
-                        <td><?= $product['Price']; ?></td>
-                        <td><?= $product['CategoryID'] == 1 ? 'Nam' : ($product['CategoryID'] == 2 ? 'Nữ' : 'Phụ kiện'); ?></td>
+                        <td style="font-size:15px"><?= $product['ProductName']; ?></td>
+                        <td style="color:red"><?= $product['Price']; ?> đ</td>
+                        <td style="background-color: aqua;" ><?= $product['CategoryID'] == 1 ? 'Nam' : ($product['CategoryID'] == 2 ? 'Nữ' : 'Phụ kiện'); ?></td>
                         <td><?= $product['Description']; ?></td>
-                        <td><?= $product['status'] == 0 ? 'Còn hàng' : 'Hết hàng'; ?></td>
+                        <td style="color:blue"><?= $product['status'] == 0 ? 'Còn hàng' : 'Hết hàng'; ?></td>
                         <td>
                             <a href="?act=edit-product&id=<?= $product['id']; ?>">
                                 <button class="edit">Sửa</button>
