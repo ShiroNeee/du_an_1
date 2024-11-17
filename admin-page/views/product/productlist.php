@@ -6,14 +6,14 @@
         <table style="text-align: left;">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>ID</th>
                     <th>Ảnh</th>
                     <th>Tên sản phẩm</th>  
                     <th>Giá</th>
                     <th>Danh mục</th>
                     <th>Mô tả sản phẩm</th>
                     <th>Trang thai</th>
-                    <th></th>
+                    <th>Tính năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,11 +30,11 @@
                         <td><?= $product['status'] == 0 ? 'Còn hàng' : 'Hết hàng'; ?></td>
                         <td>
                             <a href="?act=edit-product&id=<?= $product['id']; ?>">
-                                <button class="btn btn-primary">Sửa</button>
+                                <button class="edit">Sửa</button>
                             </a>
                             <form action="?act=delete-product" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sp?')">
                                 <input type="hidden" name="id" value="<?= $product['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Xóa</button>
+                                <button type="submit" class="delete">Xóa</button>
                             </form>
                         </td>
                     </tr>

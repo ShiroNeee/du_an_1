@@ -22,7 +22,7 @@ class Product
         }
     }
 
-    // Thêm sản phẩm
+    // Thêm sản phẩm 
     public function postData($ProductName, $Description, $Price, $CategoryID, $image)
     {
         try {
