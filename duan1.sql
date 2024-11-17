@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 16, 2024 at 06:32 AM
+-- Generation Time: Nov 17, 2024 at 04:28 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -37,8 +37,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `categoryName`) VALUES
-(2, 'heheha'),
-(3, 'abcd');
+(1, 'Nam'),
+(2, 'Nữ'),
+(3, 'Phụ kiện'),
+(48, 'abc');
 
 -- --------------------------------------------------------
 
@@ -75,13 +77,21 @@ CREATE TABLE `orders` (
 --
 
 CREATE TABLE `products` (
-  `ProductID` int NOT NULL,
+  `id` int NOT NULL,
   `ProductName` varchar(100) NOT NULL,
-  `Description` text,
-  `Price` decimal(10,2) NOT NULL,
-  `CategoryID` int DEFAULT NULL,
-  `ImageURL` varchar(255) DEFAULT NULL
+  `Description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `Price` int NOT NULL,
+  `CategoryID` int NOT NULL,
+  `status` int NOT NULL,
+  `image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `ProductName`, `Description`, `Price`, `CategoryID`, `status`, `image`) VALUES
+(1, 'abc', 'mô tả', 100, 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -120,6 +130,25 @@ INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `status`
+--
+
+CREATE TABLE `status` (
+  `id` int NOT NULL,
+  `status` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `status`
+--
+
+INSERT INTO `status` (`id`, `status`) VALUES
+(0, 'Hết hàng'),
+(1, 'Còn hàng');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -139,7 +168,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phoneNumber`, `address`, `roleID`, `image`) VALUES
-(18, 'Giap', 'giapnvph34346@fpt.edu.vn', '$2y$10$U53Q0qrmAq4GV1eKH/Ji6OZKE1p6uWqou4hI0NS8w.bkG8x1VGcpm', '0332070403', 'Hà Nội', 1, '../admin-page/img/user/user_673801a1c27aa5.71493870.jpg'),
+(18, 'Giap', 'giapnvph34346@fpt.edu.vn', '$2y$10$U53Q0qrmAq4GV1eKH/Ji6OZKE1p6uWqou4hI0NS8w.bkG8x1VGcpm', '0332070403', 'Hà Nội', 1, '../admin-page/img/user/user_67396610c61ce2.72238393.jpg'),
 (24, 'shiro', 'shiro@gmail.com', '$2y$10$JkohaO8SY6q5Q2OGIPVp2.YkelkeGvEK9gwFAKyFY/uKwQOi5tx4C', '0344192381', 'Hà Nội', 2, '../admin-page/img/user/user_6738380cedd630.67905386.jpg');
 
 --
@@ -171,8 +200,9 @@ ALTER TABLE `orders`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`ProductID`),
-  ADD KEY `CategoryID` (`CategoryID`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `CategoryID` (`CategoryID`),
+  ADD KEY `status` (`status`) USING BTREE;
 
 --
 -- Indexes for table `reviews`
@@ -190,12 +220,18 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `RoleName` (`RoleName`);
 
 --
+-- Indexes for table `status`
+--
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Email` (`email`),
-  ADD KEY `RoleID` (`roleID`);
+  ADD KEY `role` (`roleID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -205,7 +241,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
@@ -223,7 +259,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `ProductID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -238,10 +274,16 @@ ALTER TABLE `roles`
   MODIFY `RoleID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `status`
+--
+ALTER TABLE `status`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- Constraints for dumped tables
@@ -252,7 +294,7 @@ ALTER TABLE `users`
 --
 ALTER TABLE `orderdetails`
   ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`),
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`);
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`);
 
 --
 -- Constraints for table `orders`
@@ -264,20 +306,21 @@ ALTER TABLE `orders`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
+  ADD CONSTRAINT `fk_status_product_status` FOREIGN KEY (`status`) REFERENCES `status` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`id`);
 
 --
 -- Constraints for table `reviews`
 --
 ALTER TABLE `reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`RoleID`);
+  ADD CONSTRAINT `role` FOREIGN KEY (`roleID`) REFERENCES `roles` (`RoleID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
