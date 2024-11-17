@@ -11,8 +11,13 @@
             <label for="phoneNumber">Số Điện Thoại</label>
             <input type="text" name="phoneNumber" class="box" value="<?= $userDetail['phoneNumber'] ?>" placeholder="Nhập sđt">
 
-            <label for="password">Mật khẩu</label>
-            <input type="text" name="password" class="box" value="<?= $userDetail['password'] ?>" placeholder="Nhập pass">
+             <!-- Không hiển thị mật khẩu đã mã hóa -->
+             <label for="password">Mật khẩu</label>
+            <input type="password" name="password" class="box" placeholder="Nhập mật khẩu">
+
+            <label for="confirm_password">Xác nhận mật khẩu mới</label>
+            <input type="password" name="confirm_password" class="box" placeholder="Nhập lại mật khẩu mới">
+
             <label for="address">Địa Chỉ</label>
             <input type="text" name="address" class="box" value="<?= $userDetail['address'] ?>" placeholder="Nhập địa chỉ">
 

@@ -112,5 +112,3 @@
     </div>
   </section>
 </main>
-
-<script src="../client-page/public/script.js"></script>

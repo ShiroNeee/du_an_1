@@ -4,6 +4,10 @@ class LoginController
     // Hiển thị form đăng nhập
     public function showLoginForm()
     {
+        if (isset($_SESSION['user']) && $_SESSION['user']['id']) {
+            header('Location: ?act=profile');
+            exit();
+        }
         require_once '../client-page/views/header.php';
         require_once '../client-page/login_form.php';
         require_once '../client-page/views/footer.php';
@@ -25,8 +29,8 @@ class LoginController
             }
             if (empty($password)) {
                 $errors['password'] = 'Mật khẩu không được để trống.';
-            } elseif (strlen($password) < 8) {
-                $errors['password'] = 'Mật khẩu phải có ít nhất 8 ký tự.';
+            } elseif (strlen($password) < 3) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 3 ký tự.';
             }
 
             // Nếu có lỗi, lưu lại lỗi vào session và quay lại trang đăng nhập

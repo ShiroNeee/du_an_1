@@ -26,12 +26,20 @@ class User
     public function login($email, $password)
     {
         try {
-            $sql = "SELECT * FROM users WHERE email = :email AND password = :password";
+            // Truy vấn để lấy thông tin người dùng dựa trên email
+            $sql = "SELECT * FROM users WHERE email = :email";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $password);
             $stmt->execute();
-            return $stmt->fetch();
+
+            $user = $stmt->fetch();
+
+            // Kiểm tra mật khẩu sử dụng password_verify
+            if ($user && password_verify($password, $user['password'])) {
+                return $user;
+            }
+
+            return false;
         } catch (PDOException $e) {
             echo 'Lỗi: ' . $e->getMessage();
             return false;
@@ -60,7 +68,7 @@ class User
             return false;
         }
     }
-    
+
     // Thêm dữ liệu
     public function postData($name, $email, $password, $phoneNumber, $address, $roleID, $image)
     {

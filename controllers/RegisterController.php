@@ -4,6 +4,10 @@ class RegisterController
     // Hiển thị form đăng ký
     public function registerForm()
     {
+        if (isset($_SESSION['user']) && $_SESSION['user']['id']) {
+            header('Location: ?act=profile');
+            exit();
+        }
         require_once '../client-page/views/header.php';
         require_once '../client-page/register_form.php';
         require_once '../client-page/views/footer.php';
@@ -37,8 +41,8 @@ class RegisterController
             // Kiểm tra mật khẩu
             if (empty($password)) {
                 $errors['password'] = 'Mật khẩu không được để trống.';
-            } elseif (strlen($password) < 8) {
-                $errors['password'] = 'Mật khẩu phải có ít nhất 8 ký tự.';
+            } elseif (strlen($password) < 3) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 3 ký tự.';
             }
 
             // Kiểm tra xác nhận mật khẩu

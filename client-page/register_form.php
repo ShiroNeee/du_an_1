@@ -1,4 +1,4 @@
-<main class="d-flex align-items-center justify-content-center mb-5 mt-5" style="height: 100vh;">
+<main class="d-flex justify-content-center align-items-center my-5">
     <div class="col-md-4">
         <h3 class="text-center mb-3">Đăng Ký</h3>
 
