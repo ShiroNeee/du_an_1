@@ -77,10 +77,24 @@ class Product
         }
     }
 
-    public function showProductHome($limit = 5)
+//     public function showProductHome($limit = 10)
+// {
+//     try {
+//         // Câu lệnh SQL lấy sản phẩm mới nhất, sắp xếp theo id giảm dần (id lớn nhất là mới nhất).
+//         $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit";
+//         $stmt = $this->conn->prepare($sql);
+//         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+//         $stmt->execute();
+//         return $stmt->fetchAll();
+//     } catch (PDOException $e) {
+//         echo 'Lỗi: ' . $e->getMessage();
+//         return false;
+//     }
+// }
+public function showProductHome($limit = 10)
 {
     try {
-        // Câu lệnh SQL lấy sản phẩm mới nhất, sắp xếp theo id giảm dần (id lớn nhất là mới nhất).
+        // Câu lệnh SQL lấy sản phẩm mới nhất, sắp xếp theo id giảm dần và giới hạn 10 sản phẩm
         $sql = "SELECT * FROM products ORDER BY id DESC LIMIT :limit";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
