@@ -25,6 +25,8 @@ require_once '../controllers/navbar/DanhMucNamController.php';
 require_once '../controllers/navbar/DanhMucNuController.php';
 // 
 require_once '../models/users/user.php';
+//
+require_once '../controllers/PageController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
