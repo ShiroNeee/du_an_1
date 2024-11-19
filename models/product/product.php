@@ -70,7 +70,8 @@ class Product
             return false;
         }
     }
-    // Hủy kết nối 
+
+    // Hủy kết nối
     public function __destruct()
     {
         $this->conn = null;
