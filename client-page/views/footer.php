@@ -1,4 +1,4 @@
-<footer class="container mt-5 border-top pt-4">
+<footer class="container mt-5 border-top border-secondary pt-4 bg-light text-dark" >
   <div class="row">
     <div class="col-md-3">
       <h4>CÔNG TY CỔ PHẦN UNIQUE STYLE</h4>
