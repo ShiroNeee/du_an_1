@@ -42,7 +42,6 @@ class Product
             return false;
         }
     }
-
     // Lấy thông tin chi tiết sản phẩm
     public function getDetail($id)
     {
@@ -71,8 +70,7 @@ class Product
             return false;
         }
     }
-
-    // Hủy kết nối
+    // Hủy kết nối 
     public function __destruct()
     {
         $this->conn = null;
@@ -124,7 +122,6 @@ class Product
             $stmt->bindParam(':CategoryID', $CategoryID);
             $stmt->bindParam(':status', $status);
             $stmt->bindParam(':image', $image);
-
             // Thực thi câu truy vấn
             $stmt->execute();
             return true;

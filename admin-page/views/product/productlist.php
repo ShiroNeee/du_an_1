@@ -2,6 +2,12 @@
 <div class="table--wrapper">
     <h3 class="title">Danh sách sản phẩm (product)</h3>
     <a href="?act=add-product"><button class="add">Thêm sản phẩm</button></a>
+    <?php if (!empty($_SESSION['success'])): ?>
+			<div class="alert alert-success" style="background-color:#d4edda;border:0.5px solid #ddd;border-radius:6px;color:#155724;border-color: #c3e6cb; margin-bottom:5px;font-family: Arial, sans-serif;">
+				<?= $_SESSION['success']; ?>
+			</div>
+			<?php unset($_SESSION['success']); ?>
+		<?php endif; ?>
     <div class="table-container">
         <table style="text-align: left;">
             <thead>

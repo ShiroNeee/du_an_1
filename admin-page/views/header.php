@@ -15,12 +15,6 @@
 			<i class='bx bxs-user'></i>
 			<span class="text">Admin Unique Style</span>
 		</a>
-		<?php if (!empty($_SESSION['success'])): ?>
-			<div class="alert alert-success">
-				<?= $_SESSION['success']; ?>
-			</div>
-			<?php unset($_SESSION['success']); ?>
-		<?php endif; ?>
 		<ul class="side-menu top">
 			<li class="active">
 				<a href="../admin-page">

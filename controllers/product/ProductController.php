@@ -25,14 +25,15 @@ class ProductController
         require_once '../admin-page/views/product/productadd.php'; // main
         require_once '../admin-page/views/footer.php';
     }
+    // tạo 
     public function create()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $ProductName = $_POST['ProductName'] ?? null;
-            $Description = $_POST['Description'] ?? null;
-            $Price = $_POST['Price'] ?? null;
-            $CategoryID = $_POST['CategoryID'] ?? null;
-            $status = $_POST['status'] ?? null;
+            $ProductName = $_POST['ProductName'];
+            $Description = $_POST['Description'];
+            $Price = $_POST['Price'];
+            $CategoryID = $_POST['CategoryID'];
+            $status = $_POST['status'];
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
         
             $errors = [];
@@ -40,27 +41,37 @@ class ProductController
             $validStatuses = [1, 2];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
+            }elseif (strlen($ProductName) <= 6) {
+                $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 6 kí tự trở lên';
             }
             if (empty($Description)) {
-                $errors['Description'] = 'Description không được để trống.';
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
+            } elseif (strlen($Description) <= 10) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
             if (empty($Price)) {
-                $errors['Price'] = 'Giá sản phẩm không được để trống.';
+                $errors['Price'] = 'Giá thành sản phẩm không được để trống.';
+            } elseif (!is_numeric($Price) || $Price <= 0) {
+                $errors['Price'] = 'Giá thành sản phẩm không được âm (dưới 0)';
             }
             if (!in_array($CategoryID, $validCategories)) {
-                $errors['CategoryID'] = 'Danh mục không hợp lệ.';
+                $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
             if (!in_array($status, $validStatuses)) {
-                $errors['status'] = 'Trạng thái sản phẩm không hợp lệ.';
+                $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
             }
             // Xử lý upload ảnh
-            if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../admin-page/img/user/';
-                // Lấy phần mở rộng của file ảnh
-                $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
-                // Tạo tên file duy nhất dựa trên uniqid và phần mở rộng
-                $fileName = uniqid('user_', true) . '.' . $fileExtension;
-                $imagePath = $uploadDir . $fileName;
+            if (!empty($image) && $image['error'] === UPLOAD_ERR_OK) {
+                $allowedExtensions = ['jpg','jpeg','png'];
+                $uploadDir = '../admin-page/img/product/';
+                $fileExtension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+                if (!in_array($fileExtension, $allowedExtensions)) {
+                    $errors['image'] = 'Các tệp có thể upload - jpg, jpeg, png';
+                } else {
+                    $fileName = uniqid('product_', true) . '.' . $fileExtension;
+                    $imagePath = $uploadDir . $fileName;
+                    move_uploaded_file($image['tmp_name'], $imagePath);
+                }
             }
             if (empty($errors)) {
                 $this->modelProduct->addData($ProductName,$Description,$Price,$CategoryID,$status,$imagePath);
@@ -75,7 +86,7 @@ class ProductController
             }
         }
     }
-    // sửa sản phẩm
+    // ấn để sửa
     public function edit()
     {
         $id = $_GET['id'];
@@ -85,57 +96,65 @@ class ProductController
         require_once '../admin-page/views/product/productedit.php';
         require_once '../admin-page/views/footer.php';
     }
+    // sửa
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST['id'];
-            $ProductName = $_POST['ProductName'] ?? null;
-            $Description = $_POST['Description'] ?? null;
-            $Price = $_POST['Price'] ?? null;
-            $CategoryID = $_POST['CategoryID'] ?? null;
-            $status = $_POST['status'] ?? null;
+            $ProductName = $_POST['ProductName'];
+            $Description = $_POST['Description'];
+            $Price = $_POST['Price'];
+            $CategoryID = $_POST['CategoryID'];
+            $status = $_POST['status'];
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
-        
-            $productDetail = $this->modelProduct->getDetail($id);
             $errors = [];
+
             $validCategories = [1, 2, 3]; //id danh mục hợp lệ
             $validStatuses = [1, 2];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
+            }elseif (strlen($ProductName) <= 6) {
+                $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 6 kí tự trở lên';
             }
             if (empty($Description)) {
-                $errors['Description'] = 'Description không được để trống.';
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
+            } elseif (strlen($Description) <= 10) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
             if (empty($Price)) {
-                $errors['Price'] = 'Giá sản phẩm không được để trống.';
+                $errors['Price'] = 'Giá thành sản phẩm không được để trống.';
+            } elseif (!is_numeric($Price) || $Price <= 0) {
+                $errors['Price'] = 'Giá thành sản phẩm không được âm (dưới 0)';
             }
             if (!in_array($CategoryID, $validCategories)) {
-                $errors['CategoryID'] = 'Danh mục không hợp lệ.';
+                $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
             if (!in_array($status, $validStatuses)) {
-                $errors['status'] = 'Trạng thái không hợp lệ.';
+                $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
             }
+            $productDetail = $this->modelProduct->getDetail($id);
+            $imagePath = $productDetail['image']; 
             // Xử lý upload ảnh
             if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../admin-page/img/user/';
-                // Lấy phần mở rộng của file ảnh
+                $uploadDir = '../admin-page/img/product/';
                 $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
-                // Tạo tên file duy nhất dựa trên uniqid và phần mở rộng
-                $fileName = uniqid('user_', true) . '.' . $fileExtension;
+                $fileName = uniqid('product_', true) . '.' . $fileExtension;
                 $imagePath = $uploadDir . $fileName;
-
+            
                 if (move_uploaded_file($image['tmp_name'], $imagePath)) {
-                    // nếu tạo img thành công thì phải xoá ảnh cũ
+                    // Xóa ảnh cũ nếu ảnh mới được tải lên thành công
                     if ($productDetail['image'] && file_exists($productDetail['image'])) {
                         unlink($productDetail['image']);
                     }
+                } else {
+                    $errors['image'] = 'Không thể tải lên ảnh. Vui lòng thử lại.';
+                    error_log("File upload failed: " . $image['tmp_name']);
                 }
             } else {
-                $imagePath = $productDetail['image'];
+                $imagePath = $productDetail['image']; // Giữ ảnh cũ nếu không có ảnh mới
             }
             if (empty($errors)) {
                 $this->modelProduct->updateData($id, $ProductName, $Description, $Price, $CategoryID,$status,$imagePath);
-                unset($_SESSION['error']);
                 $_SESSION['success'] = 'Sản phẩm đã được cập nhật thành công.';
                 header("Location: ?act=list-product");
                 exit();
