@@ -26,7 +26,7 @@
                         <td><?= $user['email']; ?></td>
                         <td><?= $user['phoneNumber']; ?></td>
                         <td><?= $user['address']; ?></td>
-                        <td><?= $user['roleID']== 1 ? 'Admin' : 'Người dùng';?></td>
+                        <td><?= $user['RoleName'];?></td>
 
                         <td>
                             <a href="?act=edit-user&id=<?= $user['id']; ?>">

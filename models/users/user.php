@@ -12,8 +12,9 @@ class User
     public function getAll()
     {
         try {
-            $sql = "SELECT * FROM users";
-
+            $sql = "SELECT u.*, r.RoleName
+                    FROM users u
+                    LEFT JOIN roles r ON u.RoleID = r.RoleID";
             $stmt = $this->conn->prepare($sql);
 
             $stmt->execute();

@@ -23,8 +23,8 @@
 
             <label for="roleID">Role</label>
             <select name="roleID" class="box">
-                <option value="1" <?= $userDetail['roleID'] == '1' ? 'selected' : '' ?>>Quản trị viên</option>
-                <option value="2" <?= $userDetail['roleID'] == '2' ? 'selected' : '' ?>>Người dùng</option>
+                <option value="1" <?= $userDetail['roleID'] == '1' ? 'selected' : '' ?>>Admin</option>
+                <option value="2" <?= $userDetail['roleID'] == '2' ? 'selected' : '' ?>>User</option>
             </select>
 
             <label for="image">Hình Ảnh</label>
