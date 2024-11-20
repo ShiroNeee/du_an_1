@@ -135,26 +135,45 @@ class ProductController
             $productDetail = $this->modelProduct->getDetail($id);
             $imagePath = $productDetail['image']; 
             // Xử lý upload ảnh
-            if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = '../admin-page/img/product/';
-                $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
-                $fileName = uniqid('product_', true) . '.' . $fileExtension;
-                $imagePath = $uploadDir . $fileName;
+            // if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
+            //     $uploadDir = '../admin-page/img/user/';
+            //     $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
+            //     $fileName = uniqid('user_', true) . '.' . $fileExtension;
+            //     $imagePath = $uploadDir . $fileName;
             
+            //     if (move_uploaded_file($image['tmp_name'], $imagePath)) {
+            //         // Xóa ảnh cũ nếu ảnh mới được tải lên thành công
+            //         if ($productDetail['image'] && file_exists($productDetail['image'])) {
+            //             unlink($productDetail['image']);
+            //         }
+            //     } else {
+            //         $errors['image'] = 'Không thể tải lên ảnh. Vui lòng thử lại.';
+            //         error_log("File upload failed: " . $image['tmp_name']);
+            //     }
+            // } else {
+            //     $imagePath = $productDetail['image']; // Giữ ảnh cũ nếu không có ảnh mới
+            // }
+            // sửa up ảnh
+            if (isset($image) && $image['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = '../admin-page/img/user/';
+                // Lấy phần mở rộng của file ảnh
+                $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
+                // Tạo tên file duy nhất dựa trên uniqid và phần mở rộng
+                $fileName = uniqid('user_', true) . '.' . $fileExtension;
+                $imagePath = $uploadDir . $fileName;
+
                 if (move_uploaded_file($image['tmp_name'], $imagePath)) {
-                    // Xóa ảnh cũ nếu ảnh mới được tải lên thành công
+                    // nếu tạo img thành công thì phải xoá ảnh cũ
                     if ($productDetail['image'] && file_exists($productDetail['image'])) {
                         unlink($productDetail['image']);
                     }
-                } else {
-                    $errors['image'] = 'Không thể tải lên ảnh. Vui lòng thử lại.';
-                    error_log("File upload failed: " . $image['tmp_name']);
                 }
             } else {
-                $imagePath = $productDetail['image']; // Giữ ảnh cũ nếu không có ảnh mới
+                $imagePath = $productDetail['image'];
             }
-            if (empty($errors)) {
-                $this->modelProduct->updateData($id, $ProductName, $Description, $Price, $CategoryID,$status,$imagePath);
+
+            if (empty($errors) && $productDetail) {
+                $this->modelProduct->updateDataProduct($id, $ProductName, $Description, $Price, $CategoryID,$status,$imagePath);
                 $_SESSION['success'] = 'Sản phẩm đã được cập nhật thành công.';
                 header("Location: ?act=list-product");
                 exit();

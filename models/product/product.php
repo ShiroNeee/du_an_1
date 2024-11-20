@@ -102,19 +102,18 @@ class Product
         }
     }
     // update data
-    public function updateData($id,$ProductName,$Description,$Price,$CategoryID,$status,$image)
+    public function updateDataProduct($id,$ProductName,$Description,$Price,$CategoryID,$status,$image)
     {
         try {
             $sql = "UPDATE products SET 
                     ProductName = :ProductName,
                     Description = :Description,
-                    Price = :Price,
-                    CategoryID = :CategoryID,
-                    status = :status,
-                    image = :image
-                WHERE id = :id";
+                    Price       = :Price,
+                    CategoryID  = :CategoryID,
+                    status      = :status,
+                    image       = :image
+                WHERE id        = :id";
             $stmt = $this->conn->prepare($sql);
-
             // Gán giá trị cho các tham số
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->bindParam(':ProductName', $ProductName);
