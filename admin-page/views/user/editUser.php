@@ -11,8 +11,8 @@
             <label for="phoneNumber">Số Điện Thoại</label>
             <input type="text" name="phoneNumber" class="box" value="<?= $userDetail['phoneNumber'] ?>" placeholder="Nhập sđt">
 
-             <!-- Không hiển thị mật khẩu đã mã hóa -->
-             <label for="password">Mật khẩu</label>
+            <!-- Không hiển thị mật khẩu đã mã hóa -->
+            <label for="password">Mật khẩu</label>
             <input type="password" name="password" class="box" placeholder="Nhập mật khẩu">
 
             <label for="confirm_password">Xác nhận mật khẩu mới</label>
@@ -21,19 +21,22 @@
             <label for="address">Địa Chỉ</label>
             <input type="text" name="address" class="box" value="<?= $userDetail['address'] ?>" placeholder="Nhập địa chỉ">
 
-            <label for="roleID">Role</label>
+            <label for="">Role</label>
             <select name="roleID" class="box">
-                <option value="1" <?= $userDetail['roleID'] == '1' ? 'selected' : '' ?>>Admin</option>
-                <option value="2" <?= $userDetail['roleID'] == '2' ? 'selected' : '' ?>>User</option>
+                <?php foreach ($roles as $role): ?>
+                    <option value="<?= $role['RoleID'] ?>" <?= $userDetail['roleID'] == $role['RoleID'] ? 'selected' : '' ?>>
+                        <?= $role['RoleName'] ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
 
             <label for="image">Hình Ảnh</label>
             <input type="file" name="image" class="box">
             <br />
             <td>
-            <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px">
+                <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px">
             </td>
-            <br/>
+            <br />
             <a href="?act=list-user">
                 <button type="button" class="add">Danh sách</button>
             </a>

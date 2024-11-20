@@ -102,11 +102,27 @@ class User
     public function getDetail($id)
     {
         try {
-            $sql_detail = "SELECT * FROM users WHERE id = :id";
+            $sql_detail = "SELECT u.*, r.RoleName
+            FROM users u
+            LEFT JOIN roles r ON u.RoleID = r.RoleID
+            WHERE u.id = :id";
             $stmt = $this->conn->prepare($sql_detail);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    public function getAllRoles()
+    {
+        try {
+            // Lấy tất cả vai trò từ bảng roles
+            $sql = "SELECT * FROM roles";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo 'Lỗi: ' . $e->getMessage();
             return false;
