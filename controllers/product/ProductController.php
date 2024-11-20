@@ -177,6 +177,7 @@ class ProductController
                if ($productDetail['hinh_anh'] && file_exists($productDetail['hinh_anh'])) {
                    unlink($productDetail['hinh_anh']);
                }
+               $_SESSION['success']='Xóa sản phẩm thanh công xong';
                header("Location: ?act=list-product");
                exit();
            }
