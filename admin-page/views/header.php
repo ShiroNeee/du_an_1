@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="../admin-page/public/styles.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<title>Admin Dashboard - Unique style</title>
 </head>
 
@@ -16,12 +15,6 @@
 			<i class='bx bxs-user'></i>
 			<span class="text">Admin Unique Style</span>
 		</a>
-		<?php if (!empty($_SESSION['success'])): ?>
-			<div class="alert alert-success">
-				<?= $_SESSION['success']; ?>
-			</div>
-			<?php unset($_SESSION['success']); ?>
-		<?php endif; ?>
 		<ul class="side-menu top">
 			<li class="active">
 				<a href="../admin-page">
