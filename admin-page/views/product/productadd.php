@@ -38,15 +38,15 @@
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" class="box" />
         <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" class="box" />
         <select name="CategoryID" class="box" >
-            <option value="" disabled selected>Chọn danh mục</option>
+            <option value="choose" disabled selected>Chọn danh mục</option>
             <option value="1">Nam</option>
             <option value="2">Nữ</option>
-            <option value="3">Trẻ Em</option>
+            <option value="3">Phụ Kiện</option>
         </select>
         <select name="status" class="box" >
-            <option value="" disabled selected>Chọn trạng thái</option>
-            <option value="1">Còn hàng</option>
-            <option value="2">Hết hàng</option>
+            <option value="choose" disabled selected>Chọn trạng thái</option>
+            <option value="0">Còn hàng</option>
+            <option value="1">Hết hàng</option>
         </select>
         <input type="file" class="box" name="image" />
         <button type="submit" class="add">Thêm sản phẩm</button>

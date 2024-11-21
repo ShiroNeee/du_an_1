@@ -42,12 +42,12 @@
            <option value="" selected>Chọn danh mục</option>
             <option value="1" <?= $productDetail['CategoryID'] == '1' ? 'selected' : '' ?>>Nam</option>
             <option value="2" <?= $productDetail['CategoryID'] == '2' ? 'selected' : '' ?>>Nữ</option>
-            <option value="3" <?= $productDetail['CategoryID'] == '3' ? 'selected' : '' ?>>Trẻ Em</option>
+            <option value="3" <?= $productDetail['CategoryID'] == '3' ? 'selected' : '' ?>>Phụ Kiện</option>
         </select>
         <select name="status" class="box">
             <option value="" selected>Chọn trạng thái</option>
-            <option value="1" <?= $productDetail['status'] == '0' ? 'selected' : '' ?>>Còn Hàng</option>
-            <option value="2" <?= $productDetail['status'] == '1' ? 'selected' : '' ?>>Hết Hàng</option>
+            <option value="0" <?= $productDetail['status'] == '0' ? 'selected' : '' ?>>Còn Hàng</option>
+            <option value="1" <?= $productDetail['status'] == '1' ? 'selected' : '' ?>>Hết Hàng</option>
         </select>
         <input type="file" name="image" class="box" /><br>
         <img src="img/<?= empty($value['image']) || !isset($value['image']) ? 'logo.jpg' : $value['image'] ?>" alt="er img" width="50" height="50" /><br>
