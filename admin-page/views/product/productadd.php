@@ -44,8 +44,8 @@
             <option value="3">Phụ Kiện</option>
         </select>
         <select name="status" class="box" >
-            <option value="choose" disabled selected>Chọn trạng thái</option>
-            <option value="0">Còn hàng</option>
+            <option value="" disabled selected>Chọn trạng thái</option>
+            <option value="0">Còn Hàng</option>
             <option value="1">Hết hàng</option>
         </select>
         <input type="file" class="box" name="image" />

@@ -80,7 +80,7 @@ class Product
     public function addData($ProductName,$Description,$Price,$CategoryID,$status,$image)
     {
         try {
-            $sql = "INSERT INTO products
+            $sql = "INSERT INTO products 
                     (ProductName, Description, Price, CategoryID, status, image)
                     VALUES (:ProductName, :Description, :Price, :CategoryID, :status, :image) ";
             $stmt = $this->conn->prepare($sql);

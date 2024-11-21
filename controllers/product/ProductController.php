@@ -37,40 +37,49 @@ class ProductController
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
 
             $errors = [];
-            $validCategories = [1, 2, 3]; //id danh mục hợp lệ
-            $validStatuses = [0, 1];      //id status hợp lệ  
+            $validCategories = [1,2,3]; //id danh mục hợp lệ
+            $validStatuses = [0,1];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
             } elseif (strlen($ProductName) <= 6) {
                 $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 6 kí tự trở lên';
-            }
-            if (empty($Description)) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
-            } elseif (strlen($Description) <= 10) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
             if (empty($Price)) {
                 $errors['Price'] = 'Giá thành sản phẩm không được để trống.';
             } elseif (!is_numeric($Price) || $Price <= 0) {
                 $errors['Price'] = 'Giá thành sản phẩm không được âm (dưới 0)';
             }
+            if (empty($Description)) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
+            } elseif (strlen($Description) <= 12) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
+            }
             if (!in_array($CategoryID, $validCategories)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (!in_array($status, $validStatuses)) {
-                $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
+            if (empty($status) && $status !== '0') {
+                $errors['status'] = 'Trạng thái của sản phẩm không được để trống';
+            } elseif (!in_array($status, $validStatuses)) {
+                $errors['status'] = 'Trạng thái sản phẩm không hợp lệ.';
             }
             // Xử lý upload ảnh
-            if (!empty($image) && $image['error'] === UPLOAD_ERR_OK) {
+            if (empty($image) || $image['error'] === UPLOAD_ERR_NO_FILE) {
+                $errors['image'] = 'Ảnh không được để trống.';
+            } elseif ($image['error'] !== UPLOAD_ERR_OK) {
+                $errors['image'] = 'Lỗi khi tải ảnh lên';
+            } else {
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
                 $uploadDir = '../admin-page/img/product/';
                 $fileExtension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
                 if (!in_array($fileExtension, $allowedExtensions)) {
-                    $errors['image'] = 'Các tệp có thể upload - jpg, jpeg, png';
+                    $errors['image'] = 'Chỉ được upload ảnh - jpg,jpeg,png';
                 } else {
                     $fileName = uniqid('product_', true) . '.' . $fileExtension;
                     $imagePath = $uploadDir . $fileName;
-                    move_uploaded_file($image['tmp_name'], $imagePath);
+            
+                    if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
+                        $errors['image'] = 'Ảnh chưa lưu được, vui lòng thử tải lại ảnh';
+                    }
                 }
             }
             if (empty($errors)) {
@@ -116,15 +125,15 @@ class ProductController
             } elseif (strlen($ProductName) <= 6) {
                 $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 6 kí tự trở lên';
             }
-            if (empty($Description)) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
-            } elseif (strlen($Description) <= 10) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
-            }
             if (empty($Price)) {
                 $errors['Price'] = 'Giá thành sản phẩm không được để trống.';
             } elseif (!is_numeric($Price) || $Price <= 0) {
                 $errors['Price'] = 'Giá thành sản phẩm không được âm (dưới 0)';
+            }
+            if (empty($Description)) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
+            } elseif (strlen($Description) <= 12) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
             if (!in_array($CategoryID, $validCategories)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
