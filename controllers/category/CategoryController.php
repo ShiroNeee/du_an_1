@@ -39,6 +39,7 @@ class CategoryController
             if (empty($error)) {
                 $this->modelCategory->addCategory($categoryName);
                 header("Location: ?act=list-category"); // Điều hướng về trang danh sách danh mục
+                $_SESSION['success'] = 'Thêm danh mục sản phẩm thah công';
                 exit();
             } else {
                 $_SESSION['error'] = $error;
@@ -74,6 +75,7 @@ class CategoryController
             if (empty($error) && $categoryDetail) {
                 $this->modelCategory->updateCategory($id, $categoryName);
                 unset($_SESSION['error']);
+                $_SESSION['success'] = 'Sửa danh mục sản phẩm thah công';
                 header("Location: ?act=list-category"); // Điều hướng về trang danh sách danh mục
                 exit();
             } else {
@@ -93,6 +95,7 @@ class CategoryController
             $deleteCategory = $this->modelCategory->deleteCategory($id);
 
             if ($deleteCategory) {
+                $_SESSION['success'] = 'Xóa danh mục sản phẩm thah công';
                 header("Location: ?act=list-category"); // Điều hướng về trang danh sách danh mục
                 exit();
             } else {

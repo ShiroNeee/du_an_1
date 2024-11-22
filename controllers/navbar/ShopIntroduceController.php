@@ -13,7 +13,7 @@ class ShopIntroduceController
     {
         $latestCategorysHome = $this->modelCategory->showCategories();
         require_once '../client-page/views/header.php';
-        require_once '../client-page/shop_introduce.php';
+        require_once '../client-page/navbar/shop_introduce.php';
         require_once '../client-page/views/footer.php';
     }
 }

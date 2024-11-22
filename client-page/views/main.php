@@ -66,84 +66,35 @@
         </div>
       </div>
     </div>
-</section>
-
-  <!-- <section class="products py-5">
-    <div class="container">
-      <h2>Sản phẩm nổi bật (Hot Products)</h2>
-      <div class="row row-cols-1 row-cols-md-4 g-4">
-        Product Item 1
-        <div class="col">
-          <div class="product-item text-center">
-            <img src="../client-page/images/anh-1.png" class="img-fluid" alt="Product 1">
-            <h3>Áo sơ mi</h3>
-            <p>Giá: 299,000₫</p>
-            <button class="btn btn-primary">Thêm vào giỏ</button>
-          </div>
-        </div>
-        Product Item 2
-        <div class="col">
-          <div class="product-item text-center">
-            <img src="../client-page/images/anh-2.png" class="img-fluid" alt="Product 2">
-            <h3>Quần jeans</h3>
-            <p>Giá: 499,000₫</p>
-            <button class="btn btn-primary">Thêm vào giỏ</button>
-          </div>
-        </div>
-        Product Item 3
-        <div class="col">
-          <div class="product-item text-center">
-            <img src="../client-page/images/anh-1.png" class="img-fluid" alt="Product 3">
-            <h3>Áo sơ mi</h3>
-            <p>Giá: 299,000₫</p>
-            <button class="btn btn-primary">Thêm vào giỏ</button>
-          </div>
-        </div>
-        Product Item 4
-        <div class="col">
-          <div class="product-item text-center">
-            <img src="../client-page/images/anh-2.png" class="img-fluid" alt="Product 4">
-            <h3>Quần jeans</h3>
-            <p>Giá: 499,000₫</p>
-            <button class="btn btn-primary">Thêm vào giỏ</button>
-          </div>
-        </div>
-      </div>
-      <div class="text-center mt-4">
-        <a href="#"><button class="btn btn-secondary">Xem thêm</button></a>
-      </div>
-    </div>
-  </section> -->
-
   <section class="products py-5">
     <div class="container">
       <h2>Sản phẩm mới nhất</h2>
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <?php if ($latestProductsHome && count($latestProductsHome) > 0): ?>
-            <?php foreach ($latestProductsHome as $product): ?>
-                <div class="col">
-                    <div class="product-item text-center">
-                        <!-- Hiển thị ảnh sản phẩm -->
-                        <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
-                        <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
-                        <!-- Hiển thị giá sản phẩm -->
-                        <p><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
-                        <!-- Hiển thị mô tả ngắn -->
-                        <p><?= htmlspecialchars($product['Description']); ?></p>
-                        <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                        <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+          <?php foreach ($latestProductsHome as $product): ?>
+            <div class="col">
+              <div class="product-item text-center">
+                <!-- Hiển thị ảnh sản phẩm -->
+                <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
+                <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
+                <!-- Hiển thị giá sản phẩm -->
+                <p><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
+                <!-- Hiển thị mô tả ngắn -->
+                <p><?= htmlspecialchars($product['Description']); ?></p>
+                <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
+                <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
+              </div>
+            </div>
+          <?php endforeach; ?>
         <?php else: ?>
-            <p>Hiện tại chưa có sản phẩm mới.</p>
+          <p>Hiện tại chưa có sản phẩm mới.</p>
         <?php endif; ?>
       </div>
       <div class="text-center mt-4">
         <a href="#"><button class="btn btn-secondary">Xem thêm</button></a>
       </div>
     </div>
-</section>
+  </section>
 
 
 

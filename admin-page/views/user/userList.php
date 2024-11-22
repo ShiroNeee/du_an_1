@@ -17,24 +17,23 @@
             <tbody>
                 <?php foreach ($listUsers as $index => $user) : ?>
                     <tr>
-                        <td><?= $index + 1; ?></td>
+                        <td style="font-size: 20px;"><?= $index + 1; ?></td>
                         <td>
                             <img src="<?= $user['image']; ?>" width="80px">
                         </td>
                         </td>
-                        <td><?= $user['name']; ?></td>
+                        <td style="font-size: 15px;"><?= $user['name']; ?></td>
                         <td><?= $user['email']; ?></td>
                         <td><?= $user['phoneNumber']; ?></td>
                         <td><?= $user['address']; ?></td>
-                        <td><?= $user['roleID']== 1 ? 'Admin' : 'Người dùng';?></td>
-
+                        <td><?= $user['RoleName'];?></td>
                         <td>
                             <a href="?act=edit-user&id=<?= $user['id']; ?>">
-                                <button class="btn btn-primary">Sửa</button>
+                                <button class="edit">Sửa</button>
                             </a>
                             <form action="?act=delete-user" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
                                 <input type="hidden" name="id" value="<?= $user['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Xóa</button>
+                                <button type="submit" class="delete">Xóa</button>
                             </form>
                         </td>
                     </tr>

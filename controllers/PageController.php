@@ -2,42 +2,6 @@
 
 class PageController
 {
-//     public $modelProduct;
-//     public $modelCategory;
-
-//     public function __construct()
-//     {
-//         $this->modelProduct = new Product();  // Model sản phẩm
-//         $this->modelCategory = new CategoryManager();  // Model danh mục
-//     }
-
-//     // Phương thức hiển thị trang chủ với sản phẩm và danh mục
-//     public function index()
-//     {
-//         // Lấy danh sách sản phẩm (12 sản phẩm mới nhất)
-//         $latestProductsHome = $this->modelProduct->showProductHome(12);
-
-//         // Lấy danh sách danh mục
-//         $latestCategorysHome = $this->modelCategory->showCategories();
-
-//         // Gửi dữ liệu cho view
-//         require_once '../client-page/views/header.php';  // Header (danh mục)
-//         require_once '../client-page/views/main.php';  // Hiển thị sản phẩm
-//         require_once '../client-page/views/footer.php';  // Footer (cấu trúc chung)
-//     }
-
-//     // Phương thức hiển thị sản phẩm theo danh mục
-//     public function showCategoryProducts($categoryId)
-//     {
-//         // Lấy thông tin danh mục
-//         $categoryList = $this->modelProduct->getProductsByCategoryId($categoryId);
-
-//         // Lấy sản phẩm theo danh mục
-//         $productsList = $this->modelProduct->getProductsByCategoryId($categoryId);
-
-//         // Gửi dữ liệu cho view
-//         require_once '../client-page/views/header.php';
-//     }
 public $modelProduct;
 public $modelCategory;
 

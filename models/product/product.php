@@ -8,9 +8,8 @@ class Product
     {
         $this->conn = connectDB();
     }
-
     // Lấy ra toàn bộ sản phẩm
-    public function getAll()
+    public function getAllProduct()
     {
         try {
             $sql = "SELECT * FROM products";
@@ -21,16 +20,11 @@ class Product
             echo 'Lỗi: ' . $e->getMessage();
         }
     }
-
-    // Thêm sản phẩm
-    public function postData($ProductName, $Description, $Price, $CategoryID, $image)
+    // Thêm sản phẩm 
+    public function postData($ProductName, $Description, $Price, $CategoryID,$status, $image)
     {
         try {
-            $sql = "INSERT INTO products 
-                    (ProductName, Description, Price, CategoryID, image) 
-                    VALUES 
-                    (:ProductName, :Description, :Price, :CategoryID, :image)";
-            
+            $sql = "INSERT INTO products (ProductName, Description, Price, CategoryID, status, image) VALUES (:ProductName, :Description, :Price, :CategoryID, :status, :image)";
             $stmt = $this->conn->prepare($sql);
 
             // Gán giá trị cho các tham số
@@ -38,6 +32,7 @@ class Product
             $stmt->bindParam(':Description', $Description);
             $stmt->bindParam(':Price', $Price);
             $stmt->bindParam(':CategoryID', $CategoryID);
+            $stmt->bindParam(':status', $status);
             $stmt->bindParam(':image', $image);
 
             $stmt->execute();
@@ -47,7 +42,6 @@ class Product
             return false;
         }
     }
-
     // Lấy thông tin chi tiết sản phẩm
     public function getDetail($id)
     {
@@ -76,6 +70,7 @@ class Product
             return false;
         }
     }
+
 
 public function showProductHome($limit = 10)
 {
@@ -108,11 +103,64 @@ public function getProductsByCategoryId($categoryId)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
     // Hủy kết nối
     public function __destruct()
     {
         $this->conn = null;
     }
+    // add data
+    public function addData($ProductName,$Description,$Price,$CategoryID,$status,$image)
+    {
+        try {
+            $sql = "INSERT INTO products 
+                    (ProductName, Description, Price, CategoryID, status, image)
+                    VALUES (:ProductName, :Description, :Price, :CategoryID, :status, :image) ";
+            $stmt = $this->conn->prepare($sql);
+
+            // Gán giá trị cho các tham số
+            $stmt->bindParam(':ProductName', $ProductName);
+            $stmt->bindParam(':Description', $Description);
+            $stmt->bindParam(':Price', $Price);
+            $stmt->bindParam(':CategoryID', $CategoryID);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':image', $image);
+
+            // Thực thi câu truy vấn
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // update data
+    public function updateDataProduct($id,$ProductName,$Description,$Price,$CategoryID,$status,$image)
+    {
+        try {
+            $sql = "UPDATE products SET 
+                    ProductName = :ProductName,
+                    Description = :Description,
+                    Price       = :Price,
+                    CategoryID  = :CategoryID,
+                    status      = :status,
+                    image       = :image
+                WHERE id        = :id";
+            $stmt = $this->conn->prepare($sql);
+            // Gán giá trị cho các tham số
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->bindParam(':ProductName', $ProductName);
+            $stmt->bindParam(':Description', $Description);
+            $stmt->bindParam(':Price', $Price);
+            $stmt->bindParam(':CategoryID', $CategoryID);
+            $stmt->bindParam(':status', $status);
+            $stmt->bindParam(':image', $image);
+            // Thực thi câu truy vấn
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
 }
-?>
