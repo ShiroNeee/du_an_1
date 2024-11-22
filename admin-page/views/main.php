@@ -22,7 +22,7 @@
 				<li>
 					<i class='bx bxs-calendar-check' ></i>
 					<span class="text">
-						<h3>????</h3>
+						<h3>9</h3>
 						<p>Đơn hàng</p>
 					</span>
 				</li>
@@ -36,7 +36,7 @@
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
 					<span class="text">
-						<h3>???.000đ</h3>
+						<h3>200.000đ</h3>
 						<p>Doanh thu</p>
 					</span>
 				</li>
@@ -60,10 +60,10 @@
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>Khách hàng vip 010</p>
+									<p>usernew123</p>
 								</td>
 								<td>01-10-2024</td>
-								<td><span class="status process">Process</span></td>
+								<td><span class="status process">Đang giao</span></td>
 							</tr>
 							<tr>
 								<td>
@@ -71,7 +71,7 @@
 									<p>Khách hàng vip 005</p>
 								</td>
 								<td>30-4-2024</td>
-								<td><span class="status pending">Pending</span></td>
+								<td><span class="status pending">Hoãn</span></td>
 							</tr>
 							<tr>
 								<td>
@@ -79,7 +79,7 @@
 									<p>Khách hàng vip 003</p>
 								</td>
 								<td>08-03-2024</td>
-								<td><span class="status pending">Pending</span></td>
+								<td><span class="status pending">Hoãn</span></td>
 							</tr>
 							<tr>
 								<td>
@@ -87,7 +87,7 @@
 									<p>Khách hàng vip 002</p>
 								</td>
 								<td>01-02-2024</td>
-								<td><span class="status completed">Completed</span></td>
+								<td><span class="status completed">Hoàn thành</span></td>
 							</tr>
 							<tr>
 								<td>
@@ -95,7 +95,7 @@
 									<p>Khách hàng vip 001</p>
 								</td>
 								<td>01-01-2024</td>
-								<td><span class="status completed">Completed</span></td>
+								<td><span class="status completed">Hoàn thành</span></td>
 							</tr>
 						</tbody>
 					</table>
@@ -108,23 +108,23 @@
 					</div>
 					<ul class="todo-list">
 						<li class="completed">
-							<p>database</p>
+							<p>thống kê admin</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="completed">
-							<p>crud product</p>
+							<p>cart user </p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
-							<p>category (sản phẩm mới,nam,nữ,trẻ em,)</p>
+							<p>payment</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="completed">
-							<p>kháo sát fom</p>
+							<p>comment user</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
-							<p>thống kê </p>
+							<p>báo cáo</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 					</ul>

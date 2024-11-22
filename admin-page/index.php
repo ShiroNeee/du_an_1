@@ -23,6 +23,8 @@ require_once '../controllers/product/ProductController.php';
 require_once '../controllers/category/CategoryController.php';
 //user
 require_once '../controllers/user/UserController.php';
+// logout
+require_once '../controllers/LoginController.php';
 // mesage
 require_once '../controllers/MessageShopController.php';
 // Phải require các file model mà controller sử dụng
@@ -42,5 +44,7 @@ require_once '../routes/messageshop.php';
 
 // user
 require_once '../routes/user/user.php';
+// logout
+require_once '../routes/logout.php';
 // Xử lí router
 $router->dispatch($act);

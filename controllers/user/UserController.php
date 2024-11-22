@@ -41,15 +41,6 @@ class UserController
             exit();
         }
     }
-    public function edit()
-    {
-        $id = $_GET['id'];
-        //lấy ra thông tin chi tiết của ng dùng theo id
-        $userDetail = $this->userModel->getDetail($id);
-        require_once '../admin-page/views/header.php';
-        require_once '../admin-page/views/user/editUser.php';
-        require_once '../admin-page/views/footer.php';
-    }
     public function updateProfile()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -99,8 +90,8 @@ class UserController
                 // Nếu không thay đổi mật khẩu, giữ mật khẩu cũ
                 $hashedPassword = $userDetail['password'];
             }
-             // Kiểm tra số điện thoại
-             if (empty($phoneNumber)) {
+            // Kiểm tra số điện thoại
+            if (empty($phoneNumber)) {
                 $errors['phoneNumber'] = 'Số điện thoại không được để trống.';
             } elseif (!preg_match('/^[0-9]{10,11}$/', $phoneNumber)) {
                 $errors['phoneNumber'] = 'Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng.';
@@ -145,7 +136,17 @@ class UserController
             }
         }
     }
-
+    public function edit()
+    {
+        $id = $_GET['id'];
+        //lấy ra thông tin chi tiết của ng dùng theo id
+        $userDetail = $this->userModel->getDetail($id);
+        // Lấy danh sách tất cả vai trò từ cơ sở dữ liệu
+        $roles = $this->userModel->getAllRoles();
+        require_once '../admin-page/views/header.php';
+        require_once '../admin-page/views/user/editUser.php';
+        require_once '../admin-page/views/footer.php';
+    }
 
     public function update()
     {

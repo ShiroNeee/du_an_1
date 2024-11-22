@@ -76,7 +76,7 @@ class LoginController
         session_unset();
         session_destroy();
 
-        header("Location: ?act=login");
+        header("Location: /du_an_1/client-page/?act=login");
         exit();
     }
 }

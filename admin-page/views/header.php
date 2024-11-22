@@ -67,7 +67,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a href="?act=logout" class="logout" onclick="return confirm('Bạn muốn Logout khỏi trang admin?')">
 					<i class='bx bxs-log-out-circle'></i>
 					<span class="text">Logout</span>
 				</a>

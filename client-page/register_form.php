@@ -49,7 +49,7 @@
                                         <input type="file" class="form-control" id="image" name="image">
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+                                    <button type="submit" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 text-black">Đăng ký</button>
                                     <div class="d-flex align-items-center pb-4">
                                         <p class="mb-0 me-2">Bạn có tài khoản rồi ?</p>
                                         <a 

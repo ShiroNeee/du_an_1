@@ -8,22 +8,30 @@
             <input type="text" name="phoneNumber" class="box" value="<?= $userDetail['phoneNumber'] ?>" placeholder="Nhập số điện thoại...">
 
              <!-- Không hiển thị mật khẩu đã mã hóa -->
-            <input type="password" name="password" class="box" placeholder="Nhập mật khẩu....">
-            <input type="password" name="confirm_password" class="box" placeholder="Nhập lại mật khẩu mới....">
+             <label for="password">Mật khẩu</label>
+            <input type="password" name="password" class="box" placeholder="Nhập mật khẩu">
 
-            <input type="text" name="address" class="box" value="<?= $userDetail['address'] ?>" placeholder="Nhập địa chỉ nhà....">
+            <label for="confirm_password">Xác nhận mật khẩu mới</label>
+            <input type="password" name="confirm_password" class="box" placeholder="Nhập lại mật khẩu mới">
 
+            <label for="address">Địa Chỉ</label>
+            <input type="text" name="address" class="box" value="<?= $userDetail['address'] ?>" placeholder="Nhập địa chỉ">
+
+            <label for="roleID">Role</label>
             <select name="roleID" class="box">
-                <option value="1" <?= $userDetail['roleID'] == '1' ? 'selected' : '' ?>>Quản trị viên</option>
-                <option value="2" <?= $userDetail['roleID'] == '2' ? 'selected' : '' ?>>Người dùng</option>
+                <?php foreach ($roles as $role): ?>
+                    <option value="<?= $role['RoleID'] ?>" <?= $userDetail['roleID'] == $role['RoleID'] ? 'selected' : '' ?>>
+                        <?= $role['RoleName'] ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
 
             <input type="file" name="image" class="box">
             <br />
             <td>
-            <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px">
+                <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px">
             </td>
-            <br/>
+            <br />
             <a href="?act=list-user">
                 <button type="button" class="add">Danh sách</button>
             </a>
