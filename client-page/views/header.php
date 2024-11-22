@@ -6,16 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UNIQUE STYLE</title>
   <link rel="stylesheet" href="../client-page/public/styles.css">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
 </head>
 
 <body>
   <?php if (!empty($_SESSION['success']) || !empty($_SESSION['error'])): ?>
-    <div class="alert <?= !empty($_SESSION['success']) ? 'alert-success' : 'alert-danger'; ?> d-flex flex-column align-items-start p-3 position-fixed top-0 end-0 m-3" role="alert">
+    <div
+      class="alert <?= !empty($_SESSION['success']) ? 'alert-success' : 'alert-danger'; ?> d-flex flex-column align-items-start p-3 position-fixed top-0 end-0 m-3"
+      role="alert">
       <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
       <small>
         <?php if (!empty($_SESSION['success'])): ?>
@@ -46,14 +45,33 @@
         </a>
       </div>
 
-      <nav class="navbar">
+      <!-- <nav class="navbar">
         <ul class="nav">
           <li class="nav-item"><a href="?act=danhmucspmoi" class="nav-link">Sản Phẩm Mới</a></li>
           <li class="nav-item"><a href="?act=danhmucnu" class="nav-link">Nữ</a></li>
           <li class="nav-item"><a href="?act=danhmucnam" class="nav-link">Nam</a></li>
           <li class="nav-item"><a href="?act=danhmuctreem" class="nav-link">Trẻ Em</a></li>
         </ul>
+      </nav> -->
+
+      <nav class="navbar">
+        <ul class="nav">
+          <?php if (!empty($latestCategorysHome) && count($latestCategorysHome) > 0): ?>
+            <?php foreach ($latestCategorysHome as $category): ?>
+              <li class="nav-item">
+                <!-- Liên kết đến route shopintroduce kèm id -->
+                <a href="?act=danhmucnam&id=<?= urlencode($category['id']); ?>" class="nav-link" >
+                  <?= htmlspecialchars($category['categoryName'], ENT_QUOTES, 'UTF-8'); ?>
+                </a>
+              </li>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <p>Hiện tại chưa có danh mục nào.</p>
+          <?php endif; ?>
+        </ul>
       </nav>
+
+
       <!-- Header Icons -->
       <div class="header-icons d-flex align-items-center gap-3">
         <!-- Search Form -->
@@ -70,7 +88,8 @@
           <!-- Dropdown User Settings -->
           <div class="dropdown">
             <!-- Icon người dùng, có thể click để mở dropdown -->
-            <a href="javascript:void(0);" class="fa fa-user dropdown-toggle" id="user-icon" data-bs-toggle="dropdown" aria-expanded="false"></a>
+            <a href="javascript:void(0);" class="fa fa-user dropdown-toggle" id="user-icon" data-bs-toggle="dropdown"
+              aria-expanded="false"></a>
 
             <!-- Menu dropdown (ẩn/show khi click vào icon) -->
             <ul class="dropdown-menu" aria-labelledby="user-icon">

@@ -186,8 +186,8 @@ class ProductController
             $deleteProduct = $this->modelProduct->deleteData($id);
 
             if ($deleteProduct) {
-                if ($productDetail['hinh_anh'] && file_exists($productDetail['hinh_anh'])) {
-                    unlink($productDetail['hinh_anh']);
+                if ($productDetail['image'] && file_exists($productDetail['image'])) {
+                    unlink($productDetail['image']);
                 }
                 $_SESSION['success'] = 'Xóa sản phẩm thanh công xong';
                 header("Location: ?act=list-product");

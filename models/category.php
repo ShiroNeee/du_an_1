@@ -98,6 +98,25 @@ class CategoryManager
         }
     }
 
+
+    public function showCategories()
+    {
+        $sql = "SELECT id, categoryName FROM categories";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+    }
+    public function getCategoryById($categoryId)
+{
+    $sql = "SELECT * FROM categories WHERE id = :id LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $categoryId, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+    
     // Hủy kết nối
     public function __destruct()
     {

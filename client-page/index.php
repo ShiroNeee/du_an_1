@@ -26,11 +26,17 @@ require_once '../controllers/navbar/DanhMucNuController.php';
 // 
 require_once '../models/users/user.php';
 //
+require_once '../models/category.php';
+//
+require_once '../models/product/Product.php';
 require_once '../controllers/PageController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
+// $router->add('/', 'PageController', 'index');
 $router->add('/', 'PageController', 'index');
+
+// $router->add('/', 'PageCategoryController', 'index');
 // Login
 require_once '../routes/login.php';
 // Register
