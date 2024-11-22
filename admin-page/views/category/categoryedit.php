@@ -39,5 +39,5 @@
         <input type="hidden" name="id" value="<?= $categoryDetail['id'] ?>">
         <input type="text" name="categoryName" value="<?= $categoryDetail['categoryName'] ?>" class="box"
             placeholder="Nhập tên danh mục" />
-        <button type="submit" class="add" value="CẬP NHẬT">Cập nhật</button>
+        <button type="submit" class="add" value="CẬP NHẬT" style="margin-left:20px">Cập nhật</button>
     </form>

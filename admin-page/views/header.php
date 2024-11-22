@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +13,6 @@
 			filter: blur(5px);
 			transition: filter 0.3s ease;
 		}
-
 		.popup {
 			position: fixed;
 			top: 0;
@@ -29,12 +27,10 @@
 			opacity: 0;
 			transition: opacity 0.3s ease, visibility 0.3s ease;
 		}
-
 		.popup.show {
 			visibility: visible;
 			opacity: 1;
 		}
-
 		.popup-content {
 			background: #fff;
 			padding: 20px;
@@ -42,7 +38,6 @@
 			text-align: center;
 			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 		}
-
 		.popup-content h2 {
 			margin: 0 0 10px;
 			font-family: 'Poppins', sans-serif;
@@ -56,7 +51,6 @@
 			cursor: pointer;
 			font-size: 16px;
 		}
-
 		.popup-content .confirm {
 			background-color: #f44336;
 			color: #fff;
@@ -66,19 +60,16 @@
 			cursor: pointer;
 			transition: background-color 0.3s ease, transform 0.2s ease;
 		}
-
 		.popup-content .confirm:hover {
 			background-color: #d32f2f;
 			transform: scale(1.05);
 			color: #fff;
 		}
-
 		.popup-content .cancel {
 			background-color: #ccc;
 			color: #000;
 
 		}
-
 		.popup-content .cancel:hover {
 			background-color: #ccc;
 			color: #000;
@@ -100,7 +91,6 @@
 		}
 	</style>
 </head>
-
 <body>
 	<section id="sidebar">
 		<a>.</a>
@@ -123,7 +113,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="?act=statistic">
 					<i class='bx bxs-doughnut-chart'></i>
 					<span class="text">Thống kê</span>
 				</a>

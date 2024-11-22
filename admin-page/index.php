@@ -27,10 +27,13 @@ require_once '../controllers/user/UserController.php';
 require_once '../controllers/LoginController.php';
 // mesage
 require_once '../controllers/MessageShopController.php';
+// thong ke
+require_once '../controllers/statistic/StatisticController.php';
 // Phải require các file model mà controller sử dụng
 require_once '../models/category.php';
 require_once '../models/users/user.php';
 require_once '../models/product/product.php';
+require_once '../models/statistic/statistic.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -41,7 +44,8 @@ require_once '../routes/category/category.php';
 require_once '../routes/product/product.php';
 // mesage
 require_once '../routes/messageshop.php';
-
+// statistic thong ke
+require_once '../routes/statistic/statistic.php';
 // user
 require_once '../routes/user/user.php';
 // logout
