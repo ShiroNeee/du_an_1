@@ -8,16 +8,10 @@
             <input type="text" name="phoneNumber" class="box" value="<?= $userDetail['phoneNumber'] ?>" placeholder="Nhập số điện thoại...">
 
              <!-- Không hiển thị mật khẩu đã mã hóa -->
-             <label for="password">Mật khẩu</label>
             <input type="password" name="password" class="box" placeholder="Nhập mật khẩu">
-
-            <label for="confirm_password">Xác nhận mật khẩu mới</label>
             <input type="password" name="confirm_password" class="box" placeholder="Nhập lại mật khẩu mới">
 
-            <label for="address">Địa Chỉ</label>
             <input type="text" name="address" class="box" value="<?= $userDetail['address'] ?>" placeholder="Nhập địa chỉ">
-
-            <label for="roleID">Role</label>
             <select name="roleID" class="box">
                 <?php foreach ($roles as $role): ?>
                     <option value="<?= $role['RoleID'] ?>" <?= $userDetail['roleID'] == $role['RoleID'] ? 'selected' : '' ?>>
@@ -29,12 +23,9 @@
             <input type="file" name="image" class="box">
             <br />
             <td>
-                <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px">
+                <img src="<?= $userDetail['image']; ?>" alt="Hình ảnh" width="80px" style="margin-left:20px">
             </td>
             <br />
-            <a href="?act=list-user">
-                <button type="button" class="add">Danh sách</button>
-            </a>
-            <button type="submit" class="add">Cập nhật</button>
+            <button type="submit" class="add" >Cập nhật</button>
         </form>
     </div>
