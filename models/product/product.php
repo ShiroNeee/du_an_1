@@ -77,25 +77,11 @@ class Product
         }
     }
 
-//     public function showProductHome($limit = 10)
-// {
-//     try {
-//         // Câu lệnh SQL lấy sản phẩm mới nhất, sắp xếp theo id giảm dần (id lớn nhất là mới nhất).
-//         $sql = "SELECT * FROM products ORDER BY id DESC LIMIT $limit";
-//         $stmt = $this->conn->prepare($sql);
-//         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-//         $stmt->execute();
-//         return $stmt->fetchAll();
-//     } catch (PDOException $e) {
-//         echo 'Lỗi: ' . $e->getMessage();
-//         return false;
-//     }
-// }
 public function showProductHome($limit = 10)
 {
     try {
-        // Câu lệnh SQL lấy sản phẩm mới nhất, sắp xếp theo id giảm dần và giới hạn 10 sản phẩm
-        $sql = "SELECT * FROM products ORDER BY id DESC LIMIT :limit";
+        // Câu lệnh SQL lấy sản phẩm còn hàng (Status = 1), sắp xếp theo id giảm dần và giới hạn số lượng sản phẩm
+        $sql = "SELECT * FROM products WHERE Status = 1 ORDER BY id DESC LIMIT :limit";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
@@ -104,6 +90,22 @@ public function showProductHome($limit = 10)
         echo 'Lỗi: ' . $e->getMessage();
         return false;
     }
+}
+
+// public function getProductsByCategoryId($categoryId) {
+//     $sql = "SELECT * FROM products WHERE category_id = :category_id";
+//     $stmt = $this->conn->prepare($sql);
+//     $stmt->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
+//     $stmt->execute();
+//     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+// }
+public function getProductsByCategoryId($categoryId)
+{
+    $sql = "SELECT * FROM products WHERE id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':id', $categoryId, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 

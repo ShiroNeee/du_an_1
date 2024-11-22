@@ -30,33 +30,35 @@
     </div>
   </header>
 
-  <section class="categories py-5">
+ 
+
+  <section class="categories py-5"> 
     <div class="container">
       <h2>Sản phẩm mới (New Products)</h2>
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col">
-          <a href="#">
+          <a href="?act=danhmucnam">
             <div class="category-item">
               <img src="../client-page/images/cate-2.png" class="img-fluid" alt="Category 1">
             </div>
           </a>
         </div>
         <div class="col">
-          <a href="#">
+          <a href="?act=danhmucnu">
             <div class="category-item">
               <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 2">
             </div>
           </a>
         </div>
         <div class="col">
-          <a href="#">
+          <a href="?act=danhmucspmoi">
             <div class="category-item">
               <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 3">
             </div>
           </a>
         </div>
         <div class="col">
-          <a href="#">
+          <a href="?act=danhmuctreem">
             <div class="category-item">
               <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 4">
             </div>
@@ -64,7 +66,7 @@
         </div>
       </div>
     </div>
-  </section>
+</section>
 
   <!-- <section class="products py-5">
     <div class="container">
