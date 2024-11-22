@@ -1,6 +1,4 @@
 <?php
-require_once '../models/product/Product.php';
-require_once '../models/category.php';
 
 class PageController
 {
@@ -85,9 +83,9 @@ public function showCategoryProducts($categoryId)
 
     // Gửi dữ liệu cho view
     require_once '../client-page/views/header.php';  // Header
-    require_once '../client-page/views/category_products.php';  // Hiển thị sản phẩm theo danh mục
-    require_once '../client-page/views/footer.php';  // Footer
     require_once '../client-page/views/shop_introduce.php';
+    require_once '../client-page/views/footer.php';  // Footer
+
 }
 }
 ?>
