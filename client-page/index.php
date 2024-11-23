@@ -35,6 +35,9 @@ $act = $_GET['act'] ?? '/';
 
 // $router->add('/', 'PageController', 'index');
 $router->add('/', 'PageController', 'index');
+// Trong router.php, thêm đường dẫn cho danh mục nam
+
+// Giả sử router.php có mã sau:
 
 // $router->add('/', 'PageCategoryController', 'index');
 // Login
