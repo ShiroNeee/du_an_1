@@ -1,6 +1,12 @@
 <?php
 class RegisterController
 {
+    public $modelCategory;
+
+    public function __construct()
+    {
+        $this->modelCategory = new CategoryManager();  // Model danh mục
+    }
     // Hiển thị form đăng ký
     public function registerForm()
     {
@@ -8,6 +14,7 @@ class RegisterController
             header('Location: ?act=profile');
             exit();
         }
+        $latestCategorysHome = $this->modelCategory->showCategories();
         require_once '../client-page/views/header.php';
         require_once '../client-page/register_form.php';
         require_once '../client-page/views/footer.php';
