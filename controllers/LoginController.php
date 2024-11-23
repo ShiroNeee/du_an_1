@@ -1,6 +1,12 @@
 <?php
 class LoginController
 {
+    public $modelCategory;
+
+    public function __construct()
+    {
+        $this->modelCategory = new CategoryManager();  // Model danh mục
+    }
     // Hiển thị form đăng nhập
     public function showLoginForm()
     {
@@ -8,6 +14,7 @@ class LoginController
             header('Location: ?act=profile');
             exit();
         }
+        $latestCategorysHome = $this->modelCategory->showCategories();
         require_once '../client-page/views/header.php';
         require_once '../client-page/login_form.php';
         require_once '../client-page/views/footer.php';
