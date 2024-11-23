@@ -87,21 +87,14 @@ public function showProductHome($limit = 10)
     }
 }
 
-// public function getProductsByCategoryId($categoryId) {
-//     $sql = "SELECT * FROM products WHERE category_id = :category_id";
-//     $stmt = $this->conn->prepare($sql);
-//     $stmt->bindParam(':category_id', $categoryId, PDO::PARAM_INT);
-//     $stmt->execute();
-//     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-// }
 public function getProductsByCategoryId($categoryId)
-{
-    $sql = "SELECT * FROM products WHERE id = :id";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bindParam(':id', $categoryId, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    {
+        $query = "SELECT * FROM products WHERE CategoryID = :categoryId AND status = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     // Hủy kết nối
     public function __destruct()
