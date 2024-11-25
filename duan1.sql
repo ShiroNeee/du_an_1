@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 17, 2024 at 04:28 AM
+-- Generation Time: Nov 25, 2024 at 02:01 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `categories` (
-  `id` int NOT NULL,
+  `CategoryID` int NOT NULL,
   `categoryName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -36,11 +36,11 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `categoryName`) VALUES
+INSERT INTO `categories` (`CategoryID`, `categoryName`) VALUES
 (1, 'Nam'),
 (2, 'Nữ'),
-(3, 'Phụ kiện'),
-(48, 'abc');
+(3, 'Trẻ em'),
+(4, 'Phụ kiện');
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `ProductName`, `Description`, `Price`, `CategoryID`, `status`, `image`) VALUES
-(1, 'abc', 'mô tả', 100, 1, 0, '');
+(1, 'Mô tả sản phẩm', 'Mô tả sản phẩm như nào', 100, 2, 1, '../admin-page/img/product/product_673ea5aec859e0.85587944.png'),
+(9, 'Tên sản phẩm', 'Tên sản phẩmTên sản phẩmTên sản phẩm', 123456789, 1, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
+(10, 'Mô tả sản phẩm', 'Mô tả sản phẩm', 123123123, 3, 1, '../admin-page/img/product/product_673ea5b9e9a110.24374384.png'),
+(11, 'abced', 'Mô tả sản phẩm như nào', 123123123, 4, 1, '../admin-page/img/product/product_673ea5b38f4489.34314706.png');
 
 -- --------------------------------------------------------
 
@@ -134,15 +137,15 @@ INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 --
 
 CREATE TABLE `status` (
-  `id` int NOT NULL,
-  `status` varchar(100) NOT NULL
+  `statusID` int NOT NULL,
+  `statusName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `status`
 --
 
-INSERT INTO `status` (`id`, `status`) VALUES
+INSERT INTO `status` (`statusID`, `statusName`) VALUES
 (0, 'Hết hàng'),
 (1, 'Còn hàng');
 
@@ -168,8 +171,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `phoneNumber`, `address`, `roleID`, `image`) VALUES
-(18, 'Giap', 'giapnvph34346@fpt.edu.vn', '$2y$10$U53Q0qrmAq4GV1eKH/Ji6OZKE1p6uWqou4hI0NS8w.bkG8x1VGcpm', '0332070403', 'Hà Nội', 1, '../admin-page/img/user/user_67396610c61ce2.72238393.jpg'),
-(24, 'shiro', 'shiro@gmail.com', '$2y$10$JkohaO8SY6q5Q2OGIPVp2.YkelkeGvEK9gwFAKyFY/uKwQOi5tx4C', '0344192381', 'Hà Nội', 2, '../admin-page/img/user/user_6738380cedd630.67905386.jpg');
+(18, 'Giap', 'giapnvph34346@fpt.edu.vn', '$2y$10$2Xcy3Tzq6cJKSiJlKGSI1OZhq76A2g3oRsVP8hDRkL94UDWuEeQp.', '0332070403', 'Hà Nội', 1, '../admin-page/img/user/user_674073a925c836.90476994.gif'),
+(44, 'hehehe', 'hehe@gmail.com', '$2y$10$mgNm08nJk05o94AzLlE2euyk4UgiSijmUCSWPZ/8TN683xfnf8vdq', '0328495834', 'hanoi', 2, '../admin-page/img/user/user_674073d2a0c5e7.33509711.jpg');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +182,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phoneNumber`, `address`
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`CategoryID`);
 
 --
 -- Indexes for table `orderdetails`
@@ -223,7 +226,7 @@ ALTER TABLE `roles`
 -- Indexes for table `status`
 --
 ALTER TABLE `status`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`statusID`);
 
 --
 -- Indexes for table `users`
@@ -241,7 +244,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `CategoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=514;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
@@ -259,7 +262,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -277,13 +280,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `status`
 --
 ALTER TABLE `status`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `statusID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Constraints for dumped tables
@@ -306,8 +309,8 @@ ALTER TABLE `orders`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `fk_status_product_status` FOREIGN KEY (`status`) REFERENCES `status` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`id`);
+  ADD CONSTRAINT `fk_status_product_status` FOREIGN KEY (`status`) REFERENCES `status` (`statusID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`);
 
 --
 -- Constraints for table `reviews`
