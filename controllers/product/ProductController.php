@@ -21,8 +21,8 @@ class ProductController
     // ấn vào thêm
     public function add()
     {
-        // $statusCategory  = $this->modelProduct->getCategoryList();
-        // $statusList  = $this->modelProduct->getStatusList();
+        $statusCategory  = $this->modelProduct->getCategoryList();
+        $statusList  = $this->modelProduct->getStatusList();
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/product/productadd.php'; // main
         require_once '../admin-page/views/footer.php';
@@ -51,8 +51,8 @@ class ProductController
             }
             if (empty($Description)) {
                 $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
-            } elseif (strlen($Description) <= 6) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 6 kí tự trở lên';
+            } elseif (strlen($Description) <= 12) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
             if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
@@ -99,8 +99,8 @@ class ProductController
         $id = $_GET['id'];
         //lấy ra thông tin chi tiết của ng dùng theo id
         $productDetail = $this->modelProduct->getDetail($id);
-        // $statusList  = $this->modelProduct->getStatusList();
-        // $statusCategory  = $this->modelProduct->getCategoryList();
+        $statusList  = $this->modelProduct->getStatusList();
+        $statusCategory  = $this->modelProduct->getCategoryList();
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/product/productedit.php';
         require_once '../admin-page/views/footer.php';
