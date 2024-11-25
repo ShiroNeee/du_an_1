@@ -3,11 +3,13 @@
 class UserController
 {
     private $userModel;
+    public $modelCategory;
 
     // Khởi tạo model User
     public function __construct()
     {
         $this->userModel = new User(); // Khởi tạo đối tượng User
+        $this->modelCategory = new CategoryManager();  // Model danh mục
     }
 
     // Hàm xử lý việc hiển thị danh sách người dùng
@@ -30,7 +32,7 @@ class UserController
 
             // Lấy thông tin chi tiết của người dùng
             $userDetail = $this->userModel->getDetail($id);
-
+            $latestCategorysHome = $this->modelCategory->showCategories();
             // Hiển thị trang chỉnh sửa thông tin cá nhân
             require_once '../client-page/views/header.php';
             require_once '../client-page/views/proFile/proFile.php';

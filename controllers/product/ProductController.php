@@ -21,6 +21,8 @@ class ProductController
     // ấn vào thêm
     public function add()
     {
+        // $statusCategory  = $this->modelProduct->getCategoryList();
+        // $statusList  = $this->modelProduct->getStatusList();
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/product/productadd.php'; // main
         require_once '../admin-page/views/footer.php';
@@ -37,8 +39,6 @@ class ProductController
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
 
             $errors = [];
-            $validCategories = [1,2,3]; //id danh mục hợp lệ
-            $validStatuses = [0,1];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
             } elseif (strlen($ProductName) <= 3) {
@@ -54,13 +54,11 @@ class ProductController
             } elseif (strlen($Description) <= 6) {
                 $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 6 kí tự trở lên';
             }
-            if (!in_array($CategoryID, $validCategories)) {
+            if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (empty($status) && $status !== '0') {
+            if (empty($status)) {
                 $errors['status'] = 'Trạng thái của sản phẩm không được để trống';
-            } elseif (!in_array($status, $validStatuses)) {
-                $errors['status'] = 'Trạng thái sản phẩm không hợp lệ.';
             }
             // Xử lý upload ảnh
             if (empty($image) || $image['error'] === UPLOAD_ERR_NO_FILE) {
@@ -101,6 +99,8 @@ class ProductController
         $id = $_GET['id'];
         //lấy ra thông tin chi tiết của ng dùng theo id
         $productDetail = $this->modelProduct->getDetail($id);
+        // $statusList  = $this->modelProduct->getStatusList();
+        // $statusCategory  = $this->modelProduct->getCategoryList();
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/product/productedit.php';
         require_once '../admin-page/views/footer.php';
@@ -118,8 +118,6 @@ class ProductController
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
             $errors = [];
 
-            $validCategories = [1, 2, 3]; //id danh mục hợp lệ
-            $validStatuses = [0, 1];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
             } elseif (strlen($ProductName) <= 6) {
@@ -135,10 +133,10 @@ class ProductController
             } elseif (strlen($Description) <= 12) {
                 $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
             }
-            if (!in_array($CategoryID, $validCategories)) {
+            if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (!in_array($status, $validStatuses)) {
+            if (empty($status)) {
                 $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
             }
             $productDetail = $this->modelProduct->getDetail($id);

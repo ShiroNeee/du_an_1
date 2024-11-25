@@ -30,15 +30,15 @@
                             <img src="<?= $product['image']; ?>" width="80px">
                         </td>
                         <td style="font-size:15px"><?= $product['ProductName']; ?></td>
-                        <td style="color:red"><?= $product['Price']; ?> đ</td>
-                        <td style="background-color: aqua;" ><?= $product['CategoryID'] == 1 ? 'Nam' : ($product['CategoryID'] == 2 ? 'Nữ' : 'Phụ kiện'); ?></td>
+                        <td><?= $product['Price']; ?> đ</td>
+                        <td><?= $product['CategoryName']; ?></td>
                         <td><?= $product['Description']; ?></td>
-                        <td style="color:blue"><?=$product['status']== 0?'Còn Hàng' :'Hết Hàng'; ?></td>
+                        <td style="color:blue"><?= $product['statusName']; ?></td>
                         <td>
                             <a href="?act=edit-product&id=<?= $product['id']; ?>">
                                 <button class="edit">Sửa</button>
                             </a>
-                            <form action="?act=delete-product" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sp?')">
+                            <form action="?act=delete-product" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm?')">
                                 <input type="hidden" name="id" value="<?= $product['id']; ?>">
                                 <button type="submit" class="delete">Xóa</button>
                             </form>

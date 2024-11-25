@@ -23,11 +23,11 @@
                             <td><?= $index + 1; ?></td>
                             <td><?= $categories['categoryName']; ?></td>
                             <td>
-                                <a href="?act=edit-category&id=<?= $categories['id']; ?>">
+                                <a href="?act=edit-category&id=<?= $categories['CategoryID']; ?>">
                                     <button class="edit">Sửa</button>
                                 </a>
                                 <form action="?act=delete-category" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
-                                    <input type="hidden" name="id" value="<?= $categories['id']; ?>">
+                                    <input type="hidden" name="id" value="<?= $categories['CategoryID']; ?>">
                                     <button type="submit" class="delete">Xóa</button>
                                 </form>
                             </td>
