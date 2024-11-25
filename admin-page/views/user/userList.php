@@ -26,7 +26,7 @@
                         <td><?= $user['email']; ?></td>
                         <td><?= $user['phoneNumber']; ?></td>
                         <td><?= $user['address']; ?></td>
-                        <td><?= $user['RoleName'];?></td>
+                        <td style="color:blue"><?= $user['RoleName'];?></td>
                         <td>
                             <a href="?act=edit-user&id=<?= $user['id']; ?>">
                                 <button class="edit">Sửa</button>

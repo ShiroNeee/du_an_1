@@ -1,25 +1,20 @@
 <?php
-// dữ liệu thống kê
-$chartData = [
-    ['Danh mục sản phẩm', 'Số lượng'],
-    ['nam', 50],
-    ['nữ', 40],
-    ['phụ kiện', 50],
-];
+$statistic = new Statistic();
+$chartData = $statistic->getChartData();
 $chartDataJson = json_encode($chartData);
-
 // in ra
 // echo "<pre>";
 // var_dump($chartData);
 ?>
 <style>
-    body{
+    body {
         background-color: white;
     }
-    .chart{
+
+    .chart {
         margin-left: 200px;
-        margin-top:50px;
-        border-radius:20px;
+        margin-top: 50px;
+        border-radius: 20px;
     }
 </style>
 <!-- thống kê -->
@@ -34,8 +29,11 @@ $chartDataJson = json_encode($chartData);
     function drawChart() {
         var data = google.visualization.arrayToDataTable(<?php echo $chartDataJson; ?>);
         var options = {
-            title: 'Số sản phẩm của các danh mục sản phẩm',
-            is3D: true
+            title: 'Số Sản Phẩm Của Các Danh Mục Sản Phẩm',
+            is3D: true,
+            colors: ['#FF5733', '#33FF57', '#3357FF', '#FFC300', '#DAF7A6'],
+            fontName: 'Poppins',
+            pieSliceText: 'percentage',
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data, options);

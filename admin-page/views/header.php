@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
 			filter: blur(5px);
 			transition: filter 0.3s ease;
 		}
+
 		.popup {
 			position: fixed;
 			top: 0;
@@ -27,10 +29,12 @@
 			opacity: 0;
 			transition: opacity 0.3s ease, visibility 0.3s ease;
 		}
+
 		.popup.show {
 			visibility: visible;
 			opacity: 1;
 		}
+
 		.popup-content {
 			background: #fff;
 			padding: 20px;
@@ -38,6 +42,7 @@
 			text-align: center;
 			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 		}
+
 		.popup-content h2 {
 			margin: 0 0 10px;
 			font-family: 'Poppins', sans-serif;
@@ -51,6 +56,7 @@
 			cursor: pointer;
 			font-size: 16px;
 		}
+
 		.popup-content .confirm {
 			background-color: #f44336;
 			color: #fff;
@@ -60,16 +66,19 @@
 			cursor: pointer;
 			transition: background-color 0.3s ease, transform 0.2s ease;
 		}
+
 		.popup-content .confirm:hover {
 			background-color: #d32f2f;
 			transform: scale(1.05);
 			color: #fff;
 		}
+
 		.popup-content .cancel {
 			background-color: #ccc;
 			color: #000;
 
 		}
+
 		.popup-content .cancel:hover {
 			background-color: #ccc;
 			color: #000;
@@ -84,20 +93,27 @@
 			color: #000;
 			transition: all 0.3s ease;
 		}
-		
+
 		.title-admin:hover {
 			color: #3c91e6;
 			transform: scale(1.1);
 		}
+
+		.logout:hover {
+			color: #3c91e6;
+			transform: scale(1.1);
+			margin-left: 10px;
+		}
 	</style>
 </head>
+
 <body>
 	<section id="sidebar">
 		<a>.</a>
 		<li>
-		<a href="../admin-page/" style="text-align:center" class="title-admin">
-			<h1>Admin Unique Style<i class='bx bx-user'></i></h1>
-		</a>
+			<a href="../admin-page/" style="text-align:center" class="title-admin">
+				<h1>Admin Unique Style<i class='bx bx-user'></i></h1>
+			</a>
 		</li>
 		<ul class="side-menu top">
 			<li class="active">
@@ -144,14 +160,16 @@
 			</li>
 		</ul>
 		<ul class="side-menu">
+			<div class="logout">
+				<li>
+					<a href="#">
+						<i class='bx bxs-cog'></i>
+						<span class="text">Setting</span>
+					</a>
+				</li>
+			</div>
 			<li>
-				<a href="#">
-					<i class='bx bxs-cog'></i>
-					<span class="text">Setting</span>
-				</a>
-			</li>
-			<li>
-				<div id="main-content">
+				<div id="main-content" class="logout">
 					<a href="#" class="logout" onclick="openLogoutPopup(event)">
 						<i class='bx bxs-log-out-circle'></i>
 						<span class="text">Logout</span>
