@@ -14,7 +14,7 @@
                             <!-- Hiển thị mô tả ngắn -->
                             <p><?= htmlspecialchars($product['Description']); ?></p>
                             <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                            <a href="product-detail.php?id=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="?act=productdetail&id=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
                         </div>
                     </div>
                 <?php endforeach; ?>
