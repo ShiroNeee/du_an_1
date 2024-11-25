@@ -15,6 +15,8 @@ require_once '../controllers/PageController.php';
 require_once '../controllers/LoginController.php';
 require_once '../controllers/RegisterController.php';
 require_once '../controllers/user/UserController.php';
+// chi tiet sp
+require_once '../controllers/product/ProductDetailController.php';
 // shop_introduce
 require_once '../controllers/navbar/ShopIntroduceController.php';
 require_once '../controllers/navbar/CartShopController.php';
@@ -51,5 +53,6 @@ require_once '../routes/navbar/danhmuc_treem.php';
 require_once '../routes/navbar/danhmuc_nam.php';
 require_once '../routes/navbar/danhmuc_nu.php';
 require_once '../routes/navbar/danhmuc_spmoi.php';
-
+// chi tiet sp 
+require_once '../routes/product/productdetail.php';
 $router->dispatch($act);

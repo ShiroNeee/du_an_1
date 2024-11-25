@@ -1,5 +1,11 @@
 <div class="table--wrapper">
     <h3 class="title">Quản lý người dùng</h3>
+    <?php if (!empty($_SESSION['success'])): ?>
+        <div class="alert alert-success" style="background-color:#d4edda;border:0.5px solid #ddd;border-radius:6px;color:#155724;border-color: #c3e6cb; margin-bottom:5px;font-family: Arial, sans-serif;">
+            <?= $_SESSION['success']; ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
     <div class="table-container">
         <table class="user-table" style="width: 100%; text-align: left; border-collapse: collapse;">
             <thead>
@@ -26,7 +32,7 @@
                         <td><?= $user['email']; ?></td>
                         <td><?= $user['phoneNumber']; ?></td>
                         <td><?= $user['address']; ?></td>
-                        <td style="color:blue"><?= $user['RoleName'];?></td>
+                        <td style="color:blue"><?= $user['RoleName']; ?></td>
                         <td>
                             <a href="?act=edit-user&id=<?= $user['id']; ?>">
                                 <button class="edit">Sửa</button>

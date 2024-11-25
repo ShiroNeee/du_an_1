@@ -33,7 +33,7 @@
                         <td style="color:red"><?= $product['Price']; ?> đ</td>
                         <td style="background-color: aqua;" ><?= $product['CategoryID'] == 1 ? 'Nam' : ($product['CategoryID'] == 2 ? 'Nữ' : 'Phụ kiện'); ?></td>
                         <td><?= $product['Description']; ?></td>
-                        <td style="color:blue"><?= $product['status'] == 0 ? 'Còn Hàng' : 'Hết Hàng'; ?></td>
+                        <td style="color:blue"><?=$product['status']== 0?'Còn Hàng' :'Hết Hàng'; ?></td>
                         <td>
                             <a href="?act=edit-product&id=<?= $product['id']; ?>">
                                 <button class="edit">Sửa</button>

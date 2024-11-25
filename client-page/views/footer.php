@@ -69,7 +69,7 @@
           <!--Grid column-->
           <div class="col-auto mb-4 mb-md-0">
             <!-- Submit button -->
-            <button data-mdb-ripple-init type="button" class="btn btn-primary mb-4">
+            <button data-mdb-ripple-init type="button" class="btn btn-primary mb-4" >
               Subscribe
             </button>
           </div>

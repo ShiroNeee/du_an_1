@@ -41,8 +41,8 @@ class ProductController
             $validStatuses = [0,1];      //id status hợp lệ  
             if (empty($ProductName)) {
                 $errors['ProductName'] = 'Tên sản phẩm không được để trống.';
-            } elseif (strlen($ProductName) <= 6) {
-                $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 6 kí tự trở lên';
+            } elseif (strlen($ProductName) <= 3) {
+                $errors['ProductName'] = 'Tên sản phẩm phải tối thiểu 3 kí tự trở lên';
             }
             if (empty($Price)) {
                 $errors['Price'] = 'Giá thành sản phẩm không được để trống.';
@@ -51,8 +51,8 @@ class ProductController
             }
             if (empty($Description)) {
                 $errors['Description'] = 'Mô tả chi tiết sản phẩm không được để trống.';
-            } elseif (strlen($Description) <= 12) {
-                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 12 kí tự trở lên';
+            } elseif (strlen($Description) <= 6) {
+                $errors['Description'] = 'Mô tả chi tiết sản phẩm phải tối thiểu 6 kí tự trở lên';
             }
             if (!in_array($CategoryID, $validCategories)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';

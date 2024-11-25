@@ -231,6 +231,7 @@ class UserController
             if (empty($errors)) {
                 $this->userModel->updateData($id, $name, $email, $hashedPassword, $phoneNumber, $address, $roleID, $imagePath);
                 unset($_SESSION['error']);
+                $_SESSION['success'] = 'Sửa người dùng đã xong';
                 header("Location: ?act=list-user");
                 exit();
             } else {

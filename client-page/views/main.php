@@ -1,12 +1,12 @@
-<!-- main.php -->
 
+<!-- main.php -->
 <main>
   <header>
     <div class="banner-content">
       <div class="image-section">
         <!-- Slider -->
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
+     <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="../client-page/images/banner.jpg" class="d-block w-100" alt="Banner 1">
             </div>
@@ -76,13 +76,14 @@
               <div class="product-item text-center">
                 <!-- Hiển thị ảnh sản phẩm -->
                 <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
-                <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
+                <!-- chitiet sp -->
+                <h3 class="title-detail-product"><?= htmlspecialchars($product['ProductName']); ?></h3>
                 <!-- Hiển thị giá sản phẩm -->
                 <p><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
                 <!-- Hiển thị mô tả ngắn -->
                 <p><?= htmlspecialchars($product['Description']); ?></p>
                 <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
+                <a href="?act=productdetail&id=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
               </div>
             </div>
           <?php endforeach; ?>
