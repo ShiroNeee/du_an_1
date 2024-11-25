@@ -60,7 +60,7 @@
             <?php foreach ($latestCategorysHome as $category): ?>
               <li class="nav-item">
                 <!-- Liên kết đến route shopintroduce kèm id -->
-                <a href="?act=danhmucnam&id=<?= urlencode($category['id']); ?>" class="nav-link" >
+                <a href="?act=danhmucnam&id=<?= urlencode($category['categoryID']); ?>" class="nav-link" >
                   <?= htmlspecialchars($category['categoryName'], ENT_QUOTES, 'UTF-8'); ?>
                 </a>
               </li>

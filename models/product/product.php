@@ -12,7 +12,11 @@ class Product
     public function getAllProduct()
     {
         try {
-            $sql = "SELECT * FROM products";
+            $sql = "SELECT u.*, r.statusName, 
+                    c.CategoryName 
+        FROM products u
+        LEFT JOIN status r ON u.status = r.statusID
+        LEFT JOIN categories c ON u.CategoryID = c.CategoryID";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -21,7 +25,7 @@ class Product
         }
     }
     // Thêm sản phẩm 
-    public function postData($ProductName, $Description, $Price, $CategoryID,$status, $image)
+    public function postData($ProductName, $Description, $Price, $CategoryID, $status, $image)
     {
         try {
             $sql = "INSERT INTO products (ProductName, Description, Price, CategoryID, status, image) VALUES (:ProductName, :Description, :Price, :CategoryID, :status, :image)";
@@ -46,7 +50,12 @@ class Product
     public function getDetail($id)
     {
         try {
-            $sql = "SELECT * FROM products WHERE id = :id";
+            $sql = "SELECT u.*, r.statusName, 
+                    c.CategoryName 
+            FROM products u
+            LEFT JOIN status r ON u.status = r.statusID
+            LEFT JOIN categories c ON u.CategoryID = c.CategoryID
+            WHERE u.id = :id";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
@@ -56,7 +65,31 @@ class Product
             return false;
         }
     }
-
+    public function getStatusList()
+    {
+        try {
+            $sql = "SELECT * FROM status";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    public function getCategoryList()
+    {
+        try {
+            $sql = "SELECT * FROM categories";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    
     // Xoá sản phẩm
     public function deleteData($id)
     {
@@ -72,22 +105,22 @@ class Product
     }
 
 
-public function showProductHome($limit = 10)
-{
-    try {
-        // Câu lệnh SQL lấy sản phẩm còn hàng (Status = 1), sắp xếp theo id giảm dần và giới hạn số lượng sản phẩm
-        $sql = "SELECT * FROM products WHERE Status = 1 ORDER BY id DESC LIMIT :limit";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll();
-    } catch (PDOException $e) {
-        echo 'Lỗi: ' . $e->getMessage();
-        return false;
+    public function showProductHome($limit = 10)
+    {
+        try {
+            // Câu lệnh SQL lấy sản phẩm còn hàng (Status = 1), sắp xếp theo id giảm dần và giới hạn số lượng sản phẩm
+            $sql = "SELECT * FROM products WHERE Status = 1 ORDER BY id DESC LIMIT :limit";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
     }
-}
 
-public function getProductsByCategoryId($categoryId)
+    public function getProductsByCategoryId($categoryId)
     {
         $query = "SELECT * FROM products WHERE CategoryID = :categoryId AND status = 1";
         $stmt = $this->conn->prepare($query);
@@ -102,7 +135,7 @@ public function getProductsByCategoryId($categoryId)
         $this->conn = null;
     }
     // add data
-    public function addData($ProductName,$Description,$Price,$CategoryID,$status,$image)
+    public function addData($ProductName, $Description, $Price, $CategoryID, $status, $image)
     {
         try {
             $sql = "INSERT INTO products 
@@ -127,7 +160,7 @@ public function getProductsByCategoryId($categoryId)
         }
     }
     // update data
-    public function updateDataProduct($id,$ProductName,$Description,$Price,$CategoryID,$status,$image)
+    public function updateDataProduct($id, $ProductName, $Description, $Price, $CategoryID, $status, $image)
     {
         try {
             $sql = "UPDATE products SET 
@@ -155,5 +188,4 @@ public function getProductsByCategoryId($categoryId)
             return false;
         }
     }
-    
 }

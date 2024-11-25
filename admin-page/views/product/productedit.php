@@ -41,18 +41,21 @@
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" value="<?= $productDetail['Price'] ?>" class="box" />
         <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" value="<?= $productDetail['Description'] ?>" class="box" />
         <select name="CategoryID" class="box">
-            <option value="" selected>Chọn danh mục</option>
-            <option value="1" <?= $productDetail['CategoryID'] == '1' ? 'selected' : '' ?>>Nam</option>
-            <option value="2" <?= $productDetail['CategoryID'] == '2' ? 'selected' : '' ?>>Nữ</option>
-            <option value="3" <?= $productDetail['CategoryID'] == '3' ? 'selected' : '' ?>>Phụ Kiện</option>
+            <?php foreach ($statusCategory as $category): ?>
+                <option value="<?= $category['CategoryID'] ?>" <?= $productDetail['CategoryID'] == $category['CategoryID'] ? 'selected' : '' ?>>
+                    <?= $category['categoryName'] ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <select name="status" class="box">
-            <option value="" selected>Chọn trạng thái</option>
-            <option value="0" <?= $productDetail['status'] == '0' ? 'selected' : '' ?>>Còn Hàng</option>
-            <option value="1" <?= $productDetail['status'] == '1' ? 'selected' : '' ?>>Hết Hàng</option>
+            <?php foreach ($statusList as $status): ?>
+                <option value="<?= $status['statusID'] ?>" <?= $productDetail['status'] == $status['statusID'] ? 'selected' : '' ?>>
+                    <?= $status['statusName'] ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <input type="file" name="image" class="box" /><br>
-        <td >
+        <td>
             <img src="<?= $productDetail['image']; ?>" alt="Hình ảnh" width="80px" style="margin-left:20px;border-radius: 10px;">
         </td><br>
         <button type="submit" class="edit" style="margin-left:20px">Sửa sản phẩm</button>

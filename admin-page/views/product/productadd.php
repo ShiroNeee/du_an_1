@@ -12,11 +12,13 @@
         margin-left: 20px;
         width: 1170px;
     }
+
     .showErrorMessage ul {
         margin: 0;
         padding: 0;
         list-style-type: none;
     }
+
     .showErrorMessage li {
         margin-bottom: 5px;
     }
@@ -37,16 +39,21 @@
         <input type="text" placeholder="Nhập tên của sản phẩm....." name="ProductName" class="box" />
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" class="box" />
         <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" class="box" />
-        <select name="CategoryID" class="box" >
+        <select name="CategoryID" class="box">
             <option value="choose" disabled selected>Chọn danh mục</option>
-            <option value="1">Nam</option>
-            <option value="2">Nữ</option>
-            <option value="3">Phụ Kiện</option>
+            <?php foreach ($statusCategory as $category): ?>
+                <option value="<?= $category['CategoryID'] ?>">
+                    <?= $category['categoryName'] ?>
+                </option>
+            <?php endforeach; ?>
         </select>
-        <select name="status" class="box" >
-            <option value="" disabled selected>Chọn trạng thái</option>
-            <option value="0">Còn Hàng</option>
-            <option value="1">Hết hàng</option>
+        <select name="status" class="box">
+            <option value="choose" disabled selected>Chọn trạng thái</option>
+            <?php foreach ($statusList as $status): ?>
+                <option value="<?= $status['statusID'] ?>">
+                    <?= $status['statusName'] ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <input type="file" class="box" name="image" />
         <button type="submit" class="add">Thêm sản phẩm</button>
