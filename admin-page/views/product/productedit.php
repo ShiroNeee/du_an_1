@@ -41,9 +41,9 @@
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" value="<?= $productDetail['Price'] ?>" class="box" />
         <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" value="<?= $productDetail['Description'] ?>" class="box" />
         <select name="CategoryID" class="box">
-            <?php foreach ($statusCategory as $category): ?>
-                <option value="<?= $category['CategoryID'] ?>" <?= $productDetail['CategoryID'] == $category['CategoryID'] ? 'selected' : '' ?>>
-                    <?= $category['categoryName'] ?>
+            <?php foreach ($statusCategory as $categories): ?>
+                <option value="<?= $categories['CategoryID'] ?>" <?= $productDetail['CategoryID'] == $categories['CategoryID'] ? 'selected' : '' ?>>
+                    <?= $categories['categoryName'] ?>
                 </option>
             <?php endforeach; ?>
         </select>

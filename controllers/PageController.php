@@ -16,7 +16,7 @@ class PageController
         // Lấy danh sách sản phẩm (12 sản phẩm mới nhất)
         $categoryId = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
         // Lấy danh sách sản phẩm (12 sản phẩm mới nhất)
-        $latestProductsHome = $this->modelProduct->showProductHome(12);
+        $latestProductsHome = $this->modelProduct->showProductHome(limit: 12);
         // Lấy danh sách danh mục
         $latestCategorysHome = $this->modelCategory->showCategories();
         // Nếu có categoryId hợp lệ, lấy sản phẩm theo danh mục

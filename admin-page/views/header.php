@@ -131,7 +131,7 @@
 			<li>
 				<a href="?act=statistic">
 					<i class='bx bxs-doughnut-chart'></i>
-					<span class="text">Thống kê</span>
+					<span class="text">Thống kê số lượng sản phẩm</span>
 				</a>
 			</li>
 			<li>

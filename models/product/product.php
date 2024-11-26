@@ -104,7 +104,7 @@ class Product
         }
     }
 
-
+    // các sản phẩm mới nhất
     public function showProductHome($limit = 10)
     {
         try {
