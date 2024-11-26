@@ -24,12 +24,12 @@ class CategoryManager
     }
 
     // Lấy tên danh mục dựa trên ID
-    public function getCategoryName($categoryID)
+    public function getCategoryName($CategoryID)
     {
         try {
-            $sql = "SELECT * FROM categories WHERE categoryID = :categoryID";
+            $sql = "SELECT * FROM categories WHERE CategoryID = :CategoryID";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
+            $stmt->bindParam(':CategoryID', $CategoryID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch();
         } catch (PDOException $e) {
@@ -54,12 +54,12 @@ class CategoryManager
     }
 
     // Xóa danh mục theo ID
-    public function deleteCategory($categoryID)
+    public function deleteCategory($CategoryID)
     {
         try {
-            $sql = "DELETE FROM categories WHERE categoryID = :categoryID";
+            $sql = "DELETE FROM categories WHERE CategoryID = :CategoryID";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
+            $stmt->bindParam(':CategoryID', $CategoryID, PDO::PARAM_INT);
             return $stmt->execute();
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
@@ -68,12 +68,12 @@ class CategoryManager
     }
 
     // Lấy thông tin chi tiết danh mục theo ID
-    public function getCategoryDetail($categoryID)
+    public function getCategoryDetail($CategoryID)
     {
         try {
-            $sql = "SELECT * FROM categories WHERE categoryID = :categoryID";
+            $sql = "SELECT * FROM categories WHERE CategoryID = :CategoryID";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
+            $stmt->bindParam(':CategoryID', $CategoryID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch();
         } catch (PDOException $e) {
@@ -83,13 +83,13 @@ class CategoryManager
     }
 
     // Cập nhật danh mục
-    public function updateCategory($categoryID, $categoryName)
+    public function updateCategory($CategoryID, $categoryName)
     {
         try {
-            $sql = "UPDATE categories SET categoryName = :categoryName WHERE categoryID = :categoryID";
+            $sql = "UPDATE categories SET categoryName = :categoryName WHERE CategoryID = :CategoryID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':categoryName', $categoryName);
-            $stmt->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
+            $stmt->bindParam(':CategoryID', $CategoryID, PDO::PARAM_INT);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -101,17 +101,17 @@ class CategoryManager
 
     public function showCategories()
     {
-        $sql = "SELECT categoryID, categoryName FROM categories";
+        $sql = "SELECT CategoryID, categoryName FROM categories";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Lấy thông tin danh mục theo ID
-    public function getCategoryById($categoryID)
+    public function getCategoryById($CategoryID)
     {
-        $query = "SELECT * FROM categories WHERE categoryID = :categoryID";
+        $query = "SELECT * FROM categories WHERE CategoryID = :CategoryID";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':categoryID', $categoryID, PDO::PARAM_INT);
+        $stmt->bindParam(':CategoryID', $CategoryID, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

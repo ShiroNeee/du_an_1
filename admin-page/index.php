@@ -25,12 +25,13 @@ require_once '../controllers/category/CategoryController.php';
 require_once '../controllers/user/UserController.php';
 // logout
 require_once '../controllers/LoginController.php';
-// mesage
-require_once '../controllers/MessageShopController.php';
+require_once '../controllers/OrderController.php';
+
 // Phải require các file model mà controller sử dụng
 require_once '../models/category.php';
 require_once '../models/users/user.php';
 require_once '../models/product/product.php';
+require_once '../models/Order.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -39,12 +40,11 @@ $router->add('/', 'AdminController', 'index');
 require_once '../routes/category/category.php';
 //product
 require_once '../routes/product/product.php';
-// mesage
-require_once '../routes/messageshop.php';
-
 // user
 require_once '../routes/user/user.php';
 // logout
 require_once '../routes/logout.php';
+//
+require_once '../routes/order.php';
 // Xử lí router
 $router->dispatch($act);

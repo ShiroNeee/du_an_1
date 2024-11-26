@@ -52,8 +52,8 @@ class CategoryController
     // Hiển thị trang chỉnh sửa danh mục
     public function editController()
     {
-        $id = $_GET['id'];
-        $categoryDetail = $this->modelCategory->getCategoryDetail($id);
+        $CategoryID = $_GET['id'];
+        $categoryDetail = $this->modelCategory->getCategoryDetail($CategoryID);
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/category/categoryedit.php'; // main
         require_once '../admin-page/views/footer.php';
@@ -63,7 +63,7 @@ class CategoryController
     public function update()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id'];
+            $CategoryID = $_POST['id'];
             $categoryName = $_POST['categoryName'];
             $error = [];
 
@@ -71,16 +71,16 @@ class CategoryController
                 $error['categoryName'] = 'Bạn cần nhập tên danh mục';
             }
 
-            $categoryDetail = $this->modelCategory->getCategoryDetail($id);
+            $categoryDetail = $this->modelCategory->getCategoryDetail($CategoryID);
             if (empty($error) && $categoryDetail) {
-                $this->modelCategory->updateCategory($id, $categoryName);
+                $this->modelCategory->updateCategory($CategoryID, $categoryName);
                 unset($_SESSION['error']);
                 $_SESSION['success'] = 'Sửa danh mục sản phẩm thah công';
                 header("Location: ?act=list-category"); // Điều hướng về trang danh sách danh mục
                 exit();
             } else {
                 $_SESSION['error'] = $error;
-                header("Location: ?act=edit-category&id=$id");
+                header("Location: ?act=edit-category&id=$CategoryID");
                 exit();
             }
         }
@@ -90,9 +90,9 @@ class CategoryController
     public function destroy()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id'];
-            $categoryDetail = $this->modelCategory->getCategoryDetail($id);
-            $deleteCategory = $this->modelCategory->deleteCategory($id);
+            $CategoryID = $_POST['id'];
+            $categoryDetail = $this->modelCategory->getCategoryDetail($CategoryID);
+            $deleteCategory = $this->modelCategory->deleteCategory($CategoryID);
 
             if ($deleteCategory) {
                 $_SESSION['success'] = 'Xóa danh mục sản phẩm thah công';

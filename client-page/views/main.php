@@ -1,5 +1,4 @@
 <!-- main.php -->
-
 <main>
   <header>
     <div class="banner-content">
@@ -29,43 +28,32 @@
       </div>
     </div>
   </header>
-
- 
-
-  <section class="categories py-5"> 
-    <div class="container">
-      <h2>Sản phẩm mới (New Products)</h2>
-      <div class="row row-cols-1 row-cols-md-4 g-4">
-        <div class="col">
-          <a href="?act=danhmucnam">
-            <div class="category-item">
-              <img src="../client-page/images/cate-2.png" class="img-fluid" alt="Category 1">
-            </div>
-          </a>
+  <div class="container">
+    <div class="d-flex justify-content-around align-items-start my-3">
+      <div class="d-flex">
+        <i class="fa-solid fa-comments-dollar me-3"></i>
+        <div>
+          <h4>Thanh toán khi nhận hàng (COD)</h4>
+          <p class="text-muted mb-1">Giao hàng toàn quốc.</p>
         </div>
-        <div class="col">
-          <a href="?act=danhmucnu">
-            <div class="category-item">
-              <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 2">
-            </div>
-          </a>
+      </div>
+      <div class="d-flex ">
+        <i class="fa-solid fa-truck-moving me-3"></i>
+        <div>
+          <h4>Miễn phí giao hàng</h4>
+          <p class="text-muted mb-1">Với đơn hàng trên 599.000đ.</p>
         </div>
-        <div class="col">
-          <a href="?act=danhmucspmoi">
-            <div class="category-item">
-              <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 3">
-            </div>
-          </a>
-        </div>
-        <div class="col">
-          <a href="?act=danhmuctreem">
-            <div class="category-item">
-              <img src="../client-page/images/cate-1.png" class="img-fluid" alt="Category 4">
-            </div>
-          </a>
+      </div>
+      <div class="d-flex ">
+        <i class="fa-solid fa-box-open me-3"></i>
+        <div>
+          <h4>Đổi hàng miễn phí</h4>
+          <p class="text-muted mb-1">Trong 15 ngày kể từ ngày mua.</p>
         </div>
       </div>
     </div>
+  </div>
+  <hr>
   <section class="products py-5">
     <div class="container">
       <h2>Sản phẩm mới nhất</h2>
@@ -78,9 +66,8 @@
                 <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
                 <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
                 <!-- Hiển thị giá sản phẩm -->
-                <p><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
-                <!-- Hiển thị mô tả ngắn -->
-                <p><?= htmlspecialchars($product['Description']); ?></p>
+                <p class="fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
+
                 <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
                 <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
               </div>
@@ -95,7 +82,44 @@
       </div>
     </div>
   </section>
+  <hr class="container pt-5">
+  <div class="container">
+    <a href="#">
+      <img src="../client-page/images/img sale.png" class="d-block w-100">
+    </a>
+  </div>
 
-
-
+  <section class="products py-5">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <?php if ($latestProductsHome && count($latestProductsHome) > 0): ?>
+          <?php foreach ($latestProductsHome as $product): ?>
+            <div class="col">
+              <div class="product-item text-center">
+                <!-- Hiển thị ảnh sản phẩm -->
+                <div class="card position-relative">
+                  <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
+                  <form method="POST" action="?act=cartshop">
+                    <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
+                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
+                    <button type="submit"
+                      class="btn btn-light position-absolute bottom-0 start-50 translate-middle-x w-75 shadow">
+                      Thêm nhanh vào giỏ
+                    </button>
+                  </form>
+                </div>
+                <a href="=<?= $product['id']; ?>" style="text-decoration: none;">
+                  <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
+                </a>
+                <!-- Hiển thị giá sản phẩm -->
+                <p class="fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p>Hiện tại chưa có sản phẩm mới.</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
 </main>

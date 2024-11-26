@@ -129,9 +129,9 @@
 				</a>
 			</li>
 			<li>
-				<a href="?act=messageshop">
-					<i class='bx bxs-message-dots'></i>
-					<span class="text">Tin nhắn(message)</span>
+				<a href="?act=list-order">
+					<i class='bx bxs-doughnut-chart'></i>
+					<span class="text">Quản lý đơn hàng</span>
 				</a>
 			</li>
 			<li>
