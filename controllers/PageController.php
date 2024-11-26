@@ -25,6 +25,18 @@ class PageController
         } else {
             $productsList = [];  // Nếu không có categoryId, thì không có sản phẩm
         }
+        $id = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+
+    // Lấy danh sách các danh mục
+    $latestCategorysHome = $this->modelCategory->showCategories();
+
+    // Nếu có `id`, lấy chi tiết sản phẩm
+    if ($id) {
+        $product = $this->modelProduct->getDetail($id);
+    } else {
+        // Nếu không có `id`, có thể hiển thị thông báo lỗi hoặc một sản phẩm mặc định
+        $product = null;  // Hoặc có thể lấy một sản phẩm mặc định ở đây
+    }
         // Gửi dữ liệu cho view
         require_once '../client-page/views/header.php';  // Header (danh mục)
         require_once '../client-page/views/main.php';  // Hiển thị sản phẩm
@@ -65,4 +77,5 @@ class PageController
             exit();
         }
     }
+
 }

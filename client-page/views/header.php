@@ -99,7 +99,6 @@
               <?php endif; ?>
               <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
               <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
-
               <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
             </ul>
           </div>
