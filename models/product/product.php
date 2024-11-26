@@ -89,7 +89,30 @@ class Product
             return false;
         }
     }
-    
+    public function searchProductsByName($name)
+{
+    try {
+        // Truy vấn tìm các sản phẩm có tên chứa từ khóa tìm kiếm
+        $sql = "SELECT * 
+        FROM products 
+        WHERE ProductName LIKE :name AND status = 1";
+        $stmt = $this->conn->prepare($sql);
+
+        // Tạo chuỗi từ khóa tìm kiếm (thêm dấu % trước và sau để tìm kiếm theo phần)
+        $searchTerm = "%" . $name . "%";
+        $stmt->bindParam(':name', $searchTerm, PDO::PARAM_STR);
+
+        // Thực thi câu truy vấn
+        $stmt->execute();
+
+        // Trả về danh sách sản phẩm tìm được
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo 'Lỗi: ' . $e->getMessage();
+        return false;
+    }
+}
+
     // Xoá sản phẩm
     public function deleteData($id)
     {

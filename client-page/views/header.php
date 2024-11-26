@@ -60,7 +60,7 @@
             <?php foreach ($latestCategorysHome as $category): ?>
               <li class="nav-item">
                 <!-- Liên kết đến route shopintroduce kèm id -->
-                <a href="?act=danhmucnam&id=<?= urlencode($category['categoryID']); ?>" class="nav-link" >
+                <a href="?act=danhmucnam&id=<?= urlencode($category['categoryID']); ?>" class="nav-link">
                   <?= htmlspecialchars($category['categoryName'], ENT_QUOTES, 'UTF-8'); ?>
                 </a>
               </li>
@@ -76,8 +76,38 @@
       <div class="header-icons d-flex align-items-center gap-3">
         <!-- Search Form -->
         <div class="search-container">
-          <form class="d-flex" role="search" method="POST" action="?act=search">
-            <input type="text" class="form-control" placeholder="Tìm kiếm" id="search-input" required />
+          <form class="d-flex" role="search" method="POST">
+          <button class="btn btn-link dropdown-toggle" type="button" id="search-dropdown" data-bs-toggle="dropdown" style="text-decoration: none;">
+            Kết quả tìm kiếm
+          </button>
+          <!-- Dropdown hiển thị kết quả tìm kiếm -->
+          <?php if (isset($_POST['search'])): ?>
+            <?php
+            $searchQuery = $_POST['search_query'];
+            $searchResults = $this->modelProduct->searchProductsByName($searchQuery); // Giả sử phương thức tìm kiếm đã có
+            ?>
+            <div class="dropdown">
+              <ul class="dropdown-menu">
+                <?php if (!empty($searchResults)): ?>
+                  <?php foreach ($searchResults as $product): ?>
+                    <div class="card-body">
+                      <a href="=<?= $product['id']; ?>"class="d-flex align-items-center gap-3 text-decoration-none">
+                        <img src="<?= $product['image']; ?>" width="80px" />
+                        <br>
+                        <td class="my-3">Tên: <?= $product['ProductName']; ?></td>
+                        <br>
+                        <td>Giá: <?= $product['Price']; ?> đ</td>
+                        <hr>
+                      </a>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                  <li class="dropdown-item">Không có sản phẩm nào phù hợp với tìm kiếm của bạn.</li>
+                <?php endif; ?>
+              </ul>
+            </div>
+          <?php endif; ?>
+            <input type="text" class="form-control" placeholder="Tìm kiếm" name="search_query" id="search-input" required />
             <button class="btn btn-link" name="search" type="submit">
               <i class="fa fa-search"></i>
             </button>
@@ -109,7 +139,6 @@
 
         <a href="?act=shopintroduce" class="fa fa-home"></a>
       </div>
-    </div>
     </div>
   </header>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
