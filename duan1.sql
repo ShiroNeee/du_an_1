@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 25, 2024 at 02:01 PM
+-- Generation Time: Nov 26, 2024 at 09:55 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -64,11 +64,21 @@ CREATE TABLE `orderdetails` (
 
 CREATE TABLE `orders` (
   `OrderID` int NOT NULL,
-  `UserID` int DEFAULT NULL,
-  `OrderDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `TotalAmount` decimal(10,2) DEFAULT NULL,
-  `Status` varchar(50) DEFAULT NULL
+  `UserID` int NOT NULL,
+  `OrderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TotalAmount` decimal(10,2) NOT NULL,
+  `Status` int NOT NULL,
+  `ProductID` int NOT NULL,
+  `Quantity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`OrderID`, `UserID`, `OrderDate`, `TotalAmount`, `Status`, `ProductID`, `Quantity`) VALUES
+(1, 44, '2024-11-26 09:40:07', '100000.00', 1, 9, 1),
+(2, 44, '2024-11-25 09:40:07', '100000.00', 2, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -92,9 +102,10 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`id`, `ProductName`, `Description`, `Price`, `CategoryID`, `status`, `image`) VALUES
 (1, 'Mô tả sản phẩm', 'Mô tả sản phẩm như nào', 100, 2, 1, '../admin-page/img/product/product_673ea5aec859e0.85587944.png'),
-(9, 'Tên sản phẩm', 'Tên sản phẩmTên sản phẩmTên sản phẩm', 123456789, 1, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
+(9, 'Tên sản phẩm', 'Áo polo bé trai, chất liệu cotton pha, bề mặt kiểu. Dáng oversize, hình in thể thaocá tính cho bé trai. Giặt máy ở chế độ nhẹ, nhiệt độ thường. Không sử dụng hóa chất tẩy có chứa Clo. Phơi trong bóng mát. Sấy khô ở nhiệt độ thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản phẩm cùng màu. Không là lên chi tiết trang trí.', 10000000, 1, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
 (10, 'Mô tả sản phẩm', 'Mô tả sản phẩm', 123123123, 3, 1, '../admin-page/img/product/product_673ea5b9e9a110.24374384.png'),
-(11, 'abced', 'Mô tả sản phẩm như nào', 123123123, 4, 1, '../admin-page/img/product/product_673ea5b38f4489.34314706.png');
+(11, 'Tên sản phẩm', 'Mô tả sản phẩm như nào', 123123123, 4, 1, '../admin-page/img/product/product_673ea61f6771d1.10674289.png'),
+(12, 'Mô tả sản phẩm', 'Mô tả sản phẩm như nào', 12321312, 1, 1, '../admin-page/img/product/product_673ea63b7dc5a9.42713872.png');
 
 -- --------------------------------------------------------
 
@@ -152,6 +163,27 @@ INSERT INTO `status` (`statusID`, `statusName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `statusorder`
+--
+
+CREATE TABLE `statusorder` (
+  `OrderID` int NOT NULL,
+  `statusName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `statusorder`
+--
+
+INSERT INTO `statusorder` (`OrderID`, `statusName`) VALUES
+(1, 'Chưa thanh toán'),
+(2, 'Đang chuẩn bị hàng'),
+(3, 'Đang giao hàng'),
+(4, 'Thành công');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -197,7 +229,10 @@ ALTER TABLE `orderdetails`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`OrderID`),
-  ADD KEY `UserID` (`UserID`);
+  ADD UNIQUE KEY `Status_2` (`Status`),
+  ADD UNIQUE KEY `ProductID` (`ProductID`),
+  ADD KEY `UserID` (`UserID`),
+  ADD KEY `Status` (`OrderID`) USING BTREE;
 
 --
 -- Indexes for table `products`
@@ -229,6 +264,12 @@ ALTER TABLE `status`
   ADD PRIMARY KEY (`statusID`);
 
 --
+-- Indexes for table `statusorder`
+--
+ALTER TABLE `statusorder`
+  ADD PRIMARY KEY (`OrderID`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -244,7 +285,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `CategoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=514;
+  MODIFY `CategoryID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=517;
 
 --
 -- AUTO_INCREMENT for table `orderdetails`
@@ -256,13 +297,13 @@ ALTER TABLE `orderdetails`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int NOT NULL AUTO_INCREMENT;
+  MODIFY `OrderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -281,6 +322,12 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `status`
   MODIFY `statusID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `statusorder`
+--
+ALTER TABLE `statusorder`
+  MODIFY `OrderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -303,7 +350,9 @@ ALTER TABLE `orderdetails`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`Status`) REFERENCES `statusorder` (`OrderID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `products`
