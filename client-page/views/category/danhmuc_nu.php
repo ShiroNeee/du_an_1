@@ -40,3 +40,25 @@
         </div>
     </div>
 <?php endif; ?>
+
+<!-- //////////// -->
+<h3>Kích Cỡ và Số Lượng Tồn Kho</h3>
+    
+    <?php if ($productSizes): ?>
+        <ul>
+            <?php foreach ($productSizes as $size): ?>
+                <li>
+                    <strong><?php echo htmlspecialchars($size['Size']); ?></strong> - 
+                    Số lượng tồn kho: <?php echo htmlspecialchars($size['StockQuantity']); ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>Không có kích cỡ nào cho sản phẩm này.</p>
+    <?php endif; ?>
+
+
+
+
+
+

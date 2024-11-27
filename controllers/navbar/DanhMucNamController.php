@@ -11,7 +11,6 @@ class DanhMucNamController
 public function danhmucnamController() {
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $categoryId = $_GET['id'];
-
         // Gọi model để lấy dữ liệu danh mục
         $categoryInfo = $this->modelCategory->getCategoryById($categoryId);
         // Lấy danh sách danh mục

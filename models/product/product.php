@@ -65,6 +65,9 @@ class Product
             return false;
         }
     }
+    
+    // Model SizeModel
+
     public function getStatusList()
     {
         try {
@@ -188,4 +191,21 @@ class Product
             return false;
         }
     }
+    // Lấy thông tin sản phẩm theo ID
+   // Model: ProductModel.php
+// ProductModel.php
+public function getProductSizes($productID) {
+    $query = "
+        SELECT s.Size, s.StockQuantity
+        FROM sizes s
+        WHERE s.ProductID = :productID
+    ";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Trả về danh sách kích cỡ và số tồn kho cho sản phẩm
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

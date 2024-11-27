@@ -2,11 +2,12 @@
 class ProductController
 {
     public $modelProduct;
-
+    public $modelSizes;
     // Kết nối đến file model
     public function __construct()
     {
         $this->modelProduct = new Product();
+        $this->modelSizes = new SizeModel();
     }
 
     // hiển thị thay phần main

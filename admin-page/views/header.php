@@ -152,6 +152,12 @@
 					<span class="text">Quản lý người dùng</span>
 				</a>
 			</li>
+			<li>
+				<a href="?act=sizes-list">
+					<i class='bx bx-list-ul'></i>
+					<span class="text">Quản lý biến thể</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
