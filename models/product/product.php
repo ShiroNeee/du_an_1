@@ -132,6 +132,14 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getProductById($productId) {
+        $query = "SELECT * FROM products WHERE id = :productId AND status = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Hủy kết nối
     public function __destruct()
     {
@@ -192,8 +200,6 @@ class Product
         }
     }
     // Lấy thông tin sản phẩm theo ID
-   // Model: ProductModel.php
-// ProductModel.php
 public function getProductSizes($productID) {
     $query = "
         SELECT s.Size, s.StockQuantity
@@ -207,5 +213,7 @@ public function getProductSizes($productID) {
     // Trả về danh sách kích cỡ và số tồn kho cho sản phẩm
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Lấy danh sách sản phẩm theo CategoryID
 
 }

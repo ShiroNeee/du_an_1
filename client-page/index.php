@@ -21,8 +21,8 @@ require_once '../controllers/navbar/CartShopController.php';
 // danh muc nav
 require_once '../controllers/navbar/DanhMucTreEmController.php';
 require_once '../controllers/navbar/DanhMucSPMoiController.php';
-require_once '../controllers/navbar/DanhMucNamController.php';
-require_once '../controllers/navbar/DanhMucNuController.php';
+require_once '../controllers/navbar/DanhMucController.php';
+require_once '../controllers/navbar/DetailController.php';
 // 
 require_once '../models/users/user.php';
 //
@@ -52,8 +52,8 @@ require_once '../routes/navbar/shopintroduce.php';
 require_once '../routes/navbar/cartshop.php';
 // danh muc nav
 require_once '../routes/navbar/danhmuc_treem.php';
-require_once '../routes/navbar/danhmuc_nam.php';
-require_once '../routes/navbar/danhmuc_nu.php';
+require_once '../routes/navbar/danhmuc.php';
+require_once '../routes/navbar/detail.php';
 require_once '../routes/navbar/danhmuc_spmoi.php';
 
 $router->dispatch($act);
