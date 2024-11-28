@@ -144,6 +144,54 @@
         .social-share a:hover {
             color: #2980b9;
         }
+        /* Phần CSS cho sản phẩm liên quan */
+.related-products {
+    margin-top: 40px;
+}
+
+.related-products h4 {
+    color: #007bff;
+    margin-bottom: 20px;
+}
+
+.related-products .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Khoảng cách giữa các sản phẩm */
+    justify-content: space-between; /* Cân chỉnh sản phẩm trong container */
+}
+
+.related-products .product-item {
+    width: 23%; /* Mỗi sản phẩm chiếm 1/4 chiều rộng */
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.related-products .product-item:hover {
+    transform: scale(1.05);
+}
+
+.related-products .product-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 5px;
+}
+
+.related-products .product-item h5 {
+    font-size: 1.1rem;
+    color: #007bff;
+    margin-top: 10px;
+}
+
+.related-products .product-item p {
+    font-size: 1rem;
+    color: #333;
+}
+
     </style>
 
     <div class="container mt-5">
@@ -162,26 +210,35 @@
                 <!-- Đánh giá -->
                 <!-- Danh sách kích thước và tồn kho -->
                 <div class="sizes-list mt-4">
-                    <h4><strong>Kích Cỡ và Số Lượng Tồn Kho</strong></h4>
-                    <?php if (!empty($productSizes) && is_array($productSizes)): ?>
-                        <ul>
-                            <?php foreach ($productSizes as $size): ?>
-                                <li>
-                                    <span>
-                                        <strong><?= htmlspecialchars($size['Size'] ?? 'Không xác định'); ?></strong> - 
-                                        Số lượng tồn kho: <?= htmlspecialchars($size['StockQuantity'] ?? 0); ?>
-                                    </span>
-                                    <a href="?ac=?act=cartshop=product_id=<?= urlencode($product['id']); ?>&size=<?= urlencode($size['Size']); ?>&stock=<?= urlencode($size['StockQuantity']); ?>" 
-                                       class="btn-add-to-cart">
-                                        <i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p>Không có kích cỡ nào cho sản phẩm này.</p>
-                    <?php endif; ?>
-                </div>
+    <h4><strong>Kích Cỡ và Số Lượng Tồn Kho</strong></h4>
+    <?php if (!empty($productSizes) && is_array($productSizes)): ?>
+        <ul>
+            <?php 
+            $validSizes = array_filter($productSizes, function($size) {
+                return isset($size['StockQuantity']) && $size['StockQuantity'] > 0; // Chỉ giữ các size có số lượng dương
+            });
+
+            if (!empty($validSizes)):
+                foreach ($validSizes as $size): ?>
+                    <li>
+                        <span>
+                            <strong><?= htmlspecialchars($size['Size'] ?? 'Không xác định'); ?></strong> - 
+                            Số lượng tồn kho: <?= htmlspecialchars($size['StockQuantity'] ?? 0); ?>
+                        </span>
+                        <a href="?ac=?act=cartshop=product_id=<?= urlencode($product['id']); ?>&size=<?= urlencode($size['Size']); ?>&stock=<?= urlencode($size['StockQuantity']); ?>" 
+                           class="btn-add-to-cart">
+                            <i class="fa fa-cart-plus"></i> Thêm vào giỏ hàng
+                        </a>
+                    </li>
+                <?php endforeach; 
+            else: ?>
+                <p>Không có kích cỡ nào cho sản phẩm này.</p>
+            <?php endif; ?>
+        </ul>
+    <?php else: ?>
+        <p>Không có kích cỡ nào cho sản phẩm này.</p>
+    <?php endif; ?>
+</div>
                 
                 <!-- Mô tả sản phẩm -->
                 <div class="product-description">
@@ -208,4 +265,18 @@
 <?php endif; ?>
 
 
-
+<div class="related-products">
+    <h4>Có thể bạn quan tâm</h4>
+    <div class="product-container">
+        <?php foreach ($randomProducts as $product): ?>
+            <div class="product-item">
+                <img src="<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['ProductName']) ?>">
+                <h5><?= htmlspecialchars($product['ProductName']) ?></h5>
+                <p><?= number_format($product['Price'], 0, ',', '.') ?> VND</p>
+                <a href="?act=detail&id=<?= $product['id'] ?>" class="btn-add-to-cart">
+                    Xem chi tiết
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>

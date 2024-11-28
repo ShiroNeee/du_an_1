@@ -16,6 +16,7 @@ class DetailController
 
     public function detailController()
     {
+        $randomProducts = $this->modelProduct->getRandomProducts();
         // Lấy danh sách danh mục
         $latestCategorysHome = $this->modelCategory->showCategories();
         // Kiểm tra có tham số `id` trong URL không và lấy sản phẩm tương ứng

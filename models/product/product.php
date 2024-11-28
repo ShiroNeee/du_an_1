@@ -215,5 +215,15 @@ public function getProductSizes($productID) {
 }
 
 // Lấy danh sách sản phẩm theo CategoryID
+public function getRandomProducts($limit = 4)
+    {
+        $query = "SELECT * FROM products ORDER BY RAND() LIMIT :limit"; // Truy vấn trực tiếp bảng "products"
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":limit", $limit, PDO::PARAM_INT); // Gắn số lượng sản phẩm cần lấy
+        $stmt->execute();
+
+        // Trả về kết quả dưới dạng mảng
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
