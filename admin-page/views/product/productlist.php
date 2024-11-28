@@ -55,7 +55,7 @@
         </div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-    
+
     <div class="table-container">
         <table style="text-align: left;">
             <thead>
@@ -86,7 +86,7 @@
                                 : htmlspecialchars($product['Description']);
                             ?>
                         </td>
-                        <td style="color: <?= $product['status'] == 1 ? 'blue' : 'red'; ?>;">
+                        <td style="color: <?= $product['status'] == 1 ? 'blue' : 'red'; ?>;font-size: 20px;">
                             <?= $product['statusName']; ?>
                         </td>
                         <td>

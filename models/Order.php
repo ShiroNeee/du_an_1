@@ -49,7 +49,54 @@ class Order
             return 0;
         }
     }
+    public function getTotalQuantity()
+    {
+        try {
+            // Truy vấn để tính tổng số lượng của tất cả đơn hàng
+            $sql = "SELECT SUM(Quantity) AS totalQuantity FROM orders";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // Trả về tổng số lượng
+            return $result['totalQuantity'];
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return 0;
+        }
+    }
+    public function getTotalQuantityAfterPayment()
+    {
+        try {
+            // Truy vấn để tính tổng số lượng của các đơn hàng có trạng thái thành công (giả sử trạng thái "thành công" là 3)
+            $sql = "SELECT SUM(Quantity) AS totalQuantity FROM orders WHERE Status = 3";  // Trạng thái = 3 là đã thanh toán thành công
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Trả về tổng số lượng
+            return $result['totalQuantity'];
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return 0;
+        }
+    }
+    public function doanhThu()
+    {
+        try {
+            // Truy vấn để tính tổng tiền của các đơn hàng có trạng thái thành công (giả sử trạng thái "thành công" là 3)
+            $sql = "SELECT SUM(TotalAmount) AS totalRevenue FROM orders WHERE Status = 3";  // Trạng thái = 3 là đã thanh toán thành công
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Trả về tổng doanh thu
+            return $result['totalRevenue'];
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return 0;
+        }
+    }
     //Lấy ra chi tiết sản phẩm oder theo id
     public function getOrderDetail($OrderID)
     {

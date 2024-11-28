@@ -19,10 +19,18 @@ class OrderController
         // Lấy dữ liệu đơn hàng với phân trang
         $listOrders = $this->modelOrder->getAllOrders($limit, $offset);
 
+        $totalQuantityAfterPayment = $this->modelOrder->getTotalQuantityAfterPayment();
+        $doanhThu = $this->modelOrder->doanhThu();
         // Lấy tổng số đơn hàng để tính toán số trang
         $totalOrders = $this->modelOrder->getTotalOrders();
         $totalPages = ceil($totalOrders / $limit);
 
+        // Truyền tổng số đơn hàng tới trang AdminController
+        $_SESSION['totalOrders'] = $totalOrders; // Lưu vào session
+        $_SESSION['totalQuantityAfterPayment'] = $totalQuantityAfterPayment;
+        $_SESSION['totalQuantity'] = $this->modelOrder->getTotalQuantity(); // Tổng số lượng đơn hàng
+        $_SESSION['doanhThu'] = $this->modelOrder->doanhThu();
+        
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/Order/order.php'; // main
         require_once '../admin-page/views/footer.php';

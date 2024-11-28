@@ -71,7 +71,10 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($listOrders as $index => $orders) : ?>
+                <?php $totalQuantity = 0;  // Khởi tạo biến để lưu tổng số lượng
+                foreach ($listOrders as $index => $orders) :
+                    $totalQuantity += $orders['Quantity'];  // Cộng dồn số lượng 
+                ?>
                     <tr>
                         <td><?= $index + 1; ?></td>
                         <td><?= $orders['name']; ?></td>
@@ -81,7 +84,12 @@
                         </td>
                         <td><?= $orders['OrderDate']; ?></td>
                         <td><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
-                        <td><?= $orders['statusName']; ?></td>
+                        <td style="color:
+                        <?= $orders['Status'] == 3 ? 'blue' : ($orders['Status'] == 1 ||
+                            $orders['Status'] == 2 ? '#9C9900' : 'red');
+                        ?>;font-size: 20px;">
+                            <?= $orders['statusName']; ?>
+                        </td>
                         <td><?= $orders['Quantity']; ?></td>
                         <td>
                             <a href="?act=edit-order&id=<?= $orders['OrderID']; ?>">
