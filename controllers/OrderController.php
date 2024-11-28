@@ -11,7 +11,18 @@ class OrderController
 
     public function index()
     {
-        $listOrders = $this->modelOrder->getAllOrders();
+        // Xác định số lượng kết quả mỗi trang và trang hiện tại
+        $limit = 5; // Số đơn hàng mỗi trang
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($currentPage - 1) * $limit;
+
+        // Lấy dữ liệu đơn hàng với phân trang
+        $listOrders = $this->modelOrder->getAllOrders($limit, $offset);
+
+        // Lấy tổng số đơn hàng để tính toán số trang
+        $totalOrders = $this->modelOrder->getTotalOrders();
+        $totalPages = ceil($totalOrders / $limit);
+
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/Order/order.php'; // main
         require_once '../admin-page/views/footer.php';
@@ -58,7 +69,7 @@ class OrderController
             // Lấy dữ liệu từ form
             $OrderID = $_POST['OrderID'];
             $UserID = $_POST['UserID'];
-            $OrderDate = $_POST['OrderDate'];
+            $OrderDate = date('Y-m-d H:i:s');
             $TotalAmount = $_POST['TotalAmount']; // không cần thiết khi tính tổng lại
             $Status = $_POST['Status'];
             $ProductID = $_POST['ProductID'];

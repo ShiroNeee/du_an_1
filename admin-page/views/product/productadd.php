@@ -38,7 +38,7 @@
         <?php endif; ?>
         <input type="text" placeholder="Nhập tên của sản phẩm....." name="ProductName" class="box" />
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" class="box" />
-        <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" class="box" />
+        <textarea placeholder="Mô tả chi tiết về sản phẩm....." name="Description" class="box"></textarea>
         <select name="CategoryID" class="box">
             <option value="choose" disabled selected>Chọn danh mục</option>
             <?php foreach ($statusCategory as $category): ?>

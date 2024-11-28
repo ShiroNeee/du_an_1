@@ -42,7 +42,7 @@
         <input type="hidden" name="id" value="<?= $productDetail['id'] ?>">
         <input type="text" placeholder="Nhập tên của sản phẩm....." name="ProductName" value="<?= $productDetail['ProductName'] ?>" class="box" />
         <input type="number" placeholder="Nhập giá thành sản phẩm....." name="Price" value="<?= $productDetail['Price'] ?>" class="box" />
-        <input type="text" placeholder="Mô tả chi tiết về sản phẩm....." name="Description" value="<?= $productDetail['Description'] ?>" class="box" />
+        <textarea name="Description" placeholder="Nhập mô tả ....." class="box"><?= htmlspecialchars($productDetail['Description']) ?></textarea> 
         <select name="CategoryID" class="box">
             <?php foreach ($statusCategory as $category): ?>
                 <option value="<?= $category['CategoryID'] ?>" <?= $productDetail['CategoryID'] == $category['CategoryID'] ? 'selected' : '' ?>>

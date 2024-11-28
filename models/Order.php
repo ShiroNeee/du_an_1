@@ -10,7 +10,7 @@ class Order
     }
 
     // Lấy tất cả danh mục
-    public function getAllOrders()
+    public function getAllOrders($limit, $offset)
     {
         try {
             $sql = "SELECT u.*, r.name, 
@@ -19,8 +19,17 @@ class Order
             FROM orders u
             LEFT JOIN statusorder c ON u.Status = c.OrderID
             LEFT JOIN users r ON u.UserID = r.id
-            LEFT JOIN products p ON u.ProductID = p.id";
+            LEFT JOIN products p ON u.ProductID = p.id
+            ORDER BY CASE 
+            WHEN c.OrderID = 3 THEN 1  -- Trạng thái thành công (OrderID = 3) lên đầu
+            WHEN c.OrderID = 2 THEN 2  -- Trạng thái đang giao hàng (OrderID = 2) ở giữa
+            WHEN c.OrderID = 1 THEN 3  -- Trạng thái đang chuẩn bị hàng (OrderID = 1) ở dưới 
+            ELSE 4                     -- Các trạng thái khác (OrderID khác) ở dưới nữa
+            END, u.OrderID DESC  -- Sắp xếp theo OrderID của đơn hàng (giảm dần)
+            LIMIT :limit OFFSET :offset";
             $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -28,6 +37,19 @@ class Order
             return [];
         }
     }
+    public function getTotalOrders()
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM orders";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return 0;
+        }
+    }
+
     //Lấy ra chi tiết sản phẩm oder theo id
     public function getOrderDetail($OrderID)
     {

@@ -12,12 +12,21 @@ class ProductController
     // hiển thị thay phần main
     public function index()
     {
-        $listProducts = $this->modelProduct->getAllProduct();
+        // Xác định số sản phẩm trên mỗi trang và trang hiện tại
+        $limit = 5;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $offset = ($page - 1) * $limit;
+
+        // Lấy danh sách sản phẩm với phân trang
+        $listProducts = $this->modelProduct->getAllProduct($limit, $offset);
+
+        // Lấy tổng số sản phẩm để tính số trang
+        $totalProducts = $this->modelProduct->getTotalProductCount();
+        $totalPages = ceil($totalProducts / $limit);
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/product/productlist.php'; // main
         require_once '../admin-page/views/footer.php';
     }
-    //
     // ấn vào thêm
     public function add()
     {

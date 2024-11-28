@@ -9,19 +9,36 @@ class Product
         $this->conn = connectDB();
     }
     // Lấy ra toàn bộ sản phẩm
-    public function getAllProduct()
+    public function getAllProduct($limit = 5, $offset = 0)
     {
         try {
-            $sql = "SELECT u.*, r.statusName, 
-                    c.CategoryName 
-        FROM products u
-        LEFT JOIN status r ON u.status = r.statusID
-        LEFT JOIN categories c ON u.CategoryID = c.CategoryID";
+            $sql = "SELECT u.*, r.statusName, c.CategoryName 
+                    FROM products u
+                    LEFT JOIN status r ON u.status = r.statusID
+                    LEFT JOIN categories c ON u.CategoryID = c.CategoryID
+                    ORDER BY u.status ASC, u.id DESC
+                    LIMIT :limit OFFSET :offset";
             $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+            $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    // Lấy tổng số sản phẩm để tính số trang
+    public function getTotalProductCount()
+    {
+        try {
+            $sql = "SELECT COUNT(*) FROM products";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
         }
     }
     // Thêm sản phẩm 
