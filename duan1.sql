@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 26, 2024 at 09:55 AM
+-- Generation Time: Nov 28, 2024 at 07:59 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -66,7 +66,7 @@ CREATE TABLE `orders` (
   `OrderID` int NOT NULL,
   `UserID` int NOT NULL,
   `OrderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `TotalAmount` decimal(10,2) NOT NULL,
+  `TotalAmount` decimal(10,0) NOT NULL,
   `Status` int NOT NULL,
   `ProductID` int NOT NULL,
   `Quantity` int NOT NULL
@@ -77,8 +77,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`OrderID`, `UserID`, `OrderDate`, `TotalAmount`, `Status`, `ProductID`, `Quantity`) VALUES
-(1, 44, '2024-11-26 09:40:07', '100000.00', 1, 9, 1),
-(2, 44, '2024-11-25 09:40:07', '100000.00', 2, 12, 1);
+(1, 18, '2024-11-27 10:21:52', '1200', 0, 10, 1),
+(5, 44, '2024-11-27 23:51:53', '99999', 0, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -101,11 +101,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `ProductName`, `Description`, `Price`, `CategoryID`, `status`, `image`) VALUES
-(1, 'Mô tả sản phẩm', 'Mô tả sản phẩm như nào', 100, 2, 1, '../admin-page/img/product/product_673ea5aec859e0.85587944.png'),
-(9, 'Tên sản phẩm', 'Áo polo bé trai, chất liệu cotton pha, bề mặt kiểu. Dáng oversize, hình in thể thaocá tính cho bé trai. Giặt máy ở chế độ nhẹ, nhiệt độ thường. Không sử dụng hóa chất tẩy có chứa Clo. Phơi trong bóng mát. Sấy khô ở nhiệt độ thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản phẩm cùng màu. Không là lên chi tiết trang trí.', 10000000, 1, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
-(10, 'Mô tả sản phẩm', 'Mô tả sản phẩm', 123123123, 3, 1, '../admin-page/img/product/product_673ea5b9e9a110.24374384.png'),
-(11, 'Tên sản phẩm', 'Mô tả sản phẩm như nào', 123123123, 4, 1, '../admin-page/img/product/product_673ea61f6771d1.10674289.png'),
-(12, 'Mô tả sản phẩm', 'Mô tả sản phẩm như nào', 12321312, 1, 1, '../admin-page/img/product/product_673ea63b7dc5a9.42713872.png');
+(1, 'Tên sản phẩm', 'Áo polo bé trai, chất liệu cotton pha, bề mặt kiểu. Dáng oversize, hình in thể thaocá tính cho bé trai. Giặt máy ở chế độ nhẹ, nhiệt độ thường. Không sử dụng hóa chất tẩy có chứa Clo. Phơi trong bóng mát. Sấy khô ở nhiệt độ thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản phẩm cùng màu. Không là lên chi tiết trang trí.', 10000000, 1, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
+(2, 'Tên sản phẩm', 'Mô tả sản phẩm như nào', 2000, 2, 1, '../admin-page/img/product/product_673ea61f6771d1.10674289.png'),
+(3, 'Mô tả sản phẩm', 'Mô tả sản phẩm', 70000, 3, 1, '../admin-page/img/product/product_673ea5b9e9a110.24374384.png'),
+(4, 'Tên sản phẩm', 'Áo polo bé trai, chất liệu cotton pha, bề mặt kiểu. Dáng oversize, hình in thể thaocá tính cho bé trai. Giặt máy ở chế độ nhẹ, nhiệt độ thường. Không sử dụng hóa chất tẩy có chứa Clo. Phơi trong bóng mát. Sấy khô ở nhiệt độ thấp. Là ở nhiệt độ thấp 110 độ C. Giặt với sản phẩm cùng màu. Không là lên chi tiết trang trí.', 88888, 4, 1, '../admin-page/img/product/product_673ea5de019479.19872106.png'),
+(10, 'Mô tả sản phẩm', 'Mô tả sản phẩm', 1200, 1, 1, '../admin-page/img/product/product_673ea5b9e9a110.24374384.png'),
+(11, 'Tên sản phẩm', 'Mô tả sản phẩm như nào', 99999, 4, 1, '../admin-page/img/product/product_673ea61f6771d1.10674289.png');
 
 -- --------------------------------------------------------
 
@@ -144,6 +145,21 @@ INSERT INTO `roles` (`RoleID`, `RoleName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sizes`
+--
+
+CREATE TABLE `sizes` (
+  `SizeID` int NOT NULL,
+  `ProductID` int NOT NULL,
+  `Size` varchar(50) NOT NULL,
+  `StockQuantity` int DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `status`
 --
 
@@ -168,7 +184,7 @@ INSERT INTO `status` (`statusID`, `statusName`) VALUES
 
 CREATE TABLE `statusorder` (
   `OrderID` int NOT NULL,
-  `statusName` varchar(255) NOT NULL
+  `statusName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -176,10 +192,10 @@ CREATE TABLE `statusorder` (
 --
 
 INSERT INTO `statusorder` (`OrderID`, `statusName`) VALUES
-(1, 'Chưa thanh toán'),
-(2, 'Đang chuẩn bị hàng'),
-(3, 'Đang giao hàng'),
-(4, 'Thành công');
+(0, 'Chưa thanh toán'),
+(1, 'Đang chuẩn bị hàng'),
+(2, 'Đang giao hàng'),
+(3, 'Thành công');
 
 -- --------------------------------------------------------
 
@@ -229,10 +245,10 @@ ALTER TABLE `orderdetails`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`OrderID`),
-  ADD UNIQUE KEY `Status_2` (`Status`),
-  ADD UNIQUE KEY `ProductID` (`ProductID`),
+  ADD UNIQUE KEY `ProductID` (`ProductID`) USING BTREE,
   ADD KEY `UserID` (`UserID`),
-  ADD KEY `Status` (`OrderID`) USING BTREE;
+  ADD KEY `Status` (`OrderID`) USING BTREE,
+  ADD KEY `Status_2` (`Status`);
 
 --
 -- Indexes for table `products`
@@ -256,6 +272,13 @@ ALTER TABLE `reviews`
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`RoleID`),
   ADD UNIQUE KEY `RoleName` (`RoleName`);
+
+--
+-- Indexes for table `sizes`
+--
+ALTER TABLE `sizes`
+  ADD PRIMARY KEY (`SizeID`),
+  ADD KEY `ProductID` (`ProductID`);
 
 --
 -- Indexes for table `status`
@@ -297,7 +320,7 @@ ALTER TABLE `orderdetails`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `OrderID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=936298;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -316,6 +339,12 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `roles`
   MODIFY `RoleID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `sizes`
+--
+ALTER TABLE `sizes`
+  MODIFY `SizeID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `status`
@@ -367,6 +396,12 @@ ALTER TABLE `products`
 ALTER TABLE `reviews`
   ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `sizes`
+--
+ALTER TABLE `sizes`
+  ADD CONSTRAINT `sizes_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
