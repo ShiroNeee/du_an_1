@@ -2,7 +2,7 @@
 <main>
 	<div class="head-title">
 		<div class="left">
-			<h1>Dashboard Admin - Unique style</h1>
+			<h1>Admin - XÂY DỰNG WEBSITE BÁN QUẦN ÁO UNIQUE STYLE</h1>
 			<ul class="breadcrumb">
 				<li>
 					<a href="#">Dashboard</a>
@@ -45,7 +45,7 @@
 	<div class="table-data">
 		<div class="order">
 			<div class="head">
-				<h3>Đơn hàng đã đặt</h3>
+				<h3>Đơn hàng đã đặt (chưa có dữ liệu thực)</h3>
 				<i class='bx bx-search'></i>
 				<i class='bx bx-filter'></i>
 			</div>
@@ -103,7 +103,7 @@
 		</div>
 		<div class="todo">
 			<div class="head">
-				<h3>Việc cần làm</h3>
+				<h3>Việc cần làm(chưa có dữ liệu thực)</h3>
 				<i class='bx bx-plus'></i>
 				<i class='bx bx-filter'></i>
 			</div>
