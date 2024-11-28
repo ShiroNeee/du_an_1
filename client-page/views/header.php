@@ -60,7 +60,7 @@
             <?php foreach ($latestCategorysHome as $category): ?>
               <li class="nav-item">
                 <!-- Liên kết đến route shopintroduce kèm id -->
-                <a href="?act=danhmucnam&id=<?= urlencode($category['categoryID']); ?>" class="nav-link" >
+                <a href="?act=danh-muc&id=<?= urlencode($category['categoryID']); ?>" class="nav-link" >
                   <?= htmlspecialchars($category['categoryName'], ENT_QUOTES, 'UTF-8'); ?>
                 </a>
               </li>
@@ -99,7 +99,6 @@
               <?php endif; ?>
               <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
               <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
-
               <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
             </ul>
           </div>

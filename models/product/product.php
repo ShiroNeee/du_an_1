@@ -65,6 +65,9 @@ class Product
             return false;
         }
     }
+    
+    // Model SizeModel
+
     public function getStatusList()
     {
         try {
@@ -129,6 +132,14 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getProductById($productId) {
+        $query = "SELECT * FROM products WHERE id = :productId AND status = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Hủy kết nối
     public function __destruct()
     {
@@ -188,4 +199,31 @@ class Product
             return false;
         }
     }
+    // Lấy thông tin sản phẩm theo ID
+public function getProductSizes($productID) {
+    $query = "
+        SELECT s.Size, s.StockQuantity
+        FROM sizes s
+        WHERE s.ProductID = :productID
+    ";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Trả về danh sách kích cỡ và số tồn kho cho sản phẩm
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+// Lấy danh sách sản phẩm theo CategoryID
+public function getRandomProducts($limit = 4)
+    {
+        $query = "SELECT * FROM products ORDER BY RAND() LIMIT :limit"; // Truy vấn trực tiếp bảng "products"
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":limit", $limit, PDO::PARAM_INT); // Gắn số lượng sản phẩm cần lấy
+        $stmt->execute();
+
+        // Trả về kết quả dưới dạng mảng
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }

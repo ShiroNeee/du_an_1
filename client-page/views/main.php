@@ -79,10 +79,8 @@
                 <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
                 <!-- Hiển thị giá sản phẩm -->
                 <p><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
-                <!-- Hiển thị mô tả ngắn -->
-                <p><?= htmlspecialchars($product['Description']); ?></p>
                 <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
+                <a href="?act=detail&id=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
               </div>
             </div>
           <?php endforeach; ?>
