@@ -29,6 +29,14 @@ class PageController
         } else {
             $productsList = [];  // Nếu không có categoryId, thì không có sản phẩm
         }
+        $id = isset($_GET['id']) && is_numeric($_GET['id']) ? $_GET['id'] : null;
+        // Nếu có `id`, lấy chi tiết sản phẩm
+        if ($id) {
+            $product = $this->modelProduct->getDetail($id);
+        } else {
+            // Nếu không có `id`, có thể hiển thị thông báo lỗi hoặc một sản phẩm mặc định
+            $product = null;  // Hoặc có thể lấy một sản phẩm mặc định ở đây
+        }
         // Gửi dữ liệu cho view
         require_once '../client-page/views/header.php';  // Header (danh mục)
         require_once '../client-page/views/main.php';  // Hiển thị sản phẩm
@@ -89,15 +97,15 @@ class PageController
     }
 
     // Phương thức hiển thị sản phẩm theo danh mục
-    public function showCategoryProducts($categoryId)
+    public function showCategoryProducts($CategoryID)
     {
         // Kiểm tra id hợp lệ
-        if (!is_numeric($categoryId) || intval($categoryId) <= 0) {
+        if (!is_numeric($CategoryID) || intval($CategoryID) <= 0) {
             echo "ID danh mục không hợp lệ.";
             return;
         }
         // Lấy thông tin danh mục
-        $categoryInfo = $this->modelCategory->getCategoryById($categoryId);
+        $categoryInfo = $this->modelCategory->getCategoryById($CategoryID);
         if (!$categoryInfo) {
             echo "Danh mục không tồn tại.";
             return;
@@ -112,10 +120,10 @@ class PageController
     {
         // Kiểm tra xem có tham số id trong URL không
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-            $categoryId = $_GET['id'];
+            $CategoryID = $_GET['id'];
 
             // Gọi phương thức để hiển thị sản phẩm theo danh mục
-            $this->showCategoryProducts($categoryId);
+            $this->showCategoryProducts($CategoryID);
         } else {
             // Nếu không có id hợp lệ, có thể đưa về trang chủ hoặc thông báo lỗi
             header("Location: index.php");

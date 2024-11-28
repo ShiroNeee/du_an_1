@@ -54,76 +54,64 @@
     </div>
   </div>
   <hr>
-  <section class="products py-5">
+   <!-- Product Section -->
+   <section class="products py-5 bg-light">
     <div class="container">
-      <h2>Sản phẩm mới nhất</h2>
-      <div class="row row-cols-1 row-cols-md-4 g-4">
-        <?php if ($latestProductsHome && count($latestProductsHome) > 0): ?>
-          <?php foreach ($latestProductsHome as $product): ?>
-            <div class="col">
-              <div class="product-item text-center">
-                <!-- Hiển thị ảnh sản phẩm -->
-                <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
-                <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
-                <!-- Hiển thị giá sản phẩm -->
-                <p class="fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
-
-                <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                <a href="=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
-              </div>
-            </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <p>Hiện tại chưa có sản phẩm mới.</p>
-        <?php endif; ?>
-      </div>
-      <div class="text-center mt-4">
-        <a href="#"><button class="btn btn-secondary">Xem thêm</button></a>
-      </div>
-    </div>
-  </section>
-  <hr class="container pt-5">
-  <div class="container">
-    <a href="#">
-      <img src="../client-page/images/img sale.png" class="d-block w-100">
-    </a>
-  </div>
-
-  <section class="products py-5">
-    <div class="container">
+      <h2 class="text-center fw-bold mb-4">Sản phẩm mới nhất</h2>
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <?php if (!empty($latestProductsHome) && count($latestProductsHome) > 0): ?>
           <?php foreach ($latestProductsHome as $product): ?>
             <div class="col">
-              <div class="product-item text-center">
-                <!-- Hiển thị ảnh sản phẩm -->
-                <div class="card position-relative">
-                  <img src="<?= htmlspecialchars($product['image']); ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
-
-                  <!-- Form thêm vào giỏ hàng -->
-                  <form method="POST" action="?act=add-order" class="add-to-cart-form">
-                    <!-- Sử dụng ProductID thay vì id -->
-                    <input type="hidden" name="ProductID" value="<?= $product['id']; ?>">
-                    <button type="submit"
-                      class="btn btn-light position-absolute bottom-0 start-50 translate-middle-x w-75 shadow">
-                      Thêm nhanh vào giỏ
-                    </button>
-                  </form>
+              <div class="card h-100 text-center shadow-sm d-flex flex-column justify-content-between">
+                <img src="<?= htmlspecialchars($product['image']); ?>" class="card-img-top" alt="<?= htmlspecialchars($product['ProductName']); ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?= htmlspecialchars($product['ProductName']); ?></h5>
+                  <p class="card-text text-danger fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
                 </div>
-                <!-- Tên sản phẩm -->
-                <a href="?act=product-detail&id=<?= $product['id']; ?>" style="text-decoration: none;">
-                  <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
-                </a>
-                <!-- Giá sản phẩm -->
-                <p class="fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
+                <div class="card-footer bg-transparent border-0">
+                  <a href="?act=detail&id=<?= $product['id']; ?>" class="btn btn-primary w-75 mx-auto">Xem chi tiết</a>
+                </div>
               </div>
             </div>
           <?php endforeach; ?>
         <?php else: ?>
-          <p>Hiện tại chưa có sản phẩm mới.</p>
+          <p class="text-center">Hiện tại chưa có sản phẩm mới.</p>
         <?php endif; ?>
       </div>
     </div>
   </section>
 
+  <!-- Promotion Banner -->
+  <div class="container my-5">
+    <a href="#">
+      <img src="../client-page/images/img sale.png" class="img-fluid rounded shadow-sm" alt="Khuyến mãi">
+    </a>
+  </div>
+
+  <!-- Repeat Product Section -->
+   <section class="products py-5 bg-light">
+    <div class="container">
+      <h2 class="text-center fw-bold mb-4">Đồ nỉ mới cập nhật</h2>
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <?php if (!empty($latestProductsHome) && count($latestProductsHome) > 0): ?>
+          <?php foreach ($latestProductsHome as $product): ?>
+            <div class="col">
+              <div class="card h-100 text-center shadow-sm d-flex flex-column justify-content-between">
+                <img src="<?= htmlspecialchars($product['image']); ?>" class="card-img-top" alt="<?= htmlspecialchars($product['ProductName']); ?>">
+                <div class="card-body">
+                  <h5 class="card-title"><?= htmlspecialchars($product['ProductName']); ?></h5>
+                  <p class="card-text text-danger fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                  <a href="?act=detail&id=<?= $product['id']; ?>" class="btn btn-primary w-75 mx-auto">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p class="text-center">Hiện tại chưa có sản phẩm mới.</p>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
 </main>

@@ -90,28 +90,28 @@ class Product
         }
     }
     public function searchProductsByName($name)
-{
-    try {
-        // Truy vấn tìm các sản phẩm có tên chứa từ khóa tìm kiếm
-        $sql = "SELECT * 
+    {
+        try {
+            // Truy vấn tìm các sản phẩm có tên chứa từ khóa tìm kiếm
+            $sql = "SELECT * 
         FROM products 
         WHERE ProductName LIKE :name AND status = 1";
-        $stmt = $this->conn->prepare($sql);
+            $stmt = $this->conn->prepare($sql);
 
-        // Tạo chuỗi từ khóa tìm kiếm (thêm dấu % trước và sau để tìm kiếm theo phần)
-        $searchTerm = "%" . $name . "%";
-        $stmt->bindParam(':name', $searchTerm, PDO::PARAM_STR);
+            // Tạo chuỗi từ khóa tìm kiếm (thêm dấu % trước và sau để tìm kiếm theo phần)
+            $searchTerm = "%" . $name . "%";
+            $stmt->bindParam(':name', $searchTerm, PDO::PARAM_STR);
 
-        // Thực thi câu truy vấn
-        $stmt->execute();
+            // Thực thi câu truy vấn
+            $stmt->execute();
 
-        // Trả về danh sách sản phẩm tìm được
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        echo 'Lỗi: ' . $e->getMessage();
-        return false;
+            // Trả về danh sách sản phẩm tìm được
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
     }
-}
 
     // Xoá sản phẩm
     public function deleteData($id)
@@ -150,6 +150,15 @@ class Product
         $stmt->bindParam(':categoryId', $categoryId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getProductById($productId)
+    {
+        $query = "SELECT * FROM products WHERE id = :productId AND status = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     // Hủy kết nối
@@ -210,5 +219,30 @@ class Product
             echo 'Lỗi: ' . $e->getMessage();
             return false;
         }
+    }
+    // Lấy thông tin sản phẩm theo ID
+    public function getProductSizes($productID)
+    {
+        $query = "SELECT s.Size, s.StockQuantity
+        FROM sizes s
+        WHERE s.ProductID = :productID";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
+        $stmt->execute();
+
+        // Trả về danh sách kích cỡ và số tồn kho cho sản phẩm
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Lấy danh sách sản phẩm theo CategoryID
+    public function getRandomProducts($limit = 4)
+    {
+        $query = "SELECT * FROM products ORDER BY RAND() LIMIT :limit"; // Truy vấn trực tiếp bảng "products"
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":limit", $limit, PDO::PARAM_INT); // Gắn số lượng sản phẩm cần lấy
+        $stmt->execute();
+
+        // Trả về kết quả dưới dạng mảng
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

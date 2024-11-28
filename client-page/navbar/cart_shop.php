@@ -46,21 +46,9 @@ function getStatusClass($status)
             <tbody>
                 <?php
                 $totalAmountAll = 0; // Khởi tạo biến tổng số tiền
-                $ordersGrouped = []; // Mảng để nhóm đơn hàng theo ProductID
-
-                // Nhóm các đơn hàng có cùng ProductID
-                foreach ($listOrders as $orders) {
-                    $productId = $orders['ProductID'];
-                    if (!isset($ordersGrouped[$productId])) {
-                        $ordersGrouped[$productId] = $orders;
-                    } else {
-                        $ordersGrouped[$productId]['Quantity'] += $orders['Quantity'];
-                        $ordersGrouped[$productId]['TotalAmount'] += $orders['TotalAmount'];
-                    }
-                }
 
                 // Hiển thị thông tin các đơn hàng đã được nhóm
-                foreach ($ordersGrouped as $index => $orders) :
+                foreach ($listOrders as $index => $orders) :
                     $totalAmountAll += $orders['TotalAmount']; // Cộng dồn tổng tiền tất cả các đơn hàng
                 ?>
                     <tr style="font-size: 22px;" id="order-row-<?= $orders['OrderID']; ?>">

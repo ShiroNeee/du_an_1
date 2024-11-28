@@ -45,22 +45,13 @@
         </a>
       </div>
 
-      <!-- <nav class="navbar">
-        <ul class="nav">
-          <li class="nav-item"><a href="?act=danhmucspmoi" class="nav-link">Sản Phẩm Mới</a></li>
-          <li class="nav-item"><a href="?act=danhmucnu" class="nav-link">Nữ</a></li>
-          <li class="nav-item"><a href="?act=danhmucnam" class="nav-link">Nam</a></li>
-          <li class="nav-item"><a href="?act=danhmuctreem" class="nav-link">Trẻ Em</a></li>
-        </ul>
-      </nav> -->
-
       <nav class="navbar">
         <ul class="nav">
           <?php if (!empty($latestCategorysHome) && count($latestCategorysHome) > 0): ?>
             <?php foreach ($latestCategorysHome as $category): ?>
               <li class="nav-item">
                 <!-- Liên kết đến route shopintroduce kèm id -->
-                <a href="?act=danhmucnam&id=<?= urlencode($category['CategoryID']); ?>" class="nav-link">
+                <a href="?act=danh-muc&id=<?= isset($category['CategoryID']) ? urlencode($category['CategoryID']) : ''; ?>" class="nav-link">
                   <?= htmlspecialchars($category['categoryName'], ENT_QUOTES, 'UTF-8'); ?>
                 </a>
               </li>
