@@ -22,16 +22,16 @@
           <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
 
-        <?php if (!empty($_SESSION['error'])): ?>
-          <?php
+        <?php
+        if (isset($_SESSION['error']) && is_array($_SESSION['error'])) {
           foreach ($_SESSION['error'] as $key => $error) {
             if (!empty($error)) {
               echo htmlspecialchars($error) . '<br>';
             }
           }
           unset($_SESSION['error']);
-          ?>
-        <?php endif; ?>
+        }
+        ?>
       </small>
     </div>
   <?php endif; ?>
@@ -113,7 +113,8 @@
             </button>
           </form>
         </div>
-        <a href="?act=cartshop" class="fa fa-shopping-cart"></a>
+        <a href="?act=cart-shop" class="fa fa-shopping-cart"></a>
+
         <?php if (isset($_SESSION['user'])): ?>
           <!-- Dropdown User Settings -->
           <div class="dropdown">

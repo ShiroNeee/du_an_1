@@ -29,7 +29,10 @@
         <?php if (!empty($_SESSION['error'])): ?>
             <div class="showErrorMessage">
                 <ul>
-                    <?php foreach ($_SESSION['error'] as $error): ?>
+                    <?php
+                    // Kiểm tra xem $_SESSION['error'] có phải là mảng không
+                    $errors = is_array($_SESSION['error']) ? $_SESSION['error'] : [$_SESSION['error']];
+                    foreach ($errors as $error): ?>
                         <li><?= htmlspecialchars($error); ?></li>
                     <?php endforeach; ?>
                 </ul>

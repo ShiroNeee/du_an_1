@@ -33,6 +33,7 @@
                         <td><?= $product['Price']; ?> đ</td>
                         <td><?= $product['CategoryName']; ?></td>
                         <td><?= $product['Description']; ?></td>
+
                         <td style="color:blue"><?= $product['statusName']; ?></td>
                         <td>
                             <a href="?act=edit-product&id=<?= $product['id']; ?>">

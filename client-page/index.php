@@ -23,12 +23,15 @@ require_once '../controllers/navbar/DanhMucTreEmController.php';
 require_once '../controllers/navbar/DanhMucSPMoiController.php';
 require_once '../controllers/navbar/DanhMucNamController.php';
 require_once '../controllers/navbar/DanhMucNuController.php';
+// Order
+require_once '../controllers/OrderController.php';
 // 
 require_once '../models/users/user.php';
 //
 require_once '../models/category.php';
 //
 require_once '../models/product/Product.php';
+require_once '../models/Order.php';
 require_once '../controllers/PageController.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
@@ -39,7 +42,7 @@ $router->add('/', 'PageController', 'index');
 
 // Giả sử router.php có mã sau:
 
-// $router->add('/', 'PageCategoryController', 'index');
+require_once '../routes/Page.php';
 // Login
 require_once '../routes/login.php';
 // Register
@@ -54,5 +57,7 @@ require_once '../routes/navbar/danhmuc_treem.php';
 require_once '../routes/navbar/danhmuc_nam.php';
 require_once '../routes/navbar/danhmuc_nu.php';
 require_once '../routes/navbar/danhmuc_spmoi.php';
+// order
+require_once '../routes/order.php';
 
 $router->dispatch($act);

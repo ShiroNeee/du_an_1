@@ -1,118 +1,116 @@
-<div class="container mt-4">
-    <h1 class="text-center">Giỏ hàng của bạn (cart)</h1>
+<?php
+function getStatusClass($status)
+{
+    switch ($status) {
+        case 0:
+            return 'text-danger';
+        case 1:
+            return 'text-warning';
+        case 2:
+            return 'text-warning';
+        case 3:
+            return 'text-success';
+        default:
+            return 'text-danger';
+    }
+}
+
+?>
+<div class="container mt-5">
     <div class="row">
-        <div class="col-md-7 mb-4 mt-4">
-            <div class="d-flex flex-column">
-                <div class="p-2 bg-light border">
-                    <div class="d-flex">
-                        <img src="../client-page/images/aophongnam.png" alt="er" width="150" height="200" />
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light mb-4">Áo phông cộc tay nam chất liệu xịn cotton cực tốt</h4>
-                            <h4 class="fw-light text-success mb-4">Size:L</h4>
-                            <h4 class="fw-light border" style="width:60px;height:70px;background-color:#87CEFA">Màu xanh</h4>
-                        </div>
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light text-end ms-auto text-danger mb-5">199.000đ</h4>
-                            <p class="mb-4 text-end">.</p>
-                            <input type="number" value="1" min="0" max="1000" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <img src="../client-page/images/aokhoac.png" alt="er" width="150" height="200" />
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light mb-4">Áo Teelab mới chất liệu cotton cực đẹp và chất liệu tốt</h4>
-                            <h4 class="fw-light text-success mb-4">Size:XL</h4>
-                            <h4 class="fw-light border" style="width:60px;height:70px;background-color:#87CEFA">Màu đen</h4>
-                        </div>
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light text-end ms-auto text-danger mb-5">299.000đ</h4>
-                            <p class="mb-4 text-end">.</p>
-                            <input type="number" value="1" min="0" max="1000" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <img src="../client-page/images/vest-ghi.jpg" alt="er" width="150" height="200" />
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light mb-4">Áo vest nam cực lịch lãm, năng động, trẻ trung dành cho các bạn trẻ</h4>
-                            <h4 class="fw-light text-success mb-4">Size:L</h4>
-                            <h4 class="fw-light border" style="width:60px;height:70px;background-color:#87CEFA">Màu ghi</h4>
-                        </div>
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light text-end ms-auto text-danger mb-5">999.000đ</h4>
-                            <p class="mb-4 text-end">.</p>
-                            <input type="number" value="1" min="0" max="1000" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="d-flex mt-4">
-                        <img src="../client-page/images/off-white-dai-tay.png" alt="er" width="150" height="200" />
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light mb-4">Áo Off-White dài tay cực phong cách street out thích cá tính</h4>
-                            <h4 class="fw-light text-success mb-4">Size:L</h4>
-                            <h4 class="fw-light border" style="width:60px;height:70px;background-color:#87CEFA">Màu trắng</h4>
-                        </div>
-                        <div class="p-2 bg-light">
-                            <h4 class="fw-light text-end ms-auto text-danger mb-5">199.000đ</h4>
-                            <p class="mb-4 text-end">.</p>
-                            <input type="number" value="1" min="0" max="1000" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="d-flex ">
-                        <h4 class="mt-2">Tạm tính:</h4>
-                        <h4 class="ms-auto text-danger">?.000.000đ</h4>
-                    </div>
-                </div>
-            </div>
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-body-tertiary rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="../client-page" style="text-decoration: none;">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#" style="text-decoration: none;">Giỏ hàng của bạn</a></li>
+                </ol>
+            </nav>
         </div>
-        <div class="col-md-5 mb-4 mt-4">
-            <div class="checkout-form p-3 border">
-                <h4>Thông tin người nhận:</h4>
-                <form action="../client-page/index.php">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Họ và tên:</label>
-                        <input type="text" class="form-control" id="username" placeholder="Nhập đầy đủ họ tên của bạn...">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Địa chỉ nhà:</label>
-                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ nhà...">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Số điện thoại:</label>
-                        <input type="number" class="form-control" id="phone" placeholder="Số điện thoại...">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Lời nhắn(message):</label>
-                        <textarea class="form-control" id="message" placeholder="message......"></textarea>
-                    </div>
-                    <h4>Thanh toán đơn hàng:</h4>
-                    <div class="d-flex">
-                        <p>Tổng số tiền:</p>
-                        <strong class="ms-auto text-danger">?.000.000đ</strong>
-                    </div>
-                    <div class="payment-method">
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" id="bankTransfer" name="paymentMethod">
-                            <label class="form-check-label" for="bankTransfer">Thanh toán khi nhận hàng</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" id="bank" name="paymentMethod">
-                            <label class="form-check-label" for="bank">Chuyển khoản ngân hàng</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" class="form-check-input" id="atm" name="paymentMethod">
-                            <label class="form-check-label" for="atm">Qua thẻ ATM</label>
-                        </div>
-                    </div>
-                    <div class="form-check mt-3">
-                        <input type="checkbox" class="form-check-input" id="terms">
-                        <label class="form-check-label" for="terms">
-                            Tôi đồng ý với chính sách xử lý dữ liệu cuả shop Unique Style
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-success mt-3 w-100">Đặt hàng</button>
-                </form>
-            </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>ID đơn hàng</th>
+                    <th>Ảnh</th>
+                    <th>Ngày đặt</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Tính năng</th>
+                    <th>Tính năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $totalAmountAll = 0; // Khởi tạo biến tổng số tiền
+                $ordersGrouped = []; // Mảng để nhóm đơn hàng theo ProductID
+
+                // Nhóm các đơn hàng có cùng ProductID
+                foreach ($listOrders as $orders) {
+                    $productId = $orders['ProductID'];
+                    if (!isset($ordersGrouped[$productId])) {
+                        $ordersGrouped[$productId] = $orders;
+                    } else {
+                        $ordersGrouped[$productId]['Quantity'] += $orders['Quantity'];
+                        $ordersGrouped[$productId]['TotalAmount'] += $orders['TotalAmount'];
+                    }
+                }
+
+                // Hiển thị thông tin các đơn hàng đã được nhóm
+                foreach ($ordersGrouped as $index => $orders) :
+                    $totalAmountAll += $orders['TotalAmount']; // Cộng dồn tổng tiền tất cả các đơn hàng
+                ?>
+                    <tr style="font-size: 22px;" id="order-row-<?= $orders['OrderID']; ?>">
+                        <form action="?act=update-order-cart" method="POST">
+                            <td><?= $index + 1; ?></td>
+                            <td><?= $orders['name']; ?></td>
+                            <td><?= $orders['ProductID']; ?></td>
+                            <td>
+                                <img src="<?= $orders['image']; ?>" width="80px">
+                            </td>
+                            <td><?= $orders['OrderDate']; ?></td>
+                            <td>
+                                <input type="number" name="Quantity" value="<?= $orders['Quantity'] ?>" min="1">
+                            </td>
+
+                            <td id="total-amount-<?= $orders['OrderID']; ?>"><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
+                            <td class="<?= getStatusClass($orders['Status']); ?>"><?= $orders['statusName']; ?></td>
+                            <td>
+                                <!-- Các trường ẩn để gửi thông tin đơn hàng -->
+                                <input type="hidden" name="OrderID" value="<?= $orders['OrderID']; ?>">
+                                <input type="hidden" name="UserID" value="<?= $orders['UserID']; ?>">
+                                <input type="hidden" name="ProductID" value="<?= $orders['ProductID']; ?>">
+                                <input type="hidden" name="OrderDate" value="<?= $orders['OrderDate']; ?>">
+                                <input type="hidden" name="Status" value="<?= $orders['Status']; ?>">
+                                <button type="submit" name="action" value="update" class="btn btn-primary btn-sm">Update</button>
+
+                            </td>
+                        </form>
+                        <td>
+                            <form action="?act=delete-order-cart" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn huỷ đơn?')">
+                                <input type="hidden" name="id" value="<?= $orders['OrderID']; ?>">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <!-- Hiển thị tổng tiền của tất cả các đơn hàng -->
+        <div class="text-end" style="font-size: 18px; font-weight: bold;">
+            Tổng giá trị tất cả đơn hàng: <?= number_format($totalAmountAll, 0, ',', '.'); ?> VNĐ
+        </div>
+
+        <!-- Form thanh toán -->
+        <div class="text-end mt-4">
+            <form action="?act=payment" method="POST">
+                <input type="hidden" name="totalAmount" value="<?= $totalAmountAll; ?>">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
         </div>
     </div>
 </div>

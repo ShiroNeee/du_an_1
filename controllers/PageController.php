@@ -3,11 +3,15 @@ class PageController
 {
     public $modelProduct;
     public $modelCategory;
+    private $modelOrder;
+    private $userModel;
 
     public function __construct()
     {
+        $this->userModel = new User(); // Khởi tạo đối tượng User
         $this->modelProduct = new Product();  // Model sản phẩm
         $this->modelCategory = new CategoryManager();  // Model danh mục
+        $this->modelOrder = new Order();
     }
 
     // Phương thức hiển thị trang chủ với sản phẩm và danh mục
@@ -29,6 +33,59 @@ class PageController
         require_once '../client-page/views/header.php';  // Header (danh mục)
         require_once '../client-page/views/main.php';  // Hiển thị sản phẩm
         require_once '../client-page/views/footer.php';  // Footer (cấu trúc chung)
+    }
+    public function addToCart()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ProductID = isset($_POST['ProductID']) ? intval($_POST['ProductID']) : 0;
+            $OrderID = isset($_POST['OrderID']) ? intval($_POST['OrderID']) : 0; // Lấy OrderID từ POST
+            $Quantity = isset($_POST['Quantity']) ? intval($_POST['Quantity']) : 1; // Số lượng mặc định là 1
+            $id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0;
+
+            if ($id <= 0) {
+                $_SESSION['error'] = "Bạn cần đăng nhập để thực hiện thao tác này.";
+                header("Location: ?act=login");
+                exit();
+            }
+
+            // Kiểm tra ID sản phẩm hợp lệ và lấy thông tin sản phẩm
+            if ($ProductID > 0) {
+                $productDetail = $this->modelProduct->getDetail($ProductID);
+                if (!$productDetail) {
+                    $_SESSION['error'] = "Sản phẩm không tồn tại.";
+                    header("Location: ?act=/");
+                    exit();
+                }
+                // Tạo một OrderID ngẫu nhiên
+                $OrderID = rand(100000, 999999);
+                // Tạo dữ liệu đơn hàng
+                $orderData = [
+                    'OrderID' => $OrderID,
+                    'ProductID' => $ProductID,
+                    'UserID' => $id,
+                    'Quantity' => $Quantity,
+                    'TotalAmount' => $productDetail['Price'],
+                    'Status' => 0,
+                    'OrderDate' => date('Y-m-d H:i:s')
+                ];
+                // Gọi hàm addOrder để thêm dữ liệu vào bảng orders và gán kết quả vào biến
+                $isOrderAdded = $this->modelOrder->addOrder($orderData);
+                // Kiểm tra kết quả trả về của addOrder
+                if ($isOrderAdded) {
+                    $_SESSION['success'] = "Đơn hàng đã được thêm thành công!";
+                    header("Location: ?act=cart-shop");
+                } else {
+                    $_SESSION['error'] = "Đã xảy ra lỗi khi thêm đơn hàng.";
+                    header("Location: ?act=/");
+                }
+            } else {
+                $_SESSION['error'] = "ID sản phẩm không hợp lệ.";
+                header("Location: ?act=/");
+            }
+        } else {
+            $_SESSION['error'] = "Yêu cầu không hợp lệ.";
+            header("Location: ?act=/");
+        }
     }
 
     // Phương thức hiển thị sản phẩm theo danh mục

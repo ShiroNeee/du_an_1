@@ -57,10 +57,7 @@ class ProductController
             if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (empty($status)) {
-                $errors['status'] = 'Trạng thái của sản phẩm không được để trống';
-            }
-            // Xử lý upload ảnh
+            // Kiểm tra lỗi ảnh
             if (empty($image) || $image['error'] === UPLOAD_ERR_NO_FILE) {
                 $errors['image'] = 'Ảnh không được để trống.';
             } elseif ($image['error'] !== UPLOAD_ERR_OK) {
@@ -69,15 +66,19 @@ class ProductController
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
                 $uploadDir = '../admin-page/img/product/';
                 $fileExtension = strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
                 if (!in_array($fileExtension, $allowedExtensions)) {
                     $errors['image'] = 'Chỉ được upload ảnh - jpg,jpeg,png';
-                } else {
-                    $fileName = uniqid('product_', true) . '.' . $fileExtension;
-                    $imagePath = $uploadDir . $fileName;
-            
-                    if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
-                        $errors['image'] = 'Ảnh chưa lưu được, vui lòng thử tải lại ảnh';
-                    }
+                }
+            }
+
+            if (empty($errors)) {
+                // Tiến hành lưu ảnh chỉ khi không có lỗi
+                $fileName = uniqid('product_', true) . '.' . $fileExtension;
+                $imagePath = $uploadDir . $fileName;
+
+                if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
+                    $errors['image'] = 'Ảnh chưa lưu được, vui lòng thử tải lại ảnh';
                 }
             }
             if (empty($errors)) {
@@ -136,9 +137,6 @@ class ProductController
             if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (empty($status)) {
-                $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
-            }
             $productDetail = $this->modelProduct->getDetail($id);
             $imagePath = $productDetail['image'];
             // Xử lý upload ảnh
@@ -187,7 +185,7 @@ class ProductController
                 if ($productDetail['image'] && file_exists($productDetail['image'])) {
                     unlink($productDetail['image']);
                 }
-                $_SESSION['success'] = 'Xóa sản phẩm thanh công xong';
+                $_SESSION['success'] = 'Xóa sản phẩm thành công xong';
                 header("Location: ?act=list-product");
                 exit();
             }

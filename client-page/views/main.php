@@ -92,26 +92,29 @@
   <section class="products py-5">
     <div class="container">
       <div class="row row-cols-1 row-cols-md-4 g-4">
-        <?php if ($latestProductsHome && count($latestProductsHome) > 0): ?>
+        <?php if (!empty($latestProductsHome) && count($latestProductsHome) > 0): ?>
           <?php foreach ($latestProductsHome as $product): ?>
             <div class="col">
               <div class="product-item text-center">
                 <!-- Hiển thị ảnh sản phẩm -->
                 <div class="card position-relative">
-                  <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
-                  <form method="POST" action="?act=cartshop">
-                    <input type="hidden" name="product_id" value="<?= $product['id']; ?>">
-                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id']; ?>">
+                  <img src="<?= htmlspecialchars($product['image']); ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
+
+                  <!-- Form thêm vào giỏ hàng -->
+                  <form method="POST" action="?act=add-order" class="add-to-cart-form">
+                    <!-- Sử dụng ProductID thay vì id -->
+                    <input type="hidden" name="ProductID" value="<?= $product['id']; ?>">
                     <button type="submit"
                       class="btn btn-light position-absolute bottom-0 start-50 translate-middle-x w-75 shadow">
                       Thêm nhanh vào giỏ
                     </button>
                   </form>
                 </div>
-                <a href="=<?= $product['id']; ?>" style="text-decoration: none;">
+                <!-- Tên sản phẩm -->
+                <a href="?act=product-detail&id=<?= $product['id']; ?>" style="text-decoration: none;">
                   <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
                 </a>
-                <!-- Hiển thị giá sản phẩm -->
+                <!-- Giá sản phẩm -->
                 <p class="fw-bold"><?= number_format($product['Price'], 0, ',', '.'); ?>₫</p>
               </div>
             </div>
@@ -122,4 +125,5 @@
       </div>
     </div>
   </section>
+
 </main>

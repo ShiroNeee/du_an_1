@@ -14,10 +14,11 @@
                     <tr>
                         <th>ID</th>
                         <th>User</th>
+                        <th>ID đơn hàng</th>
+                        <th>Ảnh</th>
                         <th>Ngày đặt</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
-                        <th>ID đơn hàng</th>
                         <th>Số lượng</th>
                         <th>Tính năng</th>
                     </tr>
@@ -27,13 +28,16 @@
                         <tr>
                             <td><?= $index + 1; ?></td>
                             <td><?= $orders['name']; ?></td>
-                            <td><?= $orders['OrderDate']; ?></td>
-                            <td><?= $orders['TotalAmount']; ?></td>
-                            <td><?= $orders['statusName']; ?></td>
                             <td><?= $orders['ProductID']; ?></td>
+                            <td>
+                            <img src="<?= $orders['image']; ?>" width="80px">
+                            </td>
+                            <td><?= $orders['OrderDate']; ?></td>
+                            <td><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
+                            <td><?= $orders['statusName']; ?></td>
                             <td><?= $orders['Quantity']; ?></td>
                             <td>
-                                <a href="">
+                                <a href="?act=edit-order&id=<?= $orders['OrderID']; ?>">
                                     <button class="edit">Cập nhật</button>
                                 </a>
                                 <form action="?act=delete-order" method="POST" style="display: inline;" onsubmit="return confirm('Bạn có chắc chắn muốn huỷ đơn?')">
