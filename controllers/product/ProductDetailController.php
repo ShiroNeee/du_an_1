@@ -2,7 +2,6 @@
 class ProductDetailController
 {
     public $modelProduct;
-
     // Kết nối đến file model
     public function __construct()
     {

@@ -57,9 +57,6 @@ class ProductController
             if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
             }
-            if (empty($status)) {
-                $errors['status'] = 'Trạng thái của sản phẩm không được để trống';
-            }
             // Xử lý upload ảnh
             if (empty($image) || $image['error'] === UPLOAD_ERR_NO_FILE) {
                 $errors['image'] = 'Ảnh không được để trống.';
@@ -74,7 +71,7 @@ class ProductController
                 } else {
                     $fileName = uniqid('product_', true) . '.' . $fileExtension;
                     $imagePath = $uploadDir . $fileName;
-            
+
                     if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
                         $errors['image'] = 'Ảnh chưa lưu được, vui lòng thử tải lại ảnh';
                     }
@@ -135,9 +132,6 @@ class ProductController
             }
             if (empty($CategoryID)) {
                 $errors['CategoryID'] = 'Vui lòng chọn danh mục sản phẩm';
-            }
-            if (empty($status)) {
-                $errors['status'] = 'Chưa có trạng thái sản phẩm sản phẩm';
             }
             $productDetail = $this->modelProduct->getDetail($id);
             $imagePath = $productDetail['image'];

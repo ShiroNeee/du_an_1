@@ -5,7 +5,7 @@
             <?php if (!empty($productsList) && count($productsList) > 0): ?>
                 <?php foreach ($productsList as $product): ?>
                     <div class="col">
-                        <div class="product-item text-center">
+                        <div class="product-item card h-100 shadow-sm border-light text-center">
                             <!-- Hiển thị ảnh sản phẩm -->
                             <img src="<?= $product['image']; ?>" class="img-fluid" alt="<?= htmlspecialchars($product['ProductName']); ?>">
                             <h3><?= htmlspecialchars($product['ProductName']); ?></h3>
@@ -14,7 +14,7 @@
                             <!-- Hiển thị mô tả ngắn -->
                             <p><?= htmlspecialchars($product['Description']); ?></p>
                             <!-- Nút thêm vào giỏ hoặc xem chi tiết -->
-                            <a href="?act=productdetail&id=<?= $product['id']; ?>" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="?act=productdetail&id=<?= $product['id']; ?>" class="btn btn-primary mt-auto">Xem chi tiết</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

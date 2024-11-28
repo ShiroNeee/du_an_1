@@ -70,8 +70,6 @@
           <?php endif; ?>
         </ul>
       </nav>
-
-
       <!-- Header Icons -->
       <div class="header-icons d-flex align-items-center gap-3">
         <!-- Search Form -->

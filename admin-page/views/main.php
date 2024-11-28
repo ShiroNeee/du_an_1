@@ -29,7 +29,7 @@
 				<li>
 					<i class='bx bxs-group' ></i>
 					<span class="text">
-						<h3>1000+</h3>
+						<h3>99+</h3>
 						<p>Người truy cập website</p>
 					</span>
 				</li>
@@ -62,21 +62,21 @@
 									<img src="/du_an_1/admin-page/img/logo.jpg">
 									<p>usernew123</p>
 								</td>
-								<td>01-10-2024</td>
+								<td>10-11-2024</td>
 								<td><span class="status process">Đang giao</span></td>
 							</tr>
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>Khách hàng vip 005</p>
+									<p>khachvip231</p>
 								</td>
-								<td>30-4-2024</td>
-								<td><span class="status pending">Hoãn</span></td>
+								<td>08-11-2024</td>
+								<td><span class="status process">Đang giao</span></td>
 							</tr>
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>Khách hàng vip 003</p>
+									<p>ngdung_unique</p>
 								</td>
 								<td>08-03-2024</td>
 								<td><span class="status pending">Hoãn</span></td>
@@ -84,7 +84,7 @@
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>Khách hàng vip 002</p>
+									<p>fan_uniquestyle</p>
 								</td>
 								<td>01-02-2024</td>
 								<td><span class="status completed">Hoàn thành</span></td>
@@ -92,7 +92,7 @@
 							<tr>
 								<td>
 									<img src="/du_an_1/admin-page/img/logo.jpg">
-									<p>Khách hàng vip 001</p>
+									<p>firstuser1</p>
 								</td>
 								<td>01-01-2024</td>
 								<td><span class="status completed">Hoàn thành</span></td>
@@ -108,19 +108,19 @@
 					</div>
 					<ul class="todo-list">
 						<li class="completed">
-							<p>thống kê admin</p>
+							<p>thống kê số lượng sản phẩm</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="completed">
-							<p>cart user </p>
+							<p>xử lí đơn hàng của khách hàng </p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
-							<p>payment</p>
+							<p>thống kê sản phẩm bán ra</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="completed">
-							<p>comment user</p>
+							<p>Xem các phản hồi của khách hàng</p>
 							<i class='bx bx-dots-vertical-rounded' ></i>
 						</li>
 						<li class="not-completed">
