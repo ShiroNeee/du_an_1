@@ -1,3 +1,24 @@
+<?php
+$conn = connectDB();
+
+$sql = "SELECT o.UserID,
+       COUNT(o.OrderID) AS total_orders,
+       SUM(od.Quantity * od.UnitPrice) AS total_amount
+       FROM orders o
+       JOIN orderdetails od ON o.OrderID = od.OrderID
+       GROUP BY o.UserID;";
+	   
+$result = $conn->query($sql);
+
+// Kiểm tra nếu có lỗi trong truy vấn
+if ($result === false) {
+	// In ra thông tin lỗi SQL
+	$errorInfo = $conn->errorInfo();
+	echo "Lỗi SQL: " . $errorInfo[2];
+	exit;
+}
+$row = $result->fetch(PDO::FETCH_ASSOC);
+?>
 <!-- main -->
 <main>
 			<div class="head-title">
@@ -22,7 +43,7 @@
 				<li>
 					<i class='bx bxs-calendar-check' ></i>
 					<span class="text">
-						<h3>9</h3>
+						<h3><?= $row['total_orders']?></h3>
 						<p>Đơn hàng</p>
 					</span>
 				</li>
@@ -36,7 +57,7 @@
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
 					<span class="text">
-						<h3>200.000đ</h3>
+						<h3><?= $row['total_amount']?></h3>
 						<p>Doanh thu</p>
 					</span>
 				</li>
