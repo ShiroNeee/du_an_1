@@ -123,9 +123,9 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="?act=thongke-donhang">
 					<i class='bx bxs-doughnut-chart'></i>
-					<span class="text">Thống kê</span>
+					<span class="text">Doanh thu đơn hàng</span>
 				</a>
 			</li>
 			<li>
