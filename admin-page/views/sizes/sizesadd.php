@@ -1,10 +1,10 @@
 <?php
-
 // Kiểm tra và xử lý khi form được gửi
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $productID = $_POST['productID'];
     $sizes = $_POST['size'];
     $stockQuantities = $_POST['stockQuantity'];
+    $prices = $_POST['price'];
 
     $_SESSION['error'] = [];
 
@@ -143,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="productID">Chọn Sản Phẩm:</label>
                 <select class="form-control" name="productID" required>
                     <?php
+                    // Giả sử $products là danh sách sản phẩm đã được lấy từ database
                     foreach ($products as $product) {
                         echo "<option value='" . $product['id'] . "'>" . $product['ProductName'] . "</option>";
                     }
@@ -158,8 +159,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="form-group">
                         <label for="stockQuantity[]">Số Lượng Tồn:</label>
-                        <input type="number" class="form-control" name="stockQuantity[]" placeholder="Nhập số lượng"
-                            min="1" required>
+                        <input type="number" class="form-control" name="stockQuantity[]" placeholder="Nhập số lượng" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price[]">Giá:</label>
+                        <input type="number" class="form-control" name="price[]" placeholder="Nhập giá" min="1" required>
                     </div>
                 </div>
             </div>
@@ -185,6 +189,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         class="form-control" 
                         name="stockQuantity[]" 
                         placeholder="Nhập số lượng" 
+                        min="1" 
+                        required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="price[]">Giá:</label>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        name="price[]" 
+                        placeholder="Nhập giá" 
                         min="1" 
                         required
                     >

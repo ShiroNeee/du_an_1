@@ -200,19 +200,13 @@ class Product
         }
     }
     // Lấy thông tin sản phẩm theo ID
-public function getProductSizes($productID) {
-    $query = "
-        SELECT s.Size, s.StockQuantity
-        FROM sizes s
-        WHERE s.ProductID = :productID
-    ";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
-    $stmt->execute();
-
-    // Trả về danh sách kích cỡ và số tồn kho cho sản phẩm
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+    public function getSizesByProductId($productID) {
+        $query = "SELECT * FROM sizes WHERE ProductID = :productID";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':productID', $productID);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 // Lấy danh sách sản phẩm theo CategoryID
 public function getRandomProducts($limit = 4)

@@ -30,7 +30,7 @@ class DetailController
 
             // Lấy thông tin kích cỡ và số lượng tồn kho của sản phẩm
             if ($product) {
-                $productSizes = $this->modelProduct->getProductSizes($id);
+                $productSizes = $this->modelProduct->getSizesByProductId($id);
             }
         }
         // Truyền dữ liệu vào view
