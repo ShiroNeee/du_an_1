@@ -15,11 +15,12 @@ class Order
         try {
             $sql = "SELECT u.*, r.name, 
             c.statusName,
-            p.image
+            p.image,s.Size
             FROM orders u
             LEFT JOIN statusorder c ON u.Status = c.OrderID
             LEFT JOIN users r ON u.UserID = r.id
             LEFT JOIN products p ON u.ProductID = p.id
+            LEFT JOIN sizes s ON u.Size = s.SizeID
             ORDER BY CASE 
             WHEN c.OrderID = 3 THEN 1  -- Trạng thái thành công (OrderID = 3) lên đầu
             WHEN c.OrderID = 2 THEN 2  -- Trạng thái đang giao hàng (OrderID = 2) ở giữa
@@ -148,11 +149,14 @@ class Order
         try {
             $sql = "SELECT u.*, r.name, 
             c.statusName,
-            p.image
+            p.image,
+            s.SizeID,
+            s.Size AS Size
             FROM orders u 
             LEFT JOIN statusorder c ON u.Status = c.OrderID
             LEFT JOIN users r ON u.UserID = r.id 
             LEFT JOIN products p ON u.ProductID = p.id
+            LEFT JOIN sizes s ON u.Size = s.SizeID
             WHERE UserID = :userID";
             // Giả sử bạn đang sử dụng PDO để thực thi truy vấn
             $stmt = $this->conn->prepare($sql);
@@ -212,8 +216,8 @@ class Order
     {
         try {
             // Câu lệnh SQL để thêm đơn hàng vào bảng orders
-            $sql = "INSERT INTO orders (OrderID, ProductID, UserID, Quantity, TotalAmount, Status, OrderDate) 
-                VALUES (:OrderID, :ProductID, :UserID, :Quantity, :TotalAmount, :Status, :OrderDate)";
+            $sql = "INSERT INTO orders (OrderID, ProductID, UserID, Quantity, Size, TotalAmount, Status, OrderDate) 
+                VALUES (:OrderID, :ProductID, :UserID, :Quantity, :Size, :TotalAmount, :Status, :OrderDate)";
 
             $stmt = $this->conn->prepare($sql);
 
@@ -222,6 +226,7 @@ class Order
             $stmt->bindParam(':ProductID', $orderData['ProductID']);
             $stmt->bindParam(':UserID', $orderData['UserID']);
             $stmt->bindParam(':Quantity', $orderData['Quantity']);
+            $stmt->bindParam(':Size', $orderData['Size']);
             $stmt->bindParam(':TotalAmount', $orderData['TotalAmount']);
             $stmt->bindParam(':Status', $orderData['Status']);
             $stmt->bindParam(':OrderDate', $orderData['OrderDate']);

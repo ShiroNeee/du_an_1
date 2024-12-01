@@ -42,7 +42,7 @@
                                         <input type="text" class="form-control" id="address" name="address" placeholder=" Nhập địa chỉ">
                                     </div>
 
-                                    <input type="hidden" name="roleID" value="2" />
+                                    <input type="hidden" name="roleID" value="3" />
 
                                     <div class="mb-3">
                                         <label for="image" class="form-label">Ảnh đại diện</label>
