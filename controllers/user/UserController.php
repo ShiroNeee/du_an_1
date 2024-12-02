@@ -23,6 +23,110 @@ class UserController
         require_once '../admin-page/views/user/userList.php';
         require_once '../admin-page/views/footer.php';
     }
+    // Hiển thị form đăng ký
+    public function add()
+    {
+        $roles = $this->userModel->getAllRoles();
+        require_once '../admin-page/views/header.php';
+        require_once '../admin-page/views/user/addUser.php';
+        require_once '../admin-page/views/footer.php';
+    }
+    // Xử lý đăng ký
+    public function create()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Lấy dữ liệu từ form
+            $name            = $_POST['name'];
+            $email           = $_POST['email'];
+            $password        = $_POST['password'];
+            $confirmPassword = $_POST['confirm_password'];
+            $phoneNumber     = $_POST['phoneNumber'];
+            $address         = $_POST['address'];
+            $roleID          = isset($_POST['roleID']) ? $_POST['roleID'] : '3';
+            $image           = isset($_FILES['image']) ? $_FILES['image'] : null;
+
+            // Kiểm tra lỗi
+            $errors = [];
+            if (empty($name)) {
+                $errors['name'] = 'Họ tên không được để trống.';
+            }
+            // Kiểm tra email
+            if (empty($email)) {
+                $errors['email'] = 'Email không được để trống.';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email không hợp lệ.';
+            }
+
+            // Kiểm tra mật khẩu
+            if (empty($password)) {
+                $errors['password'] = 'Mật khẩu không được để trống.';
+            } elseif (strlen($password) < 3) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 3 ký tự.';
+            }
+
+            // Kiểm tra xác nhận mật khẩu
+            if (empty($confirmPassword)) {
+                $errors['confirm_password'] = 'Xác nhận mật khẩu không được để trống.';
+            } elseif ($password !== $confirmPassword) {
+                $errors['confirm_password'] = 'Mật khẩu và xác nhận mật khẩu không trùng khớp.';
+            }
+
+            // Kiểm tra số điện thoại
+            if (empty($phoneNumber)) {
+                $errors['phoneNumber'] = 'Số điện thoại không được để trống.';
+            } elseif (!preg_match('/^[0-9]{10,11}$/', $phoneNumber)) {
+                $errors['phoneNumber'] = 'Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng.';
+            }
+
+            // Kiểm tra địa chỉ
+            if (empty($address)) {
+                $errors['address'] = 'Địa chỉ không được để trống.';
+            }
+
+            // Xử lý upload ảnh
+            $imagePath = null;
+            if (empty($errors) && $image && $image['error'] == 0) {
+                $uploadDir = '../admin-page/img/user/';
+                // Lấy phần mở rộng của file ảnh
+                $fileExtension = pathinfo($image['name'], PATHINFO_EXTENSION);
+                // Tạo tên file duy nhất dựa trên uniqid và phần mở rộng
+                $fileName = uniqid('user_', true) . '.' . $fileExtension;
+                $imagePath = $uploadDir . $fileName;
+
+                // Di chuyển file đến thư mục
+                if (!move_uploaded_file($image['tmp_name'], $imagePath)) {
+                    $errors['image'] = 'Không thể upload ảnh.';
+                    $_SESSION['error'] = $errors;
+                    header("Location: ?act=list-user");
+                    exit();
+                }
+            }
+            // Kiểm tra nếu có lỗi
+            if (!empty($errors)) {
+                $_SESSION['error'] = $errors;
+                header("Location: ?act=add-user");
+                exit();
+            }
+
+            // Gọi model để đăng ký người dùng
+            require_once __DIR__ . '../../../models/users/user.php';
+            $userModel = new User();
+
+            $isUserAdded = $userModel->postData($name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
+
+            if ($isUserAdded) {
+                
+                $_SESSION['success'] = 'Tạo tài khoản thành công.';
+                header("Location: ?act=list-user");
+                exit();
+            } else {
+                
+                $_SESSION['error']['general'] = 'Lỗi. Vui lòng thử lại.';
+                header("Location: ?act=add-user");
+                exit();
+            }
+        }
+    }
     // Profile
     public function profile()
     {
@@ -58,7 +162,7 @@ class UserController
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
 
             // Kiểm tra người dùng đã đăng nhập và lấy role
-            if ($roleID != 1 && $roleID != 2) {
+            if ($roleID != 1 && $roleID != 2 && $roleID != 3) {
                 if ($id != $_SESSION['user']['id']) {
                     header("Location: ?act=profile"); // Nếu không phải của mình, chuyển hướng về trang cá nhân
                     exit();
@@ -207,7 +311,7 @@ class UserController
             // Kiểm tra vai trò
             if (empty($roleID)) {
                 $errors['roleID'] = 'Vai trò không được để trống.';
-            } elseif ($roleID != '1' && $roleID != '2') {
+            } elseif ($roleID != '1' && $roleID != '2' && $roleID != '3') {
                 $errors['roleID'] = 'Vai trò không hợp lệ.';
             }
 

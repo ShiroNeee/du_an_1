@@ -32,7 +32,7 @@ class RegisterController
             $confirmPassword = $_POST['confirm_password'];
             $phoneNumber     = $_POST['phoneNumber'];
             $address         = $_POST['address'];
-            $roleID          = isset($_POST['roleID']) ? $_POST['roleID'] : '2';
+            $roleID          = isset($_POST['roleID']) ? $_POST['roleID'] : '3';
             $image           = isset($_FILES['image']) ? $_FILES['image'] : null;
 
             // Kiểm tra lỗi

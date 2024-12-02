@@ -116,7 +116,7 @@
             <!-- Menu dropdown (ẩn/show khi click vào icon) -->
             <ul class="dropdown-menu" aria-labelledby="user-icon">
               <li><span class="dropdown-item">Xin chào, <?= $_SESSION['user']['name']; ?></span></li>
-              <?php if ($_SESSION['user']['roleID'] == 1): ?>
+              <?php if ($_SESSION['user']['roleID'] == 1 || $_SESSION['user']['roleID'] == 2): ?>
                 <li><a href="/du_an_1/admin-page/" class="dropdown-item">Admin</a></li>
               <?php endif; ?>
               <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>

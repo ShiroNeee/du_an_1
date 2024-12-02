@@ -240,7 +240,7 @@ class Product
     // Lấy thông tin sản phẩm theo ID
     public function getProductSizes($productID)
     {
-        $query = "SELECT s.Size, s.StockQuantity
+        $query = "SELECT s.SizeID, s.Size, s.StockQuantity
         FROM sizes s
         WHERE s.ProductID = :productID";
         $stmt = $this->conn->prepare($query);

@@ -14,6 +14,15 @@
                 </option>
             <?php endforeach; ?>
         </select>
+        <label>Size:</label>
+        <select name="Size" class="box">
+            <?php foreach ($siezs as $size): ?>
+                <option value="<?= $size['SizeID'] ?>"
+                    <?= $size['Size'] == $OrderDetail[0]['Size'] ? 'selected' : '' ?>>
+                    <?= $size['Size'] ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
 
         <label>Product ID:</label>
         <select name="ProductID" class="box">
@@ -28,12 +37,12 @@
         <input type="number" name="Quantity" class="box" value="<?= $OrderDetail[0]['Quantity'] ?>">
 
         <label>Tổng tiền:</label>
-        <p id="totalAmount"><?= number_format($OrderDetail[0]['TotalAmount'], 0, ',', '.') ?> VND</p> <!-- Hiển thị tổng tiền, không cho phép sửa -->
+        <p id="totalAmount"><?= number_format($OrderDetail[0]['TotalAmount'], 0, ',', '.') ?> VND</p> 
         <td>
-        <?php foreach ($ProductIdOrder as $product): ?>
-            <?php if ($OrderDetail[0]['ProductID'] == $product['id']): ?> 
-                <img src="<?= $product['image'] ?>" alt="Product Image" style="width: 100px; height: auto;">
-            <?php endif; ?>
+            <?php foreach ($ProductIdOrder as $product): ?>
+                <?php if ($OrderDetail[0]['ProductID'] == $product['id']): ?>
+                    <img src="<?= $product['image'] ?>" alt="Product Image" style="width: 100px; height: auto;">
+                <?php endif; ?>
             <?php endforeach; ?>
         </td><br>
         <button type="submit" class="add">Cập nhật</button>

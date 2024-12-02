@@ -15,7 +15,7 @@ class SizesController
     {
         // Lấy danh sách kích cỡ từ model
         $sizes = $this->modelSizes->getAllSizes();
-        
+
         // Yêu cầu hiển thị giao diện
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/sizes/sizeslist.php'; // Trang hiển thị danh sách kích cỡ
@@ -25,129 +25,112 @@ class SizesController
     public function add()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $productID = $_POST['productID'];  // Lấy ID của sản phẩm
-            $sizes = $_POST['size'];           // Mảng kích cỡ
-            $stockQuantities = $_POST['stockQuantity'];  // Mảng số lượng tồn kho (có thể nhập nhiều)
-    
-            // Duyệt qua từng kích cỡ và số tồn kho, thêm vào cơ sở dữ liệu
+            $productID = $_POST['productID'];
+            $sizes = $_POST['size'];
+            $stockQuantities = $_POST['stockQuantity'];
+
+            $_SESSION['message'] = []; // Đảm bảo khởi tạo mảng thông báo
+
             foreach ($sizes as $key => $size) {
-                $stockQuantity = $stockQuantities[$key];  // Lấy số lượng tồn kho tương ứng với kích cỡ
-    
-                // Gọi phương thức thêm kích cỡ vào database với số lượng tồn kho
+                $stockQuantity = $stockQuantities[$key];
+
                 $result = $this->modelSizes->addSize($productID, $size, $stockQuantity);
-    
+
                 if (!$result) {
-                    echo "Có lỗi xảy ra khi thêm kích cỡ: " . $size;
-                    return;
+                    $_SESSION['message'][] = "Có lỗi xảy ra khi thêm kích cỡ: $size";
                 }
             }
-    
-            // Nếu tất cả thành công, chuyển hướng
+
+            if (empty($_SESSION['message'])) {
+                $_SESSION['message'][] = "Thêm kích cỡ thành công!";
+            }
+
             header('Location: ?act=sizes-list');
             exit;
         } else {
-            // Lấy danh sách sản phẩm từ model
             $products = $this->modelSizes->getAllProducts();
-    
-            // Hiển thị form thêm kích cỡ
+
             require_once '../admin-page/views/header.php';
-            require_once '../admin-page/views/sizes/sizesadd.php'; // Form thêm kích cỡ
+            require_once '../admin-page/views/sizes/sizesadd.php';
             require_once '../admin-page/views/footer.php';
         }
     }
-    
+
+
     // Hàm sửa kích cỡ
     public function edit()
-{
-    // Kiểm tra ID hợp lệ
-    if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
-        echo "ID không hợp lệ!";
-        return;
-    }
-    
-    $sizeID = $_GET['id'];
-
-    // Lấy thông tin kích cỡ
-    $size = $this->modelSizes->getSizeById($sizeID);
-    
-    // Kiểm tra kích cỡ tồn tại không
-    if (!$size) {
-        echo "Kích cỡ không tồn tại!";
-        return;
-    }
-
-    // Lấy thông tin sản phẩm liên quan đến kích cỡ này
-    $product = $this->modelSizes->getProductById($size['ProductID']); // Giả sử model có phương thức này
-    
-    // Kiểm tra sản phẩm có tồn tại không
-    if (!$product) {
-        echo "Sản phẩm không tồn tại!";
-        return;
-    }
-
-    // Xử lý khi form được submit
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $productID = $_POST['productID'];
-        $size = $_POST['size'];
-        $stockQuantity = $_POST['stockQuantity'];
-
-        if (empty($productID) || empty($size) || !is_numeric($stockQuantity)) {
-            echo "Dữ liệu đầu vào không hợp lệ!";
-            return;
-        }
-
-        // Cập nhật kích cỡ
-        $result = $this->modelSizes->updateSize($sizeID, $productID, $size, $stockQuantity);
-
-        if ($result) {
+    {
+        if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
+            $_SESSION['message'] = ["ID không hợp lệ!"];
             header('Location: ?act=sizes-list');
             exit;
-        } else {
-            echo "Có lỗi xảy ra khi cập nhật kích cỡ.";
         }
-    } else {
-        // Truyền thông tin kích cỡ và sản phẩm đến view
-        require_once '../admin-page/views/header.php';
-        require_once '../admin-page/views/sizes/sizesedit.php';
-        require_once '../admin-page/views/footer.php';
+
+        $sizeID = $_GET['id'];
+        $size = $this->modelSizes->getSizeById($sizeID);
+
+        if (!$size) {
+            $_SESSION['message'] = ["Kích cỡ không tồn tại!"];
+            header('Location: ?act=sizes-list');
+            exit;
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $productID = $_POST['productID'];
+            $size = $_POST['size'];
+            $stockQuantity = $_POST['stockQuantity'];
+
+            if (empty($productID) || empty($size) || !is_numeric($stockQuantity)) {
+                $_SESSION['message'] = ["Dữ liệu đầu vào không hợp lệ!"];
+                header('Location: ?act=sizes-edit&id=' . $sizeID);
+                exit;
+            }
+
+            $result = $this->modelSizes->updateSize($sizeID, $productID, $size, $stockQuantity);
+
+            if ($result) {
+                $_SESSION['message'] = ["Cập nhật kích cỡ thành công!"];
+                header('Location: ?act=sizes-list');
+            } else {
+                $_SESSION['message'] = ["Có lỗi xảy ra khi cập nhật kích cỡ."];
+                header('Location: ?act=sizes-edit&id=' . $sizeID);
+            }
+            exit;
+        } else {
+            require_once '../admin-page/views/header.php';
+            require_once '../admin-page/views/sizes/sizesedit.php';
+            require_once '../admin-page/views/footer.php';
+        }
     }
-}
+
 
     // Hàm xóa kích cỡ
     public function delete()
-{
-    // Kiểm tra xem id có tồn tại trong URL không
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $id = $_GET['id']; // Dùng id thay vì sizeID
-    } else {
-        echo "Không có ID sản phẩm hoặc kích cỡ cần xóa.";
-        return;
-    }
+    {
+        if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
+            $_SESSION['message'] = ["ID không hợp lệ!"];
+            header('Location: ?act=sizes-list');
+            exit;
+        }
 
-    // Kiểm tra xem id có hợp lệ không (là số nguyên)
-    if (!is_numeric($id)) {
-        echo "ID không hợp lệ!";
-        return;
-    }
+        $id = $_GET['id'];
+        $size = $this->modelSizes->getSizeById($id);
 
-    // Kiểm tra xem sản phẩm/kích cỡ có tồn tại trong cơ sở dữ liệu không
-    $size = $this->modelSizes->getSizeById($id); // Lấy thông tin theo id
-    if (!$size) {
-        echo "Không tìm thấy sản phẩm/kích cỡ với ID này!";
-        return;
-    }
+        if (!$size) {
+            $_SESSION['message'] = ["Không tìm thấy kích cỡ với ID này!"];
+            header('Location: ?act=sizes-list');
+            exit;
+        }
 
-    // Xóa sản phẩm/kích cỡ khỏi cơ sở dữ liệu
-    $result = $this->modelSizes->deleteSize($id); // Xóa theo id
+        $result = $this->modelSizes->deleteSize($id);
 
-    // Kiểm tra kết quả và chuyển hướng về trang quản lý
-    if ($result) {
+        if ($result) {
+            $_SESSION['message'] = ["Xóa kích cỡ thành công!"];
+        } else {
+            $_SESSION['message'] = ["Có lỗi xảy ra khi xóa kích cỡ."];
+        }
+
         header('Location: ?act=sizes-list');
         exit;
-    } else {
-        echo "Có lỗi xảy ra khi xóa.";
     }
 }
- 
-}
-?>

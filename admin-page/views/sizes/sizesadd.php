@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
     <div class="admin-product-form-container">
-        <?php if (!empty($_SESSION['error'])): ?>
+        <?php if (!empty($_SESSION['error']) && is_array($_SESSION['error'])): ?>
             <div class="showErrorMessage">
                 <ul>
                     <?php foreach ($_SESSION['error'] as $error): ?>
@@ -133,8 +133,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </ul>
             </div>
-            <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
+
 
         <form action="" method="POST">
             <h3>Thêm Kích Cỡ Mới</h3>
@@ -154,12 +154,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="size-field">
                     <div class="form-group">
                         <label for="size[]">Kích Cỡ:</label>
-                        <input type="text" class="form-control" name="size[]" placeholder="Nhập kích cỡ" required>
+                        <input type="text" class="form-control" name="size[]" placeholder="Nhập kích cỡ">
                     </div>
                     <div class="form-group">
                         <label for="stockQuantity[]">Số Lượng Tồn:</label>
                         <input type="number" class="form-control" name="stockQuantity[]" placeholder="Nhập số lượng"
-                            min="1" required>
+                            min="1" >
                     </div>
                 </div>
             </div>

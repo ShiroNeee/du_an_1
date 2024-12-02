@@ -63,11 +63,11 @@ class LoginController
                 ];
                 $_SESSION['success'] = 'Đăng nhập thành công!';
 
-                if ($user['roleID'] == 1) {
+                if ($user['roleID'] == 1 || $user['roleID'] == 2) {
                     header("Location: /du_an_1/admin-page/");
                 } else {
                     header("Location: /du_an_1/client-page/");
-                }
+                }                
                 exit();
             } else {
                 // Nếu thông tin không đúng, thông báo lỗi

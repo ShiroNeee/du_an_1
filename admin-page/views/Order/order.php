@@ -64,9 +64,11 @@
                     <th>ID đơn hàng</th>
                     <th>Ảnh</th>
                     <th>Ngày đặt</th>
+                    <th>Size</th>
+                    <th>Số lượng</th>
                     <th>Tổng tiền</th>
                     <th>Trạng thái</th>
-                    <th>Số lượng</th>
+                    
                     <th>Tính năng</th>
                 </tr>
             </thead>
@@ -76,21 +78,23 @@
                     $totalQuantity += $orders['Quantity'];  // Cộng dồn số lượng 
                 ?>
                     <tr>
-                        <td><?= $index + 1; ?></td>
+                        <td><?= $orders['OrderID']; ?></td>
                         <td><?= $orders['name']; ?></td>
                         <td><?= $orders['ProductID']; ?></td>
                         <td>
                             <img src="<?= $orders['image']; ?>" width="80px">
                         </td>
                         <td><?= $orders['OrderDate']; ?></td>
+                        <td><?= $orders['Size']; ?></td>
+                        <td><?= $orders['Quantity']; ?></td>
                         <td><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
                         <td style="color:
-                        <?= $orders['Status'] == 3 ? 'blue' : ($orders['Status'] == 1 ||
-                            $orders['Status'] == 2 ? '#9C9900' : 'red');
+                        <?= $orders['Status'] == 1 ? 'red' : ($orders['Status'] == 2 ||
+                            $orders['Status'] == 3 ? '#9C9900' : 'blue');
                         ?>;font-size: 20px;">
                             <?= $orders['statusName']; ?>
                         </td>
-                        <td><?= $orders['Quantity']; ?></td>
+                        
                         <td>
                             <a href="?act=edit-order&id=<?= $orders['OrderID']; ?>">
                                 <button class="edit">Cập nhật</button>
