@@ -36,13 +36,13 @@ class CartShopController
 
             $ProductIDs = $_POST['ProductID'] ?? [];
             $UserID = $_SESSION['user']['id'] ?? null;
-            $totalAmount = $_POST['totalAmount'] ?? 0;
+            $totalAmounts = $_POST['totalAmount'] ?? 0;
             $Quantity = $_POST['Quantity'] ?? [];
-            $OrderIDs = $_POST['OrderID'] ?? [];
             $Sizes = $_POST['SizeID'] ?? [];
 
+
             // Kiểm tra thông tin thanh toán
-            if (!$UserID || $totalAmount <= 0 || empty($OrderIDs) || empty($Quantity) || empty($Sizes)) {
+            if (!$UserID || $totalAmounts <= 0 || empty($Quantity) || empty($Sizes)) {
                 $_SESSION['error'] = 'Thông tin thanh toán không hợp lệ.';
                 header("Location: ?act=cart-shop");
                 exit();
@@ -55,11 +55,11 @@ class CartShopController
             foreach ($ProductIDs as $index => $ProductID) {
                 $quantity = $Quantity[$index] ?? null;
                 $size = $Sizes[$index] ?? null;
-                $orderID = $OrderIDs[$index] ?? null;
-                
-                
+                $totalAmount = $totalAmounts[$index] ?? null;
+
+
                 // Kiểm tra nếu thông tin sản phẩm không đầy đủ
-                if (!$ProductID || !$quantity || !$size || !$orderID) {
+                if (!$ProductID || !$quantity || !$size) {
                     $_SESSION['error'] = "Thông tin sản phẩm không hợp lệ.";
                     $paymentSuccess = false;
                     break;  // Dừng quá trình thanh toán nếu có thông tin thiếu
@@ -68,45 +68,49 @@ class CartShopController
                 // Kiểm tra tồn kho
                 $currentStock = $this->modelSizes->getStockQuantity($ProductID);
                 $currentStock = $currentStock[0]['StockQuantity'] ?? null;
-                if ($currentStock === null || $currentStock < $quantity) {
-                    $_SESSION['error'] = "Số lượng không đủ cho sản phẩm $ProductID.";
-                    $paymentSuccess = false;
-                    continue;  // Tiếp tục với sản phẩm tiếp theo
-                }
 
-                $productDetail = $this->modelProduct->getDetail($ProductID);
-                $price = $productDetail['Price'] ?? null;
-                $new = $currentStock - $quantity;
-                
-                if ($price !== null) {
-                    // Tính tổng tiền = giá sản phẩm * số lượng
-                    $totalAmount = $price * $quantity;
-                    // Dữ liệu đơn hàng
-                    $orderData = [
-                        'OrderID' => $orderID,
-                        'ProductID' => $ProductID,
-                        'UserID' => $UserID,
-                        'Quantity' => $new,
-                        'Size' => $size,
-                        'TotalAmount' => $totalAmount,
-                        'Status' => 0,
-                        'OrderDate' => $currentDate
-                    ];
+
+                $orderDetail = $this->modelOrder->getOrderDetailByProductSize($ProductID, $size);
+                if ($orderDetail) {
+                    $OrderID = $orderDetail['OrderID'];
+                    $new = $currentStock - $quantity;
+
+                    // Kiểm tra nếu số lượng mới vượt quá tồn kho hiện tại
+                    if ($new < 0) {
+                        $_SESSION['error'] = "Số lượng không đủ cho sản phẩm. Tồn kho hiện tại sản phẩm.";
+                        // Điều hướng người dùng về trang giỏ hàng và thoát
+                        header("Location: ?act=cart-shop");
+                        exit();  // Dừng script để không tiếp tục xử lý
+                    }
+
+                    // Cập nhật dữ liệu đơn hàng
+                    $updateResult = $this->modelOrder->updateData(
+                        $OrderID,
+                        $UserID,
+                        $currentDate,
+                        $size,
+                        $totalAmount,
+                        1,
+                        $ProductID,
+                        $quantity
+                    );
                     // Tính toán tồn kho mới và cập nhật
-                    if (!$this->modelSizes->updateStockQuantity($ProductID, $new)) {
-                        $_SESSION['error'] = "Lỗi cập nhật tồn kho cho sản phẩm $ProductID.";
+                    if (!$this->modelSizes->updateStockQuantity($ProductID, $size, $new)) {
+                        $_SESSION['error'] = "Lỗi cập nhật tồn kho cho sản phẩm $ProductID, size $size.";
                         $paymentSuccess = false;
-                        continue;  // Tiếp tục với sản phẩm tiếp theo
+                        continue;
                     }
-                    // Thêm đơn hàng vào cơ sở dữ liệu
-                    if (!$this->modelOrder->addOrder($orderData)) {
-                        $_SESSION['error'] = "Đã xảy ra lỗi khi tạo đơn hàng cho sản phẩm $ProductID.";
-                        $paymentSuccess = false;
-                        continue;  // Tiếp tục với sản phẩm tiếp theo
+                    if ($updateResult) {
+                        $_SESSION['success'] = 'Cập nhật đơn hàng thành công.';
+                    } else {
+                        $_SESSION['error'] = 'Cập nhật đơn hàng không thành công. Vui lòng thử lại.';
                     }
+                } else {
+                    $_SESSION['error'] = 'Sản phẩm không tồn tại trong đơn hàng.';
+                    $paymentSuccess = false;
+                    continue;
                 }
 
-                // Kiểm tra kết quả của quá trình thanh toán
                 if ($paymentSuccess) {
                     $_SESSION['success'] = 'Thanh toán thành công. Cảm ơn bạn đã mua hàng!';
                 } else {

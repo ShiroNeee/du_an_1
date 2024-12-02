@@ -74,7 +74,7 @@ class SizesController
             header('Location: ?act=sizes-list');
             exit;
         }
-
+        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $productID = $_POST['productID'];
             $size = $_POST['size'];

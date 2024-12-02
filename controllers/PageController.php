@@ -48,9 +48,9 @@ class PageController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $id = isset($_SESSION['user']['id']) ? $_SESSION['user']['id'] : 0;
             $ProductID = isset($_POST['ProductID']) ? intval($_POST['ProductID']) : 0;
-            $OrderID = isset($_POST['OrderID']) ? intval($_POST['OrderID']) : 0;
             $SizeID = isset($_POST['SizeID']) ? intval($_POST['SizeID']) : 0;
             $Quantity = isset($_POST['Quantity']) ? intval($_POST['Quantity']) : 1;
+            $TotalAmount = isset($_POST['TotalPrice']) ? floatval($_POST['TotalPrice']) : 0;
 
             if ($id <= 0) {
                 $_SESSION['error'] = "Bạn cần đăng nhập để thực hiện thao tác này.";
@@ -64,23 +64,23 @@ class PageController
                 header("Location: ?act=/");
                 exit();
             }
-            
-            $OrderID = rand(100000, 999999);
-            $TotalAmount = $productDetail['Price'] * $Quantity;
-            
+            // Nếu $TotalAmount không được gửi, tính lại từ giá cơ bản và số lượng
+            if ($TotalAmount == 0) {
+                $TotalAmount = $productDetail['Price'] * $Quantity;
+            }
+
             $orderData = [
-                'OrderID' => $OrderID,
                 'ProductID' => $ProductID,
                 'UserID' => $id,
                 'Quantity' => $Quantity,
                 'Size' => $SizeID,
                 'TotalAmount' => $TotalAmount,
-                'Status' => 0,
+                'Status' => 1,
                 'OrderDate' => date('Y-m-d H:i:s')
             ];
-           
+
             $isOrderAdded = $this->modelOrder->addOrder($orderData);
-            
+
             if ($isOrderAdded) {
                 $_SESSION['success'] = "Đơn hàng đã được thêm thành công!";
                 header("Location: ?act=cart-shop");
@@ -93,7 +93,6 @@ class PageController
             header("Location: ?act=/");
         }
     }
-
 
     public function showCategoryProducts($CategoryID)
     {
@@ -116,28 +115,27 @@ class PageController
 
     public function handleCategoryRequest()
     {
-        
+
         if (isset($_GET['id']) && is_numeric($_GET['id'])) {
             $CategoryID = $_GET['id'];
 
-            
+
             $this->showCategoryProducts($CategoryID);
         } else {
-            
+
             header("Location: index.php");
             exit();
         }
     }
     public function search()
     {
-        
+
         if (isset($_POST['search_query']) && !empty($_POST['search_query'])) {
             $searchQuery = $_POST['search_query'];
 
-            
             $searchResults = $this->modelProduct->searchProductsByName($searchQuery);
         } else {
-            
+
             header("Location: index.php");
             exit();
         }

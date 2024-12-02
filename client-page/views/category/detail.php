@@ -2,11 +2,11 @@
     <div class="container mt-5">
         <div class="row">
             <!-- Hình ảnh sản phẩm -->
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6">
                 <div class="product-image-container">
                     <img src="<?= htmlspecialchars($product['image'] ?? 'no-image.jpg'); ?>"
                         alt="<?= htmlspecialchars($product['ProductName'] ?? 'Sản phẩm không tồn tại'); ?>"
-                        class="img-fluid rounded shadow-sm">
+                        class="img-fluid rounded shadow-sm" width="75%">
                 </div>
             </div>
 
@@ -37,8 +37,9 @@
                 <?php endif; ?>
 
                 <!-- Danh sách kích thước và tồn kho -->
+                !-- Danh sách kích thước và tồn kho -->
                 <div class="mt-4">
-                    <h5 class="fw-bold">Kích Cỡ và Số Lượng </h5>
+                    <h5 class="fw-bold">Kích Cỡ và Số Lượng</h5>
                     <div class="mb-3">
                         <select name="Size" id="sizeSelect" class="form-select" required <?= $outOfStock ? 'disabled' : ''; ?>>
                             <option value="">Chọn kích cỡ</option>
@@ -47,7 +48,8 @@
                                     <?php if ($size['StockQuantity'] > 0): ?>
                                         <option value="<?= htmlspecialchars($size['Size'] ?? 'Không xác định'); ?>"
                                             data-price="<?= htmlspecialchars($size['Price'] ?? 0); ?>"
-                                            data-stock="<?= htmlspecialchars($size['StockQuantity'] ?? 0); ?>">
+                                            data-stock="<?= htmlspecialchars($size['StockQuantity'] ?? 0); ?>"
+                                            data-size-id="<?= htmlspecialchars($size['SizeID']); ?>">
                                             <?= htmlspecialchars($size['Size'] ?? 'Không xác định'); ?> - Số lượng: <?= htmlspecialchars($size['StockQuantity'] ?? 0); ?>
                                         </option>
                                     <?php endif; ?>
@@ -67,29 +69,30 @@
                             <button type="button" class="btn btn-outline-secondary" id="increaseQuantity">+</button>
                         </div>
                     </div>
-                    <form method="POST" action="?act=add-order" class="m-0" id="add-to-cart-form">
-                        <?php foreach ($productSizes as $size): ?>
-                            <input type="hidden" name="ProductID" value="<?= $product['id']; ?>">
-                            <input type="hidden" name="SizeID" value="<?= $size['SizeID']; ?>">
-                            <button type="submit" class="btn btn-primary btn-lg" <?= $outOfStock ? 'disabled' : ''; ?>>Thêm vào giỏ hàng</button>
-                        <?php endforeach; ?>
-                    </form>
                 </div>
+                <form method="POST" action="?act=add-order" class="m-0" id="add-to-cart-form">
+                    <input type="hidden" name="ProductID" value="<?= $product['id']; ?>">
+                    <input type="hidden" name="SizeID" id="selectedSizeID" value="">
+                    <input type="hidden" name="TotalPrice" id="totalPriceField" value="">
+                    <button type="submit" class="btn btn-primary btn-lg" <?= $outOfStock ? 'disabled' : ''; ?>>Thêm vào giỏ hàng</button>
+                </form>
 
-                <!-- Mô tả sản phẩm -->
-                <div class="mt-4">
-                    <h5 class="fw-bold">Mô tả sản phẩm</h5>
-                    <p class="text-muted"><?= nl2br(htmlspecialchars($product['Description'] ?? 'Không có mô tả cho sản phẩm này.')); ?></p>
-                </div>
+            </div>
 
-                <div class="mt-4">
-                    <h5 class="fw-bold">Chia sẻ:</h5>
-                    <a href="#" class="btn btn-outline-primary btn-lg me-2"><i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i> Facebook</a>
-                    <a href="#" class="btn btn-outline-info btn-lg me-2"><i class="fab fa-twitter fa-lg" style="color: #55acee;"></i> Twitter</a>
-                    <a href="#" class="btn btn-outline-danger btn-lg"><i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i> Instagram</a>
-                </div>
+            <!-- Mô tả sản phẩm -->
+            <div class="mt-4">
+                <h5 class="fw-bold">Mô tả sản phẩm</h5>
+                <p class="text-muted"><?= nl2br(htmlspecialchars($product['Description'] ?? 'Không có mô tả cho sản phẩm này.')); ?></p>
+            </div>
+
+            <div class="mt-4">
+                <h5 class="fw-bold">Chia sẻ:</h5>
+                <a href="#" class="btn btn-outline-primary btn-lg me-2"><i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i> Facebook</a>
+                <a href="#" class="btn btn-outline-info btn-lg me-2"><i class="fab fa-twitter fa-lg" style="color: #55acee;"></i> Twitter</a>
+                <a href="#" class="btn btn-outline-danger btn-lg"><i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i> Instagram</a>
             </div>
         </div>
+    </div>
     </div>
 <?php else: ?>
     <div class="container mt-5">
@@ -121,11 +124,23 @@
 <script>
     document.getElementById('sizeSelect').addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
-        const sizePrice = selectedOption ? parseInt(selectedOption.getAttribute('data-price')) : 0;
         const stockQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-stock')) : 0;
-        const basePrice = <?= $product['Price'] ?? 0 ?>;
-        const totalPrice = basePrice + sizePrice;
+        const selectedSizeID = selectedOption ? selectedOption.getAttribute('data-size-id') : '';
 
+        if (!selectedSizeID) {
+            alert('Vui lòng chọn kích cỡ!');
+            return; // Nếu chưa chọn kích cỡ, ngừng tính toán giá và không cho phép tiếp tục.
+        }
+
+        const basePrice = <?= $product['Price'] ?? 0 ?>;
+
+        // Tạo phần trăm ngẫu nhiên từ 5% đến 15%
+        const randomPercent = Math.floor(Math.random() * (15 - 5 + 1)) + 5; // random từ 5% đến 15%
+        const sizePrice = basePrice * (randomPercent / 100); // Tính phần giá tăng thêm
+
+        const totalPrice = basePrice + sizePrice; // Tính giá mới
+
+        // Cập nhật giá hiển thị
         document.getElementById('price').textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
 
         // Hiển thị phần số lượng khi chọn kích cỡ
@@ -142,9 +157,12 @@
         if (parseInt(quantityInput.value) > stockQuantity) {
             quantityInput.value = stockQuantity; // Đặt lại số lượng về số lượng tối đa
         }
+
+        // Cập nhật giá trị SizeID trong form
+        document.getElementById('selectedSizeID').value = selectedSizeID;
     });
 
-    // Cập nhật tổng giá khi thay đổi số lượng
+
     document.getElementById('quantity').addEventListener('input', function() {
         const quantity = parseInt(this.value);
         const maxQuantity = parseInt(this.max);
@@ -155,19 +173,34 @@
             this.value = maxQuantity; // Reset lại số lượng
         }
 
-        updateTotalPrice();
+        updateTotalPrice(); // Cập nhật lại tổng giá
     });
 
-    // Hàm cập nhật tổng giá
     function updateTotalPrice() {
         const quantity = parseInt(document.getElementById('quantity').value);
         const selectedOption = document.getElementById('sizeSelect').options[document.getElementById('sizeSelect').selectedIndex];
-        const sizePrice = selectedOption ? parseInt(selectedOption.getAttribute('data-price')) : 0;
-        const basePrice = <?= $product['Price'] ?? 0 ?>;
-        const totalPrice = (basePrice + sizePrice) * quantity;
 
+        // Kiểm tra xem người dùng đã chọn kích cỡ chưa
+        if (!selectedOption || !selectedOption.getAttribute('data-size-id')) {
+            document.getElementById('price').textContent = 'Vui lòng chọn kích cỡ!';
+            return; // Ngừng nếu chưa chọn kích cỡ
+        }
+
+        const stockQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-stock')) : 0;
+
+        // Lấy giá gốc và tính phần trăm ngẫu nhiên từ 5%-15%
+        const basePrice = <?= $product['Price'] ?? 0 ?>;
+        const randomPercent = Math.floor(Math.random() * (15 - 5 + 1)) + 5; // random từ 5% đến 15%
+        const sizePrice = basePrice * (randomPercent / 100); // Tính phần giá tăng thêm
+
+        const totalPrice = (basePrice + sizePrice) * quantity; // Tính giá tổng
+
+        // Hiển thị giá cập nhật
         document.getElementById('price').textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
+        // Cập nhật giá trị tổng tiền vào trường ẩn trong form
+        document.getElementById('totalPriceField').value = totalPrice.toFixed(2);
     }
+
 
     // Nút cộng, trừ số lượng
     document.getElementById('increaseQuantity').addEventListener('click', function() {
@@ -180,6 +213,7 @@
             alert("Số lượng đã đạt mức tối đa trong kho.");
         }
     });
+
 
     document.getElementById('decreaseQuantity').addEventListener('click', function() {
         const quantityInput = document.getElementById('quantity');

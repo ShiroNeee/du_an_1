@@ -89,8 +89,8 @@
                         <td><?= $orders['Quantity']; ?></td>
                         <td><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
                         <td style="color:
-                        <?= $orders['Status'] == 3 ? 'blue' : ($orders['Status'] == 1 ||
-                            $orders['Status'] == 2 ? '#9C9900' : 'red');
+                        <?= $orders['Status'] == 1 ? 'red' : ($orders['Status'] == 2 ||
+                            $orders['Status'] == 3 ? '#9C9900' : 'blue');
                         ?>;font-size: 20px;">
                             <?= $orders['statusName']; ?>
                         </td>

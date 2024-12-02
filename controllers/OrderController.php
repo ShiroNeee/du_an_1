@@ -40,13 +40,15 @@ class OrderController
         if (isset($_GET['id'])) {
             $OrderID = $_GET['id'];
             $OrderDetail = $this->modelOrder->getOrderDetail($OrderID);
-
+            $ProductID = $OrderDetail[0]['ProductID'];
+            $siezs = $this ->modelOrder->getAllSizesByProductID($ProductID);
             $statusorder = $this->modelOrder->getAllStatusorder();
             $ProductIdOrder = $this->modelOrder->getAllProduct();
             // Lấy giá sản phẩm từ bảng ProductIdOrder
             $productPrices = [];
             foreach ($ProductIdOrder as $product) {
                 $productPrices[$product['id']] = $product['Price'];
+                $productID[$product['id']] = $product['id'];
             }
             // Tính tổng tiền ban đầu từ số lượng và giá sản phẩm
             $productID = $OrderDetail[0]['ProductID'];
@@ -78,7 +80,8 @@ class OrderController
             $OrderID = $_POST['OrderID'];
             $UserID = $_POST['UserID'];
             $OrderDate = date('Y-m-d H:i:s');
-            $TotalAmount = $_POST['TotalAmount']; // không cần thiết khi tính tổng lại
+            $Size = $_POST['Size'];
+            $TotalAmount = $_POST['TotalAmount'];
             $Status = $_POST['Status'];
             $ProductID = $_POST['ProductID'];
             $Quantity = $_POST['Quantity'];
@@ -104,11 +107,10 @@ class OrderController
                 $productPrices[$product['id']] = $product['Price'];
             }
 
-            // Tính tổng tiền sau khi thay đổi số lượng
-            $totalAmount = isset($productPrices[$ProductID]) ? $productPrices[$ProductID] * $Quantity : 0;
+            $TotalAmount = isset($productPrices[$ProductID]) ? $productPrices[$ProductID] * $Quantity : 0;
 
             // Thực hiện cập nhật đơn hàng
-            $updateResult = $this->modelOrder->updateData($OrderID, $UserID, $OrderDate, $totalAmount, $Status, $ProductID, $Quantity);
+            $updateResult = $this->modelOrder->updateData($OrderID, $UserID, $OrderDate, $Size, $TotalAmount, $Status, $ProductID, $Quantity);
 
             if ($updateResult) {
                 $_SESSION['success'] = 'Cập nhật đơn hàng thành công.';

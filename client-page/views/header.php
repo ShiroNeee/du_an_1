@@ -82,7 +82,7 @@
                   <?php if (!empty($searchResults)): ?>
                     <?php foreach ($searchResults as $product): ?>
                       <div class="card-body">
-                        <a href="=<?= $product['id']; ?>" class="d-flex align-items-center gap-3 text-decoration-none">
+                        <a href="?act=detail&id=<?= $product['id']; ?>" class="d-flex align-items-center gap-3 text-decoration-none">
                           <img src="<?= $product['image']; ?>" width="80px" />
                           <br>
                           <td class="my-3">Tên: <?= $product['ProductName']; ?></td>

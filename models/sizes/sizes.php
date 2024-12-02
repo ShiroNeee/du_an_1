@@ -108,15 +108,16 @@ class SizeModel
             return false;
         }
     }
-    public function updateStockQuantity($ProductID, $new)
+    public function updateStockQuantity($ProductID, $SizeID, $new)
     {
         try {
             $sql = "UPDATE sizes 
                 SET StockQuantity = :StockQuantity 
-                WHERE ProductID = :ProductID";
+                WHERE ProductID = :ProductID AND SizeID = :SizeID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':StockQuantity', $new, PDO::PARAM_INT);
             $stmt->bindParam(':ProductID', $ProductID, PDO::PARAM_INT);
+            $stmt->bindParam(':SizeID', $SizeID, PDO::PARAM_INT);
             $stmt->execute();
             return true;  
         } catch (PDOException $e) {

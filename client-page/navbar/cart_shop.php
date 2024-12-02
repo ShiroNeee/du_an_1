@@ -3,13 +3,13 @@ function getStatusClass($status)
 {
     switch ($status) {
         case 0:
-            return 'text-danger';
+            return 'text-primary';
         case 1:
-            return 'text-warning';
+            return 'text-danger';
         case 2:
             return 'text-warning';
         case 3:
-            return 'text-success';
+            return 'text-warning';
         default:
             return 'text-danger';
     }
@@ -48,12 +48,10 @@ function getStatusClass($status)
                     <?php
                     $totalAmountAll = 0;
                     $totalQuantity = 0;
-                    $OrderID = 0;
 
                     foreach ($listOrders as $index => $orders) :
                         $totalAmountAll += $orders['TotalAmount'];
                         $totalQuantity += $orders['Quantity'];
-                        $OrderID = $orders['OrderID'];
 
                     ?>
                         <tr style="font-size: 22px;" id="order-row-<?= $orders['OrderID']; ?>">
@@ -100,7 +98,6 @@ function getStatusClass($status)
                 ?>
                     <input type="hidden" name="ProductID[]" value="<?= $orders['ProductID']; ?>">
                     <input type="hidden" name="SizeID[]" value="<?= $orders['SizeID']; ?>">
-                    <input type="hidden" name="OrderID[]" value="<?= $orders['OrderID']; ?>">
                     <input type="hidden" name="Quantity[]" value="<?= $orders['Quantity']; ?>" id="quantity-<?= $orders['OrderID']; ?>">
                     <input type="hidden" name="totalAmount[]" value="<?= $orders['TotalAmount']; ?>" id="total-amount-<?= $orders['OrderID']; ?>">
                 <?php endforeach; ?>
@@ -112,64 +109,86 @@ function getStatusClass($status)
 </div>
 
 <script>
-    document.querySelectorAll('.increase-quantity, .decrease-quantity').forEach(function(button) {
-        button.addEventListener('click', function() {
-            var orderId = this.getAttribute('data-orderid');
-            var quantityElement = document.getElementById('quantity-' + orderId);
-            var displayQuantityElement = document.getElementById('display-quantity-' + orderId);
-            var totalAmountElement = document.getElementById('total-amount-' + orderId);
+    document.addEventListener('DOMContentLoaded', function() {
+        // Quản lý tăng/giảm số lượng sản phẩm
+        document.querySelectorAll('.increase-quantity, .decrease-quantity').forEach(function(button) {
+            button.addEventListener('click', function() {
+                handleQuantityChange(this);
+            });
+        });
 
-            // Kiểm tra nếu các phần tử không tồn tại
-            if (!quantityElement || !displayQuantityElement || !totalAmountElement) {
-                console.error("Các phần tử không tồn tại cho OrderID: " + orderId);
-                return;
-            }
+        // Quản lý nút "Chọn tất cả"
+        document.getElementById('select-all').addEventListener('click', function() {
+            toggleSelectAll(this);
+        });
 
-            // Lấy số lượng và tổng tiền hiện tại
-            var currentQuantity = parseInt(quantityElement.value, 10);
-            var currentTotalAmount = parseInt(totalAmountElement.textContent.replace(/\./g, '').replace(' VNĐ', ''), 10);
-
-            // Nếu giá trị không hợp lệ (NaN), dừng lại
-            if (isNaN(currentQuantity) || isNaN(currentTotalAmount)) {
-                console.error("Giá trị không hợp lệ cho OrderID: " + orderId);
-                return;
-            }
-
-            var pricePerUnit = currentTotalAmount / currentQuantity; // Tính giá mỗi sản phẩm
-
-            // Xác định thao tác (tăng hoặc giảm)
-            var isIncrease = this.classList.contains('increase-quantity');
-            var newQuantity = isIncrease ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
-
-            // Cập nhật số lượng và tổng tiền của đơn hàng
-            quantityElement.value = newQuantity;
-            displayQuantityElement.textContent = newQuantity;
-
-            var newTotalAmount = pricePerUnit * newQuantity; // Tính tổng tiền mới
-            totalAmountElement.textContent = newTotalAmount.toLocaleString() + '';
-
-            // Cập nhật tổng tiền và tổng số lượng của tất cả đơn hàng
+        // Đảm bảo cập nhật tổng số lượng và tổng tiền khi submit form
+        document.querySelector('form#payment-form').addEventListener('submit', function() {
             updateTotalAmountAll();
         });
     });
 
-    document.getElementById('select-all').addEventListener('click', function() {
-        // Lấy tất cả các checkbox với class 'delete-checkbox'
-        var checkboxes = document.querySelectorAll('.delete-checkbox');
-        var isChecked = this.checked; // Lấy trạng thái của checkbox "Chọn tất cả"
+    /**
+     * Xử lý khi thay đổi số lượng sản phẩm
+     * @param {HTMLElement} button Nút được click (tăng/giảm số lượng)
+     */
+    function handleQuantityChange(button) {
+        var orderId = button.getAttribute('data-orderid');
+        var quantityElement = document.getElementById('quantity-' + orderId);
+        var displayQuantityElement = document.getElementById('display-quantity-' + orderId);
+        var totalAmountElement = document.getElementById('total-amount-' + orderId);
+        var hiddenTotalAmountElement = document.querySelector('input[name="totalAmount[]"][id="total-amount-' + orderId + '"]');
 
-        // Duyệt qua tất cả các checkbox và cập nhật trạng thái của chúng theo checkbox "Chọn tất cả"
+        if (!quantityElement || !displayQuantityElement || !totalAmountElement || !hiddenTotalAmountElement) {
+            console.error("Các phần tử không tồn tại cho OrderID: " + orderId);
+            return;
+        }
+
+        var currentQuantity = parseInt(quantityElement.value, 10);
+        var currentTotalAmount = parseInt(totalAmountElement.textContent.replace(/\./g, '').replace(' VNĐ', ''), 10);
+
+        if (isNaN(currentQuantity) || isNaN(currentTotalAmount)) {
+            console.error("Giá trị không hợp lệ cho OrderID: " + orderId);
+            return;
+        }
+
+        var pricePerUnit = currentTotalAmount / currentQuantity;
+
+        var isIncrease = button.classList.contains('increase-quantity');
+        var newQuantity = isIncrease ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
+
+        quantityElement.value = newQuantity;
+        displayQuantityElement.textContent = newQuantity;
+
+        var newTotalAmount = pricePerUnit * newQuantity;
+        totalAmountElement.textContent = newTotalAmount.toLocaleString() + ' VNĐ';
+
+        // Cập nhật giá trị vào trường ẩn
+        hiddenTotalAmountElement.value = newTotalAmount;
+
+        updateTotalAmountAll();
+    }
+
+    /**
+     * Chọn hoặc bỏ chọn tất cả checkbox
+     * @param {HTMLInputElement} selectAllCheckbox Checkbox "Chọn tất cả"
+     */
+    function toggleSelectAll(selectAllCheckbox) {
+        var checkboxes = document.querySelectorAll('.delete-checkbox');
+        var isChecked = selectAllCheckbox.checked;
+
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = isChecked;
         });
-    });
+    }
 
-
+    /**
+     * Cập nhật tổng số lượng và tổng tiền cho toàn bộ đơn hàng
+     */
     function updateTotalAmountAll() {
         var totalAllAmount = 0;
         var totalQuantity = 0;
 
-        // Tính tổng tiền của tất cả các đơn hàng
         document.querySelectorAll('[id^="total-amount-"]').forEach(function(element) {
             var amount = parseInt(element.textContent.replace(/\./g, '').replace(' VNĐ', ''), 10);
             if (!isNaN(amount)) {
@@ -177,7 +196,6 @@ function getStatusClass($status)
             }
         });
 
-        // Tính tổng số lượng của tất cả các đơn hàng
         document.querySelectorAll('[id^="quantity-"]').forEach(function(element) {
             var quantity = parseInt(element.value, 10);
             if (!isNaN(quantity)) {
@@ -185,17 +203,21 @@ function getStatusClass($status)
             }
         });
 
-        // Hiển thị tổng tiền tất cả đơn hàng
         document.getElementById('total-all-amount').textContent = totalAllAmount.toLocaleString() + ' VNĐ';
 
-        // Cập nhật tổng số lượng và tổng tiền vào các trường ẩn (form thanh toán)
-        document.getElementById('total-quantity-hidden').value = totalQuantity;
-        document.getElementById('total-amount-hidden').value = totalAllAmount;
+        var totalQuantityHidden = document.getElementById('total-quantity-hidden');
+        var totalAmountHidden = document.getElementById('total-amount-hidden');
+
+        if (totalQuantityHidden && totalAmountHidden) {
+            totalQuantityHidden.value = totalQuantity;
+            totalAmountHidden.value = totalAllAmount;
+        }
     }
 
-
+    /**
+     * Cập nhật giá trị trường ẩn cho tổng số lượng và tổng tiền
+     */
     function updateHiddenFields() {
-        // Đảm bảo cập nhật lại giá trị của tổng số lượng và tổng tiền vào các trường ẩn
         var totalQuantity = 0;
         var totalAmount = 0;
 
@@ -210,14 +232,4 @@ function getStatusClass($status)
         document.getElementById('total-quantity-hidden').value = totalQuantity;
         document.getElementById('total-amount-hidden').value = totalAmount;
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Cập nhật tổng tiền và tổng số lượng ban đầu
-        updateTotalAmountAll();
-
-        // Đảm bảo cập nhật lại giá trị khi form được submit
-        document.querySelector('form#payment-form').addEventListener('submit', function() {
-            updateTotalAmountAll();
-        });
-    });
 </script>

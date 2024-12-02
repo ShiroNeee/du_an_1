@@ -21,12 +21,14 @@ class Order
             LEFT JOIN users r ON u.UserID = r.id
             LEFT JOIN products p ON u.ProductID = p.id
             LEFT JOIN sizes s ON u.Size = s.SizeID
-            ORDER BY CASE 
-            WHEN c.OrderID = 3 THEN 1  -- Trạng thái thành công (OrderID = 3) lên đầu
-            WHEN c.OrderID = 2 THEN 2  -- Trạng thái đang giao hàng (OrderID = 2) ở giữa
-            WHEN c.OrderID = 1 THEN 3  -- Trạng thái đang chuẩn bị hàng (OrderID = 1) ở dưới 
-            ELSE 4                     -- Các trạng thái khác (OrderID khác) ở dưới nữa
-            END, u.OrderID DESC  -- Sắp xếp theo OrderID của đơn hàng (giảm dần)
+             ORDER BY 
+                CASE 
+                    WHEN c.OrderID = 1 THEN 1
+                    WHEN c.OrderID = 2 THEN 2
+                    WHEN c.OrderID = 3 THEN 3
+                    WHEN c.OrderID = 0 THEN 4
+                    ELSE 5
+                END, u.OrderID DESC
             LIMIT :limit OFFSET :offset";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -103,10 +105,12 @@ class Order
     {
         try {
             $sql = "SELECT u.*, r.name, 
-            c.statusName
+            c.statusName,
+            s.Size
             FROM orders u 
             LEFT JOIN statusorder c ON u.Status = c.OrderID
             LEFT JOIN users r ON u.UserID = r.id 
+            LEFT JOIN sizes s ON u.Size = s.SizeID
             WHERE u.OrderID = :OrderID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':OrderID', $OrderID, PDO::PARAM_INT);
@@ -131,6 +135,37 @@ class Order
             return false;
         }
     }
+    public function getAllSizesByProductID($ProductID)
+    {
+        try {
+
+            $sql = "SELECT s.SizeID, s.Size 
+            FROM sizes s
+            WHERE s.ProductID = :ProductID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ProductID', $ProductID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+    public function getOrderDetailByProductSize($ProductID, $Size)
+    {
+        try {
+            $sql = "SELECT OrderID FROM orders WHERE ProductID = :ProductID AND Size = :Size";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ProductID', $ProductID, PDO::PARAM_INT);
+            $stmt->bindParam(':Size', $Size, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC); // Trả về OrderID nếu tìm thấy
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return null;
+        }
+    }
+
     public function getAllProduct()
     {
         try {
@@ -169,12 +204,13 @@ class Order
         }
     }
     //
-    public function updateData($OrderID, $UserID, $OrderDate, $TotalAmount, $Status, $ProductID, $Quantity)
+    public function updateData($OrderID, $UserID, $OrderDate, $Size, $TotalAmount, $Status, $ProductID, $Quantity)
     {
         try {
             $sql = "UPDATE orders SET 
                     UserID = :UserID,
                     OrderDate = :OrderDate,
+                    Size = :Size,
                     TotalAmount = :TotalAmount,
                     Status = :Status,
                     ProductID = :ProductID,
@@ -186,6 +222,7 @@ class Order
             $stmt->bindParam(':OrderID', $OrderID, PDO::PARAM_INT);
             $stmt->bindParam(':UserID', $UserID);
             $stmt->bindParam(':OrderDate', $OrderDate);
+            $stmt->bindParam(':Size', $Size);
             $stmt->bindParam(':TotalAmount', $TotalAmount);
             $stmt->bindParam(':Status', $Status);
             $stmt->bindParam(':ProductID', $ProductID);
