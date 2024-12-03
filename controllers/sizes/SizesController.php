@@ -13,8 +13,10 @@ class SizesController
     // Hàm hiển thị danh sách kích cỡ
     public function index()
     {
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         // Lấy danh sách kích cỡ từ model
-        $sizes = $this->modelSizes->getAllSizes();
+        $sizes = $this->modelSizes->getAllSizes($currentPage);
+        $totalPages = $this->modelSizes->getTotalPages();
 
         // Yêu cầu hiển thị giao diện
         require_once '../admin-page/views/header.php';
@@ -74,7 +76,7 @@ class SizesController
             header('Location: ?act=sizes-list');
             exit;
         }
-        
+        $products = $this->modelSizes->getAllProducts();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $productID = $_POST['productID'];
             $size = $_POST['size'];

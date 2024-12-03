@@ -13,7 +13,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Tên sản phẩm</th>
+                    <th>ID sản phẩm</th>
                     <th>Kích cỡ</th>
                     <th>Số lượng trong kho</th>
                     <th>Chỉnh sửa</th>
@@ -21,30 +21,38 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $sizes = $this->modelSizes->getAllSizes(); // Lấy dữ liệu kích cỡ từ model
-                if ($sizes) {
-                    foreach ($sizes as $size) {
-                        echo "<tr>";
-                        echo "<td style='font-size:20px'>" . $size['SizeID'] . "</td>";
-                        echo "<td style='font-size:15px'>" . $size['ProductName'] . "</td>";
-                        echo "<td>" . $size['Size'] . "</td>";
-                        echo "<td>" . $size['StockQuantity'] . "</td>";
-                        echo "<td>
-                                <a href='?act=sizes-edit&id=" . $size['SizeID'] . "'>
-                                    <button class='edit'>Sửa</button>
+                <?php if ($sizes): ?>
+                    <?php foreach ($sizes as $size): ?>
+                        <tr>
+                            <td><?= $size['SizeID'] ?></td>
+                            <td><?= $size['ProductID'] ?></td>
+                            <td><?= $size['Size'] ?></td>
+                            <td><?= $size['StockQuantity'] ?></td>
+                            <td>
+                                <a href="?act=sizes-edit&id=<?= $size['SizeID'] ?>">
+                                    <button class="edit">Sửa</button>
                                 </a>
-                              </td>";
-                        echo "<td>
-                                <a href='?act=sizes-delete&id=" . $size['SizeID'] . "' onclick='return confirm(\"Bạn có chắc chắn muốn xóa kích cỡ này không?\")'>
-                                    <button class='delete'>Xóa</button>
+                            </td>
+                            <td>
+                                <a href="?act=sizes-delete&id=<?= $size['SizeID'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa kích cỡ này không?')">
+                                    <button class="delete">Xóa</button>
                                 </a>
-                              </td>";
-                        echo "</tr>";
-                    }
-                }
-                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </tbody>
         </table>
+    </div>
+    <!-- Phân trang -->
+    <div class="pagination">
+        <h3>Trang:</h3>
+        <div class="pagination">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="?act=sizes-list&page=<?= $i ?>" class="<?= $i == $currentPage ? 'active' : '' ?>">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+        </div>
     </div>
 </div>

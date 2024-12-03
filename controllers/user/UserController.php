@@ -115,12 +115,12 @@ class UserController
             $isUserAdded = $userModel->postData($name, $email, $password, $phoneNumber, $address, $roleID, $imagePath);
 
             if ($isUserAdded) {
-                
+
                 $_SESSION['success'] = 'Tạo tài khoản thành công.';
                 header("Location: ?act=list-user");
                 exit();
             } else {
-                
+
                 $_SESSION['error']['general'] = 'Lỗi. Vui lòng thử lại.';
                 header("Location: ?act=add-user");
                 exit();

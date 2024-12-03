@@ -23,18 +23,25 @@
         <?php endif; ?>
 
         <?php
-        if (isset($_SESSION['error']) && is_array($_SESSION['error'])) {
-          foreach ($_SESSION['error'] as $key => $error) {
-            if (!empty($error)) {
-              echo htmlspecialchars($error) . '<br>';
+        // Kiểm tra xem error có phải là mảng không
+        if (isset($_SESSION['error'])) {
+          if (is_array($_SESSION['error'])) {
+            // Nếu là mảng, lặp qua và hiển thị từng lỗi
+            foreach ($_SESSION['error'] as $key => $error) {
+              if (!empty($error)) {
+                echo htmlspecialchars($error) . '<br>';
+              }
             }
+          } else {
+            // Nếu là chuỗi, hiển thị trực tiếp
+            echo htmlspecialchars($_SESSION['error']);
           }
-          unset($_SESSION['error']);
+          unset($_SESSION['error']); // Xóa lỗi sau khi hiển thị
         }
         ?>
       </small>
     </div>
-  <?php endif; ?>
+<?php endif; ?>
 
   <header class="top-header bg-white py-3 border-bottom">
     <div class="container d-flex justify-content-between align-items-center">
@@ -120,8 +127,8 @@
                 <li><a href="/du_an_1/admin-page/" class="dropdown-item">Admin</a></li>
               <?php endif; ?>
               <li><a href="?act=profile" class="dropdown-item">Thông tin cá nhân</a></li>
-              <li><a href="?act=payment" class="dropdown-item">Thanh toán</a></li>
-
+              <li><a href="?act=checkout" class="dropdown-item">Thanh toán</a></li>
+              <li><a href="?act=my-orders" class="dropdown-item">Đơn hàng của bạn</a></li>
               <li><a href="?act=logout" class="dropdown-item">Đăng xuất</a></li>
             </ul>
           </div>

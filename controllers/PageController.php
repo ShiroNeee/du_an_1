@@ -64,11 +64,38 @@ class PageController
                 header("Location: ?act=/");
                 exit();
             }
+            // Kiểm tra số lượng tồn kho
+            $productSizes = $this->modelProduct->getProductSizes($ProductID);
+            $availableStock = 0;
+            foreach ($productSizes as $size) {
+                if ($size['SizeID'] == $SizeID) {
+                    $availableStock = $size['StockQuantity'];
+                    break;
+                }
+            }
+
+            // Kiểm tra số lượng trong giỏ hàng trước khi thêm mới
+            $existingOrder = $this->modelOrder->getOrderByProductAndSize($id, $ProductID, $SizeID);
+            
+            if ($existingOrder) {
+                
+                $orderQuantity = $existingOrder['Quantity'];
+                if (($orderQuantity + $Quantity) > $availableStock) {
+                    $_SESSION['error'] = "Số lượng trong giỏ hàng đã vượt quá số lượng tồn kho.";
+                    header("Location: ?act=detail&id=" . $ProductID);
+                    exit();
+                }
+            } else {
+                if ($Quantity > $availableStock) {
+                    $_SESSION['error'] = "Số lượng bạn yêu cầu vượt quá số lượng tồn kho.";
+                    header("Location: ?act=detail&id=" . $ProductID);
+                    exit();
+                }
+            }
             // Nếu $TotalAmount không được gửi, tính lại từ giá cơ bản và số lượng
             if ($TotalAmount == 0) {
                 $TotalAmount = $productDetail['Price'] * $Quantity;
             }
-
             $orderData = [
                 'ProductID' => $ProductID,
                 'UserID' => $id,
@@ -78,14 +105,18 @@ class PageController
                 'Status' => 1,
                 'OrderDate' => date('Y-m-d H:i:s')
             ];
+            // Thêm hoặc cập nhật giỏ hàng và lấy lại thông tin đơn hàng
+            $existingOrder = $this->modelOrder->addOrUpdateOrder($orderData);
 
-            $isOrderAdded = $this->modelOrder->addOrder($orderData);
-
-            if ($isOrderAdded) {
-                $_SESSION['success'] = "Đơn hàng đã được thêm thành công!";
+            if ($existingOrder) {
+                if (isset($existingOrder['OrderID'])) {
+                    $_SESSION['success'] = "Cập nhật giỏ hàng thành công! Số lượng mới: " . ($existingOrder['Quantity'] + $Quantity);
+                } else {
+                    $_SESSION['success'] = "Sản phẩm đã được thêm vào giỏ hàng!";
+                }
                 header("Location: ?act=cart-shop");
             } else {
-                $_SESSION['error'] = "Đã xảy ra lỗi khi thêm đơn hàng.";
+                $_SESSION['error'] = "Đã xảy ra lỗi khi thêm hoặc cập nhật giỏ hàng.";
                 header("Location: ?act=/");
             }
         } else {

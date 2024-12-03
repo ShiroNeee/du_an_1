@@ -45,6 +45,11 @@
                 <?php endif; ?>
             <?php endforeach; ?>
         </td><br>
-        <button type="submit" class="add">Cập nhật</button>
+          <!-- Kiểm tra trạng thái đơn hàng và ẩn nút Cập nhật nếu trạng thái là 0 -->
+          <?php if ($OrderDetail[0]['Status'] != 0): ?>
+            <button type="submit" class="add">Cập nhật</button>
+        <?php else: ?>
+            <p style="color: red;">Đơn hàng này không thể cập nhật vì trạng thái là thành công.</p>
+        <?php endif; ?>
     </form>
 </div>
