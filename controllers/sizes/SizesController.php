@@ -3,7 +3,6 @@
 class SizesController
 {
     public $modelSizes;
-
     public function __construct()
     {
         // Khởi tạo Model
@@ -49,7 +48,6 @@ class SizesController
             exit;
         } else {
             $products = $this->modelSizes->getAllProducts();
-
             require_once '../admin-page/views/header.php';
             require_once '../admin-page/views/sizes/sizesadd.php';
             require_once '../admin-page/views/footer.php';
@@ -60,21 +58,19 @@ class SizesController
     // Hàm sửa kích cỡ
     public function edit()
     {
+        
         if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
             $_SESSION['message'] = ["ID không hợp lệ!"];
             header('Location: ?act=sizes-list');
             exit;
         }
-
         $sizeID = $_GET['id'];
         $size = $this->modelSizes->getSizeById($sizeID);
-
         if (!$size) {
             $_SESSION['message'] = ["Kích cỡ không tồn tại!"];
             header('Location: ?act=sizes-list');
             exit;
         }
-        
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $productID = $_POST['productID'];
             $size = $_POST['size'];
@@ -97,6 +93,7 @@ class SizesController
             }
             exit;
         } else {
+            $product = $this->modelSizes->getProductById($size['ProductID']);
             require_once '../admin-page/views/header.php';
             require_once '../admin-page/views/sizes/sizesedit.php';
             require_once '../admin-page/views/footer.php';

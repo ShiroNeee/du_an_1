@@ -130,7 +130,7 @@
 			</li>
 			<li>
 				<a href="?act=list-order">
-					<i class='bx bxs-doughnut-chart'></i>
+				<i class='bx bx-receipt'></i>
 					<span class="text">Quản lý đơn hàng</span>
 				</a>
 			</li>

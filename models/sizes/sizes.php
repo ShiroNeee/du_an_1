@@ -29,17 +29,22 @@ class SizeModel
     // Lấy thông tin kích cỡ theo ID
     public function getSizeById($sizeID)
     {
-        $query = "SELECT sizes.SizeID, sizes.Size, sizes.StockQuantity, sizes.ProductID, products.ProductName
-                FROM sizes
-                JOIN products ON sizes.ProductID = products.id  -- Sử dụng 'id' thay vì 'ProductID' trong bảng products
-                WHERE sizes.SizeID = :sizeID";
+        $query = "SELECT 
+                sizes.SizeID, 
+                sizes.Size, 
+                sizes.StockQuantity, 
+                sizes.ProductID, 
+                products.ProductName, 
+                products.Price -- Thêm cột Price để hiển thị giá
+              FROM sizes
+              JOIN products ON sizes.ProductID = products.id 
+              WHERE sizes.SizeID = :sizeID";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':sizeID', $sizeID, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Trong Model
-
     public function getProductById($productID)
     {
         $sql = "SELECT * FROM products WHERE id = ?";

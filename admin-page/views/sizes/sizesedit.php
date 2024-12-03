@@ -47,7 +47,7 @@
     <h2>Chỉnh sửa kích cỡ</h2>
     <form action="" method="post">
         <div class="form-group">
-            <label for="productID">Sản phẩm:</label>
+            <label for="productID">Tên sản phẩm:</label>
             <select name="productID" id="productID">
                 <option value="<?php echo $product['id']; ?>" selected>
                     <?php echo $product['ProductName']; ?> (Giá: <?php echo number_format($product['Price'], 0, ',', '.'); ?>)

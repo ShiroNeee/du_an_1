@@ -20,7 +20,7 @@ class ThongKeModel
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC)?:[];
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
         } catch (PDOException $e) {
             echo "Lỗi: " . $e->getMessage();
             return [];
@@ -35,7 +35,23 @@ class ThongKeModel
             WHERE OrderDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) 
             GROUP BY DATE_FORMAT(OrderDate, '%Y-%m-%d')
             ORDER BY DATE_FORMAT(OrderDate, '%Y-%m-%d') ASC";
-            
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+        } catch (PDOException $e) {
+            echo "Lỗi: " . $e->getMessage();
+            return [];
+        }
+    }
+    public function tongDoanhThuWeek()
+    {
+        try {
+            $sql = "SELECT YEARWEEK(OrderDate, 1) AS Week, SUM(TotalAmount) AS TotalRevenue
+            FROM orders 
+            GROUP BY YEARWEEK(OrderDate, 1)
+            ORDER BY YEARWEEK(OrderDate, 1) ASC";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
 
