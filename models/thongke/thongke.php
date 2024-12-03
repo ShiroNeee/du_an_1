@@ -8,6 +8,7 @@ class ThongKeModel
     {
         $this->conn = connectDB();
     }
+    // model của doanh thu tháng
     public function tongDoanhThuMonth()
     {
         try {
@@ -26,15 +27,15 @@ class ThongKeModel
             return [];
         }
     }
+        // model của doanh thu ngày
     public function tongDoanhThuDay()
     {
         try {
-            $sql = "SELECT 
-            DATE_FORMAT(OrderDate, '%Y-%m-%d') AS Day, 
-            SUM(TotalAmount) AS TotalRevenue FROM orders
-            WHERE OrderDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) 
-            GROUP BY DATE_FORMAT(OrderDate, '%Y-%m-%d')
-            ORDER BY DATE_FORMAT(OrderDate, '%Y-%m-%d') ASC";
+            $sql = "SELECT DATE_FORMAT(OrderDate, '%Y-%m-%d') 
+                AS Day, SUM(TotalAmount) 
+                AS TotalRevenue FROM orders 
+                GROUP BY DATE_FORMAT(OrderDate, '%Y-%m-%d')
+                ORDER BY DATE_FORMAT(OrderDate, '%Y-%m-%d') ASC";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -45,6 +46,8 @@ class ThongKeModel
             return [];
         }
     }
+
+    // model của doanh thu tuần
     public function tongDoanhThuWeek()
     {
         try {

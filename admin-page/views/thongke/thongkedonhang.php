@@ -1,9 +1,3 @@
-<?php
-
-$model = new ThongKeModel();
-$data = $model->tongDoanhThuMonth(); // Lấy dữ liệu doanh thu theo tháng
-$data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
-?>
 <!DOCTYPE html>
 <html>
 
@@ -28,11 +22,13 @@ $data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
         }
 
         .canvas-container canvas {
-            width: 100%;
-            max-width: 600px;
-            background-color: #eeeeee;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            display: block;
+            margin: 30px auto;
+            max-width: 90%;
+            border: 3px solid #f0f0f0;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, #ffffff, #f7f7f7);
         }
     </style>
 </head>
@@ -44,7 +40,7 @@ $data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
         <canvas class="bieudo3" id="myChart3" style="width:100%;max-width:600px"></canvas>
     </div>
     <script>
-        // Biểu đồ doanh thu theo tháng
+        // Biểu đồ doanh thu đơn hàng theo tháng
         var xValuesMonth = <?php echo json_encode(array_column($data, 'Month')); ?>;
         var yValuesMonth = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
 
@@ -67,13 +63,21 @@ $data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
                     text: "Doanh Thu Đơn Hàng Theo Tháng",
                     fontSize: 18,
                     padding: 20
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Doanh thu (Vnd)'
+                        }
+                    }]
                 }
             }
         });
-        // Biểu đồ doanh thu theo tuần
+        // Biểu đồ doanh thu đơn hàng theo tuần
         var xValuesWeek = <?php echo json_encode(array_column($data, 'Week')); ?>;
         var yValuesWeek = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
-        var barColors = ["blue", "green", "red", "orange", "brown"];
+        var barColors = ["green", "blue", "red", "orange", "brown"];
         new Chart("myChart3", {
             type: "bar",
             data: {
@@ -103,31 +107,35 @@ $data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Doanh thu (VND)'
+                            labelString: 'Doanh thu (Vnd)'
                         }
                     }]
                 }
             }
         });
-        // Biểu đồ doanh thu theo ngày
-        var xValues = <?php echo json_encode(array_column($data, 'Day')); ?>;
-        var yValues = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
+        // Biểu đồ doanh thu đơn hàng theo ngày
+        var xValuesDay = <?php echo json_encode(array_column($data, 'Day')); ?>;
+        var yValuesDay = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
+
+        var barColorsDay = ["orange", "green", "red", "blue", "brown"];
         new Chart("myChart2", {
-            type: "line",
+            type: "bar",
             data: {
-                labels: xValues,
+                labels: xValuesDay,
                 datasets: [{
-                    label: "Doanh thu (VND)",
-                    data: yValues,
-                    borderColor: "blue",
-                    fill: false
+                    backgroundColor: barColorsDay,
+                    data: yValuesDay
                 }]
             },
             options: {
+                legend: {
+                    display: false
+                },
                 title: {
                     display: true,
                     text: "Doanh Thu Đơn Hàng Theo Ngày",
-                    fontSize: 18
+                    fontSize: 18,
+                    padding: 20
                 },
                 scales: {
                     xAxes: [{
@@ -139,7 +147,7 @@ $data2 = $model->tongDoanhThuDay(); // Lấy dữ liệu doanh thu theo ngày
                     yAxes: [{
                         scaleLabel: {
                             display: true,
-                            labelString: 'Doanh thu (VND)'
+                            labelString: 'Doanh thu (Vnd)'
                         }
                     }]
                 }
