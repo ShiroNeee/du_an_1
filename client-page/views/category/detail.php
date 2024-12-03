@@ -87,8 +87,6 @@
                     <a href="#" class="btn btn-outline-danger btn-lg"><i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i> Instagram</a>
                 </div>
             </div>
-
-
         </div>
     </div>
     </div>
@@ -99,7 +97,38 @@
         </div>
     </div>
 <?php endif; ?>
+<div class="container mt-5">
+    <h4 class="fw-bold">Bình luận về sản phẩm</h4>
+    <div class="mt-4">
+        <?php if (!empty($comments) && is_array($comments)): ?>
+            <?php foreach ($comments as $comment): ?>
+                <div class="mb-3 p-3 border rounded">
+                    <strong><?= htmlspecialchars($comment['UserName']); ?></strong>
+                    <p class="mb-1 text-muted"><?= nl2br(htmlspecialchars($comment['Content'])); ?></p>
+                    <small class="text-secondary"><?= htmlspecialchars($comment['date']); ?></small>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-muted">Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+        <?php endif; ?>
+    </div>
+    <!-- Form nhập bình luận -->
+    <?php if ($isLoggedIn): ?>
+        <form method="POST" action="">
+            <?php if (isset($errorMessage)): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($errorMessage); ?></div>
+            <?php endif; ?>
 
+            <div class="mb-3">
+                <label for="comment" class="form-label">Viết bình luận của bạn:</label>
+                <textarea name="comment" id="comment" rows="3" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+        </form>
+    <?php else: ?>
+        <p class="text-danger">Vui lòng <a href="?act=login">đăng nhập</a> để bình luận.</p>
+    <?php endif; ?>
+</div>
 <div class="container mt-5">
     <h4 class="fw-bold">Có thể bạn quan tâm</h4>
     <div class="row g-3">

@@ -46,6 +46,8 @@ require_once '../models/category.php';
 require_once '../models/product/Product.php';
 require_once '../models/sizes/sizes.php';
 require_once '../models/Order.php';
+//
+require_once '../models/comment.php';
 
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';

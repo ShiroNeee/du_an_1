@@ -94,6 +94,7 @@ class CartShopController
 
 
                 $orderDetail = $this->modelOrder->getOrderDetailByProductSize($ProductID, $size);
+                // var_dump($orderDetail);die;
                 if ($orderDetail) {
                     $OrderID = $orderDetail['OrderID'];
                     $new = $currentStock - $quantity;
@@ -117,7 +118,6 @@ class CartShopController
                         $ProductID,
                         $quantity
                     );
-
                     // Tính toán tồn kho mới và cập nhật
                     if (!$this->modelSizes->updateStockQuantity($ProductID, $size, $new)) {
                         $_SESSION['error'] = "Lỗi cập nhật tồn kho cho sản phẩm $ProductID, size $size.";
@@ -203,7 +203,7 @@ class CartShopController
 
                     foreach ($orderStatusUpdates as $orderID) {
                         $this->modelOrder->deleteOrder($orderID); // Gọi phương thức deleteOrder để xóa đơn hàng
-                        // $this->modelOrder->updateOrderStatus($orderID, 1); // 1: Đã hủy
+                        $this->modelOrder->updateOrderStatus($orderID, 1); // 1: Đã hủy
                     }
                     $_SESSION['success'] = "Đơn hàng đã được hủy thành công.";
                     header('Location: ?act=cart-shop');
