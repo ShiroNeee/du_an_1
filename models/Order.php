@@ -267,6 +267,20 @@ class Order
             return false;
         }
     }
+    public function updateOrderStatus($OrderID, $Status)
+    {
+        try {
+            $sql = "UPDATE orders SET Status = :Status WHERE OrderID = :OrderID";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':OrderID', $OrderID, PDO::PARAM_INT);
+            $stmt->bindParam(':Status', $Status, PDO::PARAM_INT);
+
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+            return false;
+        }
+    }
     // public function updateOrderStatus($orderID, $userID, $productID, $newStatus)
     // {
     //     try {

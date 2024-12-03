@@ -34,57 +34,61 @@
                             }
                             ?>
                             <hr />
-                            <input type="hidden" name="OrderID" value="<?php echo $orderId; ?>" />
+                            <input type="hidden" name="OrderID" value="<?php echo $order['OrderID']; ?>" />
+                            <input type="hidden" name="OrderID" value="<?php echo $order['ProductID']; ?>" />
                             <h4>Phương thức thanh toán</h4>
-                                <div class="pt-2">
-                                    <div class="d-flex flex-row pb-3 align-items-center">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="payment_method1"
-                                                value="direct_payment" aria-label="..." checked />
-                                        </div>
-                                        <div class="rounded border d-flex w-100 p-3 align-items-center">
-                                            <p class="mb-0">
-                                                <i class="fas fa-hand-holding-usd fa-lg text-primary pe-2"></i>Thanh toán trực tiếp
-                                            </p>
-                                        </div>
+                            <div class="pt-2">
+                                <div class="d-flex flex-row pb-3 align-items-center">
+                                    <div class="d-flex align-items-center pe-2">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_method1"
+                                            value="direct_payment" aria-label="..." checked />
                                     </div>
-
-                                    <!-- Thanh toán ATM Momo -->
-                                    <div class="d-flex flex-row pb-3 align-items-center">
-                                        <div class="d-flex align-items-center pe-2">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="payment_method2"
-                                                value="atm_momo" aria-label="..." />
-                                        </div>
-                                        <div class="rounded border d-flex w-100 p-3 align-items-center">
-                                            <p class="mb-0">
-                                                <i class="fab fa-cc-mastercard fa-lg text-body pe-2"></i>Thanh toán ATM Momo
-                                            </p>
-                                        </div>
+                                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                                        <p class="mb-0">
+                                            <i class="fas fa-hand-holding-usd fa-lg text-primary pe-2"></i>Thanh toán trực tiếp
+                                        </p>
                                     </div>
-
-                                    <h4 class="text-primary mt-4"> Thành tiền:
-                                        <?php
-                                        $totalAmount = 0;
-                                        if (!empty($listOrders)) {
-                                            foreach ($listOrders as $order) {
-                                                $totalAmount += $order['TotalAmount'];
-                                            }
-                                            echo number_format($totalAmount) . ' VNĐ';
-                                        } else {
-                                            echo '0 VNĐ';
-                                        }
-                                        ?>
-                                        <input type="hidden" name="totalAmount" value="<?php echo $totalAmount; ?>" />
-                                    </h4>
-                                    <button type="submit" name="thanhtoan" class="btn btn-primary ">Xác nhận đặt hàng</button>
                                 </div>
+
+                                <!-- Thanh toán ATM Momo -->
+                                <div class="d-flex flex-row pb-3 align-items-center">
+                                    <div class="d-flex align-items-center pe-2">
+                                        <input class="form-check-input" type="radio" name="payment_method" id="payment_method2"
+                                            value="atm_momo" aria-label="..." />
+                                    </div>
+                                    <div class="rounded border d-flex w-100 p-3 align-items-center">
+                                        <p class="mb-0">
+                                            <i class="fab fa-cc-mastercard fa-lg text-body pe-2"></i>Thanh toán ATM Momo
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <h4 class="text-primary mt-4"> Thành tiền:
+                                    <?php
+                                    $totalAmount = 0;
+                                    if (!empty($listOrders)) {
+                                        foreach ($listOrders as $order) {
+                                            $totalAmount += $order['TotalAmount'];
+                                        }
+                                        echo number_format($totalAmount) . ' VNĐ';
+                                    } else {
+                                        echo '0 VNĐ';
+                                    }
+                                    ?>
+                                    <input type="hidden" name="totalAmount" value="<?php echo $totalAmount; ?>" />
+                                </h4>
+                                <!-- Nút hủy thanh toán -->
+                                <button type="submit" name="payment_method" value="cancel_payment" class="btn btn-danger">Hủy đơn hàng</button>
+                                <button type="submit" name="thanhtoan" class="btn btn-primary ">Xác nhận đặt hàng</button>
+                                
+                            </div>
                         </form>
                     </div>
 
                     <!-- Thông tin cá nhân -->
                     <div class="col-md-5 col-xl-4 offset-xl-1">
                         <div class="py-4 d-flex justify-content-end">
-                            <h6><a href="/du_an_1/client-page/" style="text-decoration: none;">Cancel and return to website</a></h6>
+                            <h6><a href="/du_an_1/client-page/?act=cart-shop" style="text-decoration: none;">Huỷ và quay lại trang giỏ hàng</a></h6>
                         </div>
                         <div class="rounded d-flex flex-column p-2 bg-body-tertiary">
                             <div class="p-2 me-3">

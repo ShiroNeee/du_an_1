@@ -74,21 +74,21 @@
                     <input type="hidden" name="TotalPrice" id="totalPriceField" value="">
                     <button type="submit" class="btn btn-primary btn-lg" <?= $outOfStock ? 'disabled' : ''; ?>>Thêm vào giỏ hàng</button>
                 </form>
+                <!-- Mô tả sản phẩm -->
+                <div class="mt-4">
+                    <h5 class="fw-bold">Mô tả sản phẩm</h5>
+                    <p class="text-muted"><?= nl2br(htmlspecialchars($product['Description'] ?? 'Không có mô tả cho sản phẩm này.')); ?></p>
+                </div>
 
+                <div class="mt-4">
+                    <h5 class="fw-bold">Chia sẻ:</h5>
+                    <a href="#" class="btn btn-outline-primary btn-lg me-2"><i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i> Facebook</a>
+                    <a href="#" class="btn btn-outline-info btn-lg me-2"><i class="fab fa-twitter fa-lg" style="color: #55acee;"></i> Twitter</a>
+                    <a href="#" class="btn btn-outline-danger btn-lg"><i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i> Instagram</a>
+                </div>
             </div>
 
-            <!-- Mô tả sản phẩm -->
-            <div class="mt-4">
-                <h5 class="fw-bold">Mô tả sản phẩm</h5>
-                <p class="text-muted"><?= nl2br(htmlspecialchars($product['Description'] ?? 'Không có mô tả cho sản phẩm này.')); ?></p>
-            </div>
 
-            <div class="mt-4">
-                <h5 class="fw-bold">Chia sẻ:</h5>
-                <a href="#" class="btn btn-outline-primary btn-lg me-2"><i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i> Facebook</a>
-                <a href="#" class="btn btn-outline-info btn-lg me-2"><i class="fab fa-twitter fa-lg" style="color: #55acee;"></i> Twitter</a>
-                <a href="#" class="btn btn-outline-danger btn-lg"><i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i> Instagram</a>
-            </div>
         </div>
     </div>
     </div>
@@ -120,73 +120,73 @@
     </div>
 </div>
 <script>
- document.addEventListener('DOMContentLoaded', function() {
-    const quantityInput = document.getElementById('quantity');
-    const sizeSelect = document.getElementById('sizeSelect');
-    const quantitySection = document.getElementById('quantitySection');
-    const priceDisplay = document.getElementById('price');
-    const totalPriceField = document.getElementById('totalPriceField');
-    const increaseBtn = document.getElementById('increaseQuantity');
-    const decreaseBtn = document.getElementById('decreaseQuantity');
-    const form = document.getElementById('add-to-cart-form');
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInput = document.getElementById('quantity');
+        const sizeSelect = document.getElementById('sizeSelect');
+        const quantitySection = document.getElementById('quantitySection');
+        const priceDisplay = document.getElementById('price');
+        const totalPriceField = document.getElementById('totalPriceField');
+        const increaseBtn = document.getElementById('increaseQuantity');
+        const decreaseBtn = document.getElementById('decreaseQuantity');
+        const form = document.getElementById('add-to-cart-form');
 
-    sizeSelect.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const stockQuantity = parseInt(selectedOption?.getAttribute('data-stock') || 0);
-        const selectedSizeID = selectedOption?.getAttribute('data-size-id') || '';
+        sizeSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const stockQuantity = parseInt(selectedOption?.getAttribute('data-stock') || 0);
+            const selectedSizeID = selectedOption?.getAttribute('data-size-id') || '';
 
-        if (!selectedSizeID) {
-            alert('Vui lòng chọn kích cỡ!');
-            return;
+            if (!selectedSizeID) {
+                alert('Vui lòng chọn kích cỡ!');
+                return;
+            }
+
+            quantitySection.style.display = 'block';
+            quantityInput.max = stockQuantity;
+            quantityInput.value = Math.min(parseInt(quantityInput.value), stockQuantity);
+            document.getElementById('selectedSizeID').value = selectedSizeID;
+            updateTotalPrice();
+        });
+
+        quantityInput.addEventListener('input', function() {
+            const quantity = Math.min(parseInt(this.value), parseInt(this.max));
+            if (quantity !== parseInt(this.value)) alert("Số lượng vượt quá số lượng trong kho.");
+            this.value = quantity;
+            updateTotalPrice();
+        });
+
+        increaseBtn.addEventListener('click', function() {
+            // Không kiểm tra giới hạn kho nữa, chỉ tăng số lượng
+            quantityInput.value++;
+            updateTotalPrice();
+        });
+
+        decreaseBtn.addEventListener('click', function() {
+            if (parseInt(quantityInput.value) > 1) quantityInput.value--;
+            updateTotalPrice();
+        });
+
+        form.addEventListener('submit', function(event) {
+            const selectedSizeID = document.getElementById('selectedSizeID').value;
+
+            // Nếu chưa chọn kích cỡ, hiển thị thông báo và ngừng submit form
+            if (!selectedSizeID) {
+                alert('Vui lòng chọn kích cỡ sản phẩm trước khi thêm vào giỏ hàng!');
+                event.preventDefault(); // Ngừng gửi form
+            } else {
+                let quantityField = document.createElement('input');
+                quantityField.type = 'hidden';
+                quantityField.name = 'Quantity';
+                quantityField.value = quantityInput.value;
+                this.appendChild(quantityField);
+            }
+        });
+
+        function updateTotalPrice() {
+            const quantity = parseInt(quantityInput.value);
+            const basePrice = <?= $product['Price'] ?? 0 ?>;
+            const totalPrice = basePrice * quantity;
+            priceDisplay.textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
+            totalPriceField.value = totalPrice.toFixed(2);
         }
-
-        quantitySection.style.display = 'block';
-        quantityInput.max = stockQuantity;
-        quantityInput.value = Math.min(parseInt(quantityInput.value), stockQuantity);
-        document.getElementById('selectedSizeID').value = selectedSizeID;
-        updateTotalPrice();
     });
-
-    quantityInput.addEventListener('input', function() {
-        const quantity = Math.min(parseInt(this.value), parseInt(this.max));
-        if (quantity !== parseInt(this.value)) alert("Số lượng vượt quá số lượng trong kho.");
-        this.value = quantity;
-        updateTotalPrice();
-    });
-
-    increaseBtn.addEventListener('click', function() {
-        // Không kiểm tra giới hạn kho nữa, chỉ tăng số lượng
-        quantityInput.value++;
-        updateTotalPrice();
-    });
-
-    decreaseBtn.addEventListener('click', function() {
-        if (parseInt(quantityInput.value) > 1) quantityInput.value--;
-        updateTotalPrice();
-    });
-
-    form.addEventListener('submit', function(event) {
-        const selectedSizeID = document.getElementById('selectedSizeID').value;
-
-        // Nếu chưa chọn kích cỡ, hiển thị thông báo và ngừng submit form
-        if (!selectedSizeID) {
-            alert('Vui lòng chọn kích cỡ sản phẩm trước khi thêm vào giỏ hàng!');
-            event.preventDefault();  // Ngừng gửi form
-        } else {
-            let quantityField = document.createElement('input');
-            quantityField.type = 'hidden';
-            quantityField.name = 'Quantity';
-            quantityField.value = quantityInput.value;
-            this.appendChild(quantityField);
-        }
-    });
-
-    function updateTotalPrice() {
-        const quantity = parseInt(quantityInput.value);
-        const basePrice = <?= $product['Price'] ?? 0 ?>;
-        const totalPrice = basePrice * quantity;
-        priceDisplay.textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
-        totalPriceField.value = totalPrice.toFixed(2);
-    }
-});
 </script>

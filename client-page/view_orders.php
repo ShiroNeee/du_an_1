@@ -45,12 +45,13 @@ function getStatusClass($status)
                     </tr>
                 </thead>
                 <tbody>
-                <?php
+                    <?php
                     $totalAmountAll = 0;
 
                     // Duyệt qua danh sách đơn hàng đã lấy từ controller
                     foreach ($listOrders as $index => $order) :
                         $totalAmountAll += $order['TotalAmount'];  // Tính tổng giá trị đơn hàng
+                        $isSuccess = ($order['Status'] == 3);
                     ?>
                         <tr style="font-size: 22px;" id="order-row-<?= $order['OrderID']; ?>">
                             <td><input type="checkbox" name="deleteOrders[]" value="<?= $order['OrderID']; ?>" class="delete-checkbox"></td>
@@ -66,7 +67,7 @@ function getStatusClass($status)
                             <td><?= htmlspecialchars($order['Size']); ?></td>
                             <td><?= $order['Quantity']; ?></td>
                             <td><?= number_format($order['TotalAmount'], 0, ',', '.'); ?> VNĐ</td>
-                            <td class="<?= getStatusClass($order['Status']); ?>"><?= $order['statusName']; ?></td>
+                            <td class=" status-cell <?= getStatusClass($order['Status']); ?>"><?= $order['statusName']; ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -83,25 +84,37 @@ function getStatusClass($status)
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        var checkboxes = document.querySelectorAll('.delete-checkbox');
+
+        checkboxes.forEach(function(checkbox) {
+            var row = checkbox.closest('tr'); // Lấy dòng tương ứng với checkbox
+            var status = row.querySelector('.status-cell'); // Lấy trạng thái của đơn hàng
+
+            if (status && status.textContent.trim() === 'Thành công') {
+                checkbox.disabled = true; // Vô hiệu hóa checkbox
+            }
+        });
+
         // Quản lý nút "Chọn tất cả"
         document.getElementById('select-all').addEventListener('click', function() {
             var checkboxes = document.querySelectorAll('.delete-checkbox');
             checkboxes.forEach(function(checkbox) {
-                checkbox.checked = this.checked;
+                if (!checkbox.disabled) { // Kiểm tra checkbox không bị vô hiệu hóa
+                    checkbox.checked = this.checked;
+                }
             }, this);
         });
-    });
 
-    /**
-     * Chọn hoặc bỏ chọn tất cả checkbox
-     * @param {HTMLInputElement} selectAllCheckbox Checkbox "Chọn tất cả"
-     */
-    function toggleSelectAll(selectAllCheckbox) {
-        var checkboxes = document.querySelectorAll('.delete-checkbox');
-        var isChecked = selectAllCheckbox.checked;
+        // Xử lý khi form được submit
+        document.getElementById('delete-form').addEventListener('submit', function(event) {
+            var checkboxes = document.querySelectorAll('.delete-checkbox');
 
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = isChecked;
+            // Loại bỏ checkbox bị vô hiệu hóa khỏi form trước khi gửi
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.disabled) {
+                    checkbox.disabled = false; // Hủy vô hiệu hóa checkbox để nó không bị gửi đi
+                }
+            });
         });
-    }
+    });
 </script>
