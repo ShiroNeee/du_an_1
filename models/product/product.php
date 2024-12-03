@@ -13,11 +13,17 @@ class Product
     {
         try {
             $sql = "SELECT u.*, r.statusName, c.CategoryName 
-                    FROM products u
-                    LEFT JOIN status r ON u.status = r.statusID
-                    LEFT JOIN categories c ON u.CategoryID = c.CategoryID
-                    ORDER BY u.status ASC, u.id DESC
-                    LIMIT :limit OFFSET :offset";
+                FROM products u
+                LEFT JOIN status r ON u.status = r.statusID
+                LEFT JOIN categories c ON u.CategoryID = c.CategoryID
+                ORDER BY 
+                    CASE 
+                        WHEN u.status = 1 THEN 0  -- Còn hàng lên trên cùng
+                        WHEN u.status = 0 THEN 1  -- Hết hàng xuống dưới cùng
+                        ELSE 2  -- Các trạng thái khác (nếu có) xuống dưới nữa
+                    END, 
+                    u.id DESC
+                LIMIT :limit OFFSET :offset";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
             $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);

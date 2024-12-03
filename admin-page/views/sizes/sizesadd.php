@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <div class="admin-product-form-container">
+<div class="admin-product-form-container">
         <?php if (!empty($_SESSION['error']) && is_array($_SESSION['error'])): ?>
             <div class="showErrorMessage">
                 <ul>

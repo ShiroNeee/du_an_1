@@ -5,13 +5,15 @@ class CartShopController
     private $modelOrder;
     public $modelProduct;
     public $modelSizes;
+    private $userModel;
 
     public function __construct()
     {
-        $this->modelCategory = new CategoryManager();  // Model danh mục
-        $this->modelOrder = new Order(); // Kết nối với class Oder
+        $this->modelCategory = new CategoryManager();
+        $this->modelOrder = new Order();
         $this->modelProduct = new Product();
         $this->modelSizes = new SizeModel();
+        $this->userModel = new User();
     }
     public function index()
     {
@@ -24,10 +26,33 @@ class CartShopController
         $listOrders = $this->modelOrder->getAllOrdersByUser($UserID);
         // $statusorder = $this->modelOrder->getAllStatusorder();
         // $ProductIdOrder = $this->modelOrder->getAllProduct();
-        var_dump($UserID);
+        // var_dump($UserID);
         require_once '../client-page/views/header.php';
         require_once '../client-page/navbar/cart_shop.php';
         require_once '../client-page/views/footer.php';
+    }
+    public function view_Payment_method()
+    {
+        if (isset($_SESSION['user']['id'])) {
+            $userID = $_SESSION['user']['id'];
+
+            // Lấy thông tin chi tiết của người dùng
+            $userDetail = $this->userModel->getDetail($userID);
+            $latestCategorysHome = $this->modelCategory->showCategories();
+
+            // Lấy ra tên, số lượng , giá đơn hàng
+            $listOrders = $this->modelOrder->getAllOrdersByUserExcludePending($userID);
+            // var_dump($listOrders);
+            // Kiểm tra nếu thanh toán thành công
+
+            require_once '../client-page/views/header.php';
+            require_once '../client-page/Payment_method.php';
+            require_once '../client-page/views/footer.php';
+        } else {
+            // Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
+            header("Location: ?act=login");
+            exit();
+        }
     }
 
     public function PAY()
@@ -58,15 +83,15 @@ class CartShopController
                 $totalAmount = $totalAmounts[$index] ?? null;
 
 
-                // Kiểm tra nếu thông tin sản phẩm không đầy đủ
+
                 if (!$ProductID || !$quantity || !$size) {
                     $_SESSION['error'] = "Thông tin sản phẩm không hợp lệ.";
                     $paymentSuccess = false;
-                    break;  // Dừng quá trình thanh toán nếu có thông tin thiếu
+                    break;
                 }
 
                 // Kiểm tra tồn kho
-                $currentStock = $this->modelSizes->getStockQuantity($ProductID);
+                $currentStock = $this->modelSizes->getStockQuantity($ProductID, $size);
                 $currentStock = $currentStock[0]['StockQuantity'] ?? null;
 
 
@@ -80,7 +105,7 @@ class CartShopController
                         $_SESSION['error'] = "Số lượng không đủ cho sản phẩm. Tồn kho hiện tại sản phẩm.";
                         // Điều hướng người dùng về trang giỏ hàng và thoát
                         header("Location: ?act=cart-shop");
-                        exit();  // Dừng script để không tiếp tục xử lý
+                        exit();
                     }
 
                     // Cập nhật dữ liệu đơn hàng
@@ -90,17 +115,20 @@ class CartShopController
                         $currentDate,
                         $size,
                         $totalAmount,
-                        1,
+                        2,
                         $ProductID,
                         $quantity
                     );
+
                     // Tính toán tồn kho mới và cập nhật
                     if (!$this->modelSizes->updateStockQuantity($ProductID, $size, $new)) {
                         $_SESSION['error'] = "Lỗi cập nhật tồn kho cho sản phẩm $ProductID, size $size.";
                         $paymentSuccess = false;
                         continue;
                     }
+
                     if ($updateResult) {
+
                         $_SESSION['success'] = 'Cập nhật đơn hàng thành công.';
                     } else {
                         $_SESSION['error'] = 'Cập nhật đơn hàng không thành công. Vui lòng thử lại.';
@@ -110,17 +138,146 @@ class CartShopController
                     $paymentSuccess = false;
                     continue;
                 }
+            }
+            if ($paymentSuccess) {
 
-                if ($paymentSuccess) {
-                    $_SESSION['success'] = 'Thanh toán thành công. Cảm ơn bạn đã mua hàng!';
-                } else {
-                    $_SESSION['error'] = 'Có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại.';
-                }
-
+                $_SESSION['success'] = 'Chọn phương thức thanh toán!';
                 // Điều hướng người dùng về giỏ hàng hoặc trang mua hàng
+                header("Location: ?act=checkout");
+            } else {
+                $_SESSION['error'] = 'Có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại.';
                 header("Location: ?act=cart-shop");
                 exit();
             }
+        }
+    }
+    public function payment_method()
+    {
+        // Kiểm tra xem phương thức thanh toán là gì
+        if (isset($_POST['payment_method'])) {
+            // Lấy giá trị totalAmount từ POST
+            $orderId = $_POST['OrderID'] ?? null;
+            $totalAmount = $_POST['totalAmount'] ?? 0;
+
+            // Kiểm tra nếu không có OrderID hoặc totalAmount, trả về lỗi
+            if (!$orderId || $totalAmount <= 0) {
+                echo "Thông tin đơn hàng không hợp lệ.";
+                return;
+            }
+
+            // Xử lý thanh toán ATM MoMo
+            if ($_POST['payment_method'] == "atm_momo") {
+                // Dữ liệu cần thiết để gọi API MoMo
+                $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
+                $partnerCode = 'MOMOBKUN20180529';
+                $accessKey = 'klm05TvNBzhg7h7j';
+                $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+                $orderInfo = "Thanh toán bằng ATM MoMo";
+                $orderId = time() . "";
+                $redirectUrl = "http://localhost/du_an_1/client-page/?act=cart-shop"; // Link trả về sau khi thanh toán
+                $ipnUrl = "http://localhost/du_an_1/client-page/?act=cart-shop"; // Link IPN (chuyển trạng thái thanh toán)
+
+                $extraData = "";
+
+                $requestId = time() . "";
+                $requestType = "payWithATM";
+
+                // Tạo hash signature
+                $rawHash = "accessKey=" . $accessKey . "&amount=" . $totalAmount . "&extraData=" . $extraData . "&ipnUrl=" . $ipnUrl . "&orderId=" . $orderId .
+                    "&orderInfo=" . $orderInfo . "&partnerCode=" . $partnerCode . "&redirectUrl=" . $redirectUrl . "&requestId=" . $requestId . "&requestType=" . $requestType;
+
+                $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+                // Dữ liệu gửi đến API MoMo
+                $data = array(
+                    'partnerCode' => $partnerCode,
+                    'partnerName' => "Test",
+                    "storeId" => "MomoTestStore",
+                    'requestId' => $requestId,
+                    'amount' => $totalAmount,
+                    'orderId' => $orderId,
+                    'orderInfo' => $orderInfo,
+                    'redirectUrl' => $redirectUrl,
+                    'ipnUrl' => $ipnUrl,
+                    'lang' => 'vi',
+                    'extraData' => $extraData,
+                    'requestType' => $requestType,
+                    'signature' => $signature
+                );
+
+                // Gọi API MoMo
+                $result = $this->execPostRequest($endpoint, json_encode($data));
+                $jsonResult = json_decode($result, true);
+
+                // Sau khi gọi API thành công, chuyển hướng người dùng tới trang thanh toán MoMo
+                if ($jsonResult && isset($jsonResult['payUrl'])) {
+                    unset($_SESSION['cart']);
+                    unset($_SESSION['totalAmount']);
+                    header('Location: ' . $jsonResult['payUrl']);
+                    exit();
+                } else {
+                    header('Location: http://localhost/du_an_1/client-page/');
+                    exit();
+                }
+            }
+            // Xử lý thanh toán trực tiếp
+            else if ($_POST['payment_method'] == "direct_payment") {
+                // Xử lý thanh toán trực tiếp tại đây
+                unset($_SESSION['cart']);
+                unset($_SESSION['totalAmount']);
+
+                // Hiển thị trang cảm ơn
+                $latestCategorysHome = $this->modelCategory->showCategories();
+                require_once '../client-page/views/header.php';
+                require_once '../client-page/thankYou.php';
+                require_once '../client-page/views/footer.php';
+                exit();
+            }
+        }
+    }
+
+    public function execPostRequest($url, $data)
+    {
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Content-Length: ' . strlen($data)
+        ));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
+
+        $result = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+
+            echo 'Curl error: ' . curl_error($ch);
+        }
+
+        curl_close($ch);
+        return $result;
+    }
+
+    public function view_my_orders()
+    {
+        if (isset($_SESSION['user']['id'])) {
+            $userID = $_SESSION['user']['id'];
+
+            $latestCategorysHome = $this->modelCategory->showCategories();
+
+            $listOrders = $this->modelOrder->getAllOrdersByUserExcludePending($userID);
+
+            require_once '../client-page/views/header.php';
+            require_once '../client-page/view_orders.php';
+            require_once '../client-page/views/footer.php';
+        } else {
+            // Chuyển hướng về trang đăng nhập nếu chưa đăng nhập
+            header("Location: ?act=login");
+            exit();
         }
     }
 

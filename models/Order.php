@@ -185,14 +185,16 @@ class Order
             $sql = "SELECT u.*, r.name, 
             c.statusName,
             p.image,
+            p.ProductName,
             s.SizeID,
-            s.Size AS Size
+            s.Size AS Size,
+            s.StockQuantity
             FROM orders u 
             LEFT JOIN statusorder c ON u.Status = c.OrderID
             LEFT JOIN users r ON u.UserID = r.id 
             LEFT JOIN products p ON u.ProductID = p.id
             LEFT JOIN sizes s ON u.Size = s.SizeID
-            WHERE UserID = :userID";
+            WHERE UserID = :userID AND u.Status = 1";
             // Giả sử bạn đang sử dụng PDO để thực thi truy vấn
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
@@ -203,6 +205,35 @@ class Order
             return false;
         }
     }
+    public function getAllOrdersByUserExcludePending($userID)
+    {
+        try {
+            $sql = "SELECT u.*, r.name, 
+                c.statusName,
+                p.image,
+                p.ProductName,
+                s.SizeID,
+                s.Size AS Size,
+                s.StockQuantity
+                FROM orders u 
+                LEFT JOIN statusorder c ON u.Status = c.OrderID
+                LEFT JOIN users r ON u.UserID = r.id 
+                LEFT JOIN products p ON u.ProductID = p.id
+                LEFT JOIN sizes s ON u.Size = s.SizeID
+                WHERE u.UserID = :userID AND u.Status != 1"; // Loại bỏ trạng thái '1' (chưa thanh toán)
+
+            // Giả sử bạn đang sử dụng PDO để thực thi truy vấn
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
+    }
+
     //
     public function updateData($OrderID, $UserID, $OrderDate, $Size, $TotalAmount, $Status, $ProductID, $Quantity)
     {
@@ -236,37 +267,92 @@ class Order
             return false;
         }
     }
-    public function updateOrderStatus($orderID, $newStatus)
+    // public function updateOrderStatus($orderID, $userID, $productID, $newStatus)
+    // {
+    //     try {
+    //         // Cập nhật trạng thái và thêm thời gian hoàn tất nếu là trạng thái 2
+    //         $sql = "UPDATE orders 
+    //             SET Status = :status, 
+    //                 CompletedAt = CASE WHEN :status = 2 THEN NOW() ELSE CompletedAt END
+    //             WHERE OrderID = :orderID 
+    //             AND UserID = :userID 
+    //             AND ProductID = :productID";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->bindParam(':status', $newStatus, PDO::PARAM_INT);
+    //         $stmt->bindParam(':orderID', $orderID, PDO::PARAM_INT);
+    //         $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
+    //         $stmt->bindParam(':productID', $productID, PDO::PARAM_INT);
+    //         return $stmt->execute();
+    //     } catch (PDOException $e) {
+    //         error_log("Error updating order status: " . $e->getMessage());
+    //         return false;
+    //     }
+    // }
+
+    public function getOrderByProductAndSize($userID, $productID, $sizeID)
+    {
+        $query = "SELECT * FROM orders WHERE UserID = :UserID AND ProductID = :ProductID AND Size = :SizeID";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([
+            ':UserID' => $userID,
+            ':ProductID' => $productID,
+            ':SizeID' => $sizeID,
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    public function addOrUpdateOrder($orderData)
     {
         try {
-            $sql = "UPDATE orders SET Status = :status WHERE OrderID = :orderID";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':status', $newStatus, PDO::PARAM_INT);
-            $stmt->bindParam(':orderID', $orderID, PDO::PARAM_INT);
-            return $stmt->execute(); // Trả về true nếu cập nhật thành công, false nếu thất bại
+            // Kiểm tra nếu đơn hàng đã tồn tại
+            $sqlCheck = "SELECT * FROM orders 
+                     WHERE ProductID = :ProductID AND Size = :Size AND UserID = :UserID";
+            $stmtCheck = $this->conn->prepare($sqlCheck);
+            $stmtCheck->bindParam(':ProductID', $orderData['ProductID']);
+            $stmtCheck->bindParam(':Size', $orderData['Size']);
+            $stmtCheck->bindParam(':UserID', $orderData['UserID']);
+            $stmtCheck->execute();
+
+            $existingOrder = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+            if ($existingOrder) {
+                // Nếu tồn tại, cập nhật số lượng và tổng tiền
+                $newQuantity = $existingOrder['Quantity'] + $orderData['Quantity'];
+                $newTotalAmount = $existingOrder['TotalAmount'] + $orderData['TotalAmount'];
+
+                $sqlUpdate = "UPDATE orders 
+                          SET Quantity = :Quantity, TotalAmount = :TotalAmount 
+                          WHERE OrderID = :OrderID";
+                $stmtUpdate = $this->conn->prepare($sqlUpdate);
+                $stmtUpdate->bindParam(':Quantity', $newQuantity);
+                $stmtUpdate->bindParam(':TotalAmount', $newTotalAmount);
+                $stmtUpdate->bindParam(':OrderID', $existingOrder['OrderID']);
+                return $stmtUpdate->execute();
+            } else {
+                // Nếu chưa tồn tại, thêm mới
+                $sqlInsert = "INSERT INTO orders (ProductID, UserID, Quantity, Size, TotalAmount, Status, OrderDate) 
+                          VALUES (:ProductID, :UserID, :Quantity, :Size, :TotalAmount, :Status, :OrderDate)";
+                $stmtInsert = $this->conn->prepare($sqlInsert);
+                $stmtInsert->bindParam(':ProductID', $orderData['ProductID']);
+                $stmtInsert->bindParam(':UserID', $orderData['UserID']);
+                $stmtInsert->bindParam(':Quantity', $orderData['Quantity']);
+                $stmtInsert->bindParam(':Size', $orderData['Size']);
+                $stmtInsert->bindParam(':TotalAmount', $orderData['TotalAmount']);
+                $stmtInsert->bindParam(':Status', $orderData['Status']);
+                $stmtInsert->bindParam(':OrderDate', $orderData['OrderDate']);
+                return $stmtInsert->execute();
+            }
         } catch (PDOException $e) {
-            error_log("Error updating order status: " . $e->getMessage());
+            echo 'Error: ' . $e->getMessage();
             return false;
         }
     }
-    public function addOrder($orderData)
+    public function cancelOrder($OrderID)
     {
         try {
-            // Câu lệnh SQL để thêm đơn hàng vào bảng orders
-            $sql = "INSERT INTO orders (OrderID, ProductID, UserID, Quantity, Size, TotalAmount, Status, OrderDate) 
-                VALUES (:OrderID, :ProductID, :UserID, :Quantity, :Size, :TotalAmount, :Status, :OrderDate)";
-
+            // Cập nhật trạng thái của đơn hàng thành 1 (chưa thanh toán)
+            $sql = "UPDATE orders SET Status = 1 WHERE OrderID = :OrderID";
             $stmt = $this->conn->prepare($sql);
-
-            // Gán giá trị cho các tham số
-            $stmt->bindParam(':OrderID', $orderData['OrderID']);
-            $stmt->bindParam(':ProductID', $orderData['ProductID']);
-            $stmt->bindParam(':UserID', $orderData['UserID']);
-            $stmt->bindParam(':Quantity', $orderData['Quantity']);
-            $stmt->bindParam(':Size', $orderData['Size']);
-            $stmt->bindParam(':TotalAmount', $orderData['TotalAmount']);
-            $stmt->bindParam(':Status', $orderData['Status']);
-            $stmt->bindParam(':OrderDate', $orderData['OrderDate']);
+            $stmt->bindParam(':OrderID', $OrderID, PDO::PARAM_INT);
 
             // Thực thi câu truy vấn
             return $stmt->execute();
@@ -275,6 +361,7 @@ class Order
             return false;
         }
     }
+
     public function deleteOrder($OrderID)
     {
         try {

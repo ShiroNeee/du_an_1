@@ -36,8 +36,6 @@
                     </div>
                 <?php endif; ?>
 
-                <!-- Danh sách kích thước và tồn kho -->
-                !-- Danh sách kích thước và tồn kho -->
                 <div class="mt-4">
                     <h5 class="fw-bold">Kích Cỡ và Số Lượng</h5>
                     <div class="mb-3">
@@ -122,117 +120,73 @@
     </div>
 </div>
 <script>
-    document.getElementById('sizeSelect').addEventListener('change', function() {
+ document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.getElementById('quantity');
+    const sizeSelect = document.getElementById('sizeSelect');
+    const quantitySection = document.getElementById('quantitySection');
+    const priceDisplay = document.getElementById('price');
+    const totalPriceField = document.getElementById('totalPriceField');
+    const increaseBtn = document.getElementById('increaseQuantity');
+    const decreaseBtn = document.getElementById('decreaseQuantity');
+    const form = document.getElementById('add-to-cart-form');
+
+    sizeSelect.addEventListener('change', function() {
         const selectedOption = this.options[this.selectedIndex];
-        const stockQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-stock')) : 0;
-        const selectedSizeID = selectedOption ? selectedOption.getAttribute('data-size-id') : '';
+        const stockQuantity = parseInt(selectedOption?.getAttribute('data-stock') || 0);
+        const selectedSizeID = selectedOption?.getAttribute('data-size-id') || '';
 
         if (!selectedSizeID) {
             alert('Vui lòng chọn kích cỡ!');
-            return; // Nếu chưa chọn kích cỡ, ngừng tính toán giá và không cho phép tiếp tục.
+            return;
         }
 
-        const basePrice = <?= $product['Price'] ?? 0 ?>;
-
-        // Tạo phần trăm ngẫu nhiên từ 5% đến 15%
-        const randomPercent = Math.floor(Math.random() * (15 - 5 + 1)) + 5; // random từ 5% đến 15%
-        const sizePrice = basePrice * (randomPercent / 100); // Tính phần giá tăng thêm
-
-        const totalPrice = basePrice + sizePrice; // Tính giá mới
-
-        // Cập nhật giá hiển thị
-        document.getElementById('price').textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
-
-        // Hiển thị phần số lượng khi chọn kích cỡ
-        document.getElementById('quantitySection').style.display = 'block';
-
-        // Cập nhật lại giá tiền khi thay đổi kích cỡ
-        updateTotalPrice();
-
-        // Cập nhật số lượng tối đa có thể chọn
-        const quantityInput = document.getElementById('quantity');
-        quantityInput.max = stockQuantity; // Cập nhật số lượng tối đa
-
-        // Reset giá trị số lượng nếu người dùng chọn kích cỡ khác với số lượng đã chọn lớn hơn kho
-        if (parseInt(quantityInput.value) > stockQuantity) {
-            quantityInput.value = stockQuantity; // Đặt lại số lượng về số lượng tối đa
-        }
-
-        // Cập nhật giá trị SizeID trong form
+        quantitySection.style.display = 'block';
+        quantityInput.max = stockQuantity;
+        quantityInput.value = Math.min(parseInt(quantityInput.value), stockQuantity);
         document.getElementById('selectedSizeID').value = selectedSizeID;
+        updateTotalPrice();
     });
 
+    quantityInput.addEventListener('input', function() {
+        const quantity = Math.min(parseInt(this.value), parseInt(this.max));
+        if (quantity !== parseInt(this.value)) alert("Số lượng vượt quá số lượng trong kho.");
+        this.value = quantity;
+        updateTotalPrice();
+    });
 
-    document.getElementById('quantity').addEventListener('input', function() {
-        const quantity = parseInt(this.value);
-        const maxQuantity = parseInt(this.max);
+    increaseBtn.addEventListener('click', function() {
+        // Không kiểm tra giới hạn kho nữa, chỉ tăng số lượng
+        quantityInput.value++;
+        updateTotalPrice();
+    });
 
-        // Nếu số lượng vượt quá số lượng trong kho, hiển thị lỗi
-        if (quantity > maxQuantity) {
-            alert("Số lượng vượt quá số lượng trong kho. Vui lòng chọn lại.");
-            this.value = maxQuantity; // Reset lại số lượng
+    decreaseBtn.addEventListener('click', function() {
+        if (parseInt(quantityInput.value) > 1) quantityInput.value--;
+        updateTotalPrice();
+    });
+
+    form.addEventListener('submit', function(event) {
+        const selectedSizeID = document.getElementById('selectedSizeID').value;
+
+        // Nếu chưa chọn kích cỡ, hiển thị thông báo và ngừng submit form
+        if (!selectedSizeID) {
+            alert('Vui lòng chọn kích cỡ sản phẩm trước khi thêm vào giỏ hàng!');
+            event.preventDefault();  // Ngừng gửi form
+        } else {
+            let quantityField = document.createElement('input');
+            quantityField.type = 'hidden';
+            quantityField.name = 'Quantity';
+            quantityField.value = quantityInput.value;
+            this.appendChild(quantityField);
         }
-
-        updateTotalPrice(); // Cập nhật lại tổng giá
     });
 
     function updateTotalPrice() {
-        const quantity = parseInt(document.getElementById('quantity').value);
-        const selectedOption = document.getElementById('sizeSelect').options[document.getElementById('sizeSelect').selectedIndex];
-
-        // Kiểm tra xem người dùng đã chọn kích cỡ chưa
-        if (!selectedOption || !selectedOption.getAttribute('data-size-id')) {
-            document.getElementById('price').textContent = 'Vui lòng chọn kích cỡ!';
-            return; // Ngừng nếu chưa chọn kích cỡ
-        }
-
-        const stockQuantity = selectedOption ? parseInt(selectedOption.getAttribute('data-stock')) : 0;
-
-        // Lấy giá gốc và tính phần trăm ngẫu nhiên từ 5%-15%
+        const quantity = parseInt(quantityInput.value);
         const basePrice = <?= $product['Price'] ?? 0 ?>;
-        const randomPercent = Math.floor(Math.random() * (15 - 5 + 1)) + 5; // random từ 5% đến 15%
-        const sizePrice = basePrice * (randomPercent / 100); // Tính phần giá tăng thêm
-
-        const totalPrice = (basePrice + sizePrice) * quantity; // Tính giá tổng
-
-        // Hiển thị giá cập nhật
-        document.getElementById('price').textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
-        // Cập nhật giá trị tổng tiền vào trường ẩn trong form
-        document.getElementById('totalPriceField').value = totalPrice.toFixed(2);
+        const totalPrice = basePrice * quantity;
+        priceDisplay.textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
+        totalPriceField.value = totalPrice.toFixed(2);
     }
-
-
-    // Nút cộng, trừ số lượng
-    document.getElementById('increaseQuantity').addEventListener('click', function() {
-        const quantityInput = document.getElementById('quantity');
-        const maxQuantity = parseInt(quantityInput.max); // Lấy số lượng tối đa
-        if (parseInt(quantityInput.value) < maxQuantity) {
-            quantityInput.value = parseInt(quantityInput.value) + 1;
-            updateTotalPrice();
-        } else {
-            alert("Số lượng đã đạt mức tối đa trong kho.");
-        }
-    });
-
-
-    document.getElementById('decreaseQuantity').addEventListener('click', function() {
-        const quantityInput = document.getElementById('quantity');
-        if (parseInt(quantityInput.value) > 1) {
-            quantityInput.value = parseInt(quantityInput.value) - 1;
-            updateTotalPrice();
-        }
-    });
-    document.getElementById('add-to-cart-form').addEventListener('submit', function(event) {
-        const quantityInput = document.getElementById('quantity');
-        const quantityValue = quantityInput.value;
-
-        // Tạo trường hidden cho quantity để gửi cùng với form
-        let quantityField = document.createElement('input');
-        quantityField.type = 'hidden';
-        quantityField.name = 'Quantity';
-        quantityField.value = quantityValue;
-
-        // Thêm trường quantity vào form
-        this.appendChild(quantityField);
-    });
+});
 </script>

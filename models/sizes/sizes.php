@@ -17,15 +17,64 @@ class SizeModel
     }
 
     // Lấy tất cả kích cỡ của sản phẩm
-    public function getAllSizes()
+    public function getAllSizes($page = 1)
     {
-        $query = "SELECT sizes.SizeID, sizes.Size, sizes.StockQuantity, products.ProductName 
+        try {
+            $itemsPerPage = 8; // Số lượng sản phẩm mỗi trang
+            $offset = ($page - 1) * $itemsPerPage; // Tính vị trí bắt đầu
+
+            // Truy vấn để lấy tất cả các kích thước
+            $query = "SELECT sizes.SizeID, sizes.Size, sizes.StockQuantity, 
+                         products.ProductName, products.id AS ProductID, products.status 
                   FROM sizes 
-                  INNER JOIN products ON sizes.ProductID = products.id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  INNER JOIN products ON sizes.ProductID = products.id
+                  LIMIT :limit OFFSET :offset";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':limit', $itemsPerPage, PDO::PARAM_INT);
+            $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+            $stmt->execute();
+            $sizes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Kiểm tra và cập nhật status nếu cần
+            foreach ($sizes as $size) {
+                if ($size['StockQuantity'] == 0 && $size['status'] != 0) { // Chỉ cập nhật khi status khác 0
+                    $updateQuery = "UPDATE products 
+                                SET status = 0 
+                                WHERE id = :productID";
+                    $updateStmt = $this->conn->prepare($updateQuery);
+                    $updateStmt->bindParam(':productID', $size['ProductID'], PDO::PARAM_INT);
+                    $updateStmt->execute();
+                }
+            }
+
+            return $sizes;
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return false;
+        }
     }
+
+    public function getTotalPages()
+    {
+        try {
+            $itemsPerPage = 8; // Số sản phẩm mỗi trang
+
+            // Đếm tổng số sản phẩm
+            $query = "SELECT COUNT(*) as total FROM sizes";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $totalItems = $result['total'];
+
+            // Tính tổng số trang
+            return ceil($totalItems / $itemsPerPage);
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+            return 0;
+        }
+    }
+
     // Lấy thông tin kích cỡ theo ID
     public function getSizeById($sizeID)
     {
@@ -45,6 +94,7 @@ class SizeModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Trong Model
+
     public function getProductById($productID)
     {
         $sql = "SELECT * FROM products WHERE id = ?";
@@ -98,14 +148,15 @@ class SizeModel
         return $stmt->execute();
     }
 
-    public function getStockQuantity($ProductID)
+    public function getStockQuantity($ProductID, $SizeID)
     {
         try {
             $sql = "SELECT StockQuantity 
                     FROM sizes 
-                    WHERE ProductID = :ProductID";
+                    WHERE ProductID = :ProductID AND SizeID = :SizeID";
             $stmt = $this->conn->prepare($sql);
             $stmt->bindParam(':ProductID', $ProductID, PDO::PARAM_INT);
+            $stmt->bindParam(':SizeID', $SizeID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -124,7 +175,7 @@ class SizeModel
             $stmt->bindParam(':ProductID', $ProductID, PDO::PARAM_INT);
             $stmt->bindParam(':SizeID', $SizeID, PDO::PARAM_INT);
             $stmt->execute();
-            return true;  
+            return true;
         } catch (PDOException $e) {
             echo 'Lỗi: ' . $e->getMessage();
             return false;

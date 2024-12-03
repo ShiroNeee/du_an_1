@@ -1,5 +1,15 @@
+<!--
+dữ liệu test 
+số thẻ : 9704 0000 0000 0018
+tên : NGUYEN VAN A
+ngày : 03/07
+OTP : OTP 
+sdt :  
+-->
 <?php
 session_start();
+if(!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+
 
 // Đây là file chạy chính, 
 // là nơi ta require tất cả các file mà hệ thống sử dụng
@@ -26,6 +36,9 @@ require_once '../controllers/navbar/DetailController.php';
 // Order
 require_once '../controllers/OrderController.php';
 // 
+require_once '../controllers/PageController.php';
+//
+require_once '../controllers/PaymentController.php';
 require_once '../models/users/user.php';
 //
 require_once '../models/category.php';
@@ -33,7 +46,7 @@ require_once '../models/category.php';
 require_once '../models/product/Product.php';
 require_once '../models/sizes/sizes.php';
 require_once '../models/Order.php';
-require_once '../controllers/PageController.php';
+
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -49,6 +62,7 @@ require_once '../routes/login.php';
 // Register
 require_once '../routes/register.php';
 //
+require_once '../routes/Payment.php';
 require_once '../routes/user/user.php';
 //shop_introduce
 require_once '../routes/navbar/shopintroduce.php';

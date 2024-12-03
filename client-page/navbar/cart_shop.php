@@ -41,7 +41,6 @@ function getStatusClass($status)
                         <th>Size</th>
                         <th>Số lượng</th>
                         <th>Tổng tiền</th>
-                        <th>Trạng thái</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,12 +71,16 @@ function getStatusClass($status)
 
                             <td>
                                 <button type="button" class="decrease-quantity" data-orderid="<?= $orders['OrderID']; ?>">-</button>
-                                <span class="quantity-display" id="display-quantity-<?= $orders['OrderID']; ?>"><?= $orders['Quantity']; ?></span>
-                                <button type="button" class="increase-quantity" data-orderid="<?= $orders['OrderID']; ?>">+</button>
+                                <span class="quantity-display"
+                                    id="display-quantity-<?= $orders['OrderID']; ?>"
+                                    data-max="<?= $orders['StockQuantity']; ?>">
+                                    <?= $orders['Quantity']; ?>
+                                </span>
+                                <button type="button" class="increase-quantity" data-orderid="<?= $orders['OrderID']; ?>"
+                                    data-max="<?= $orders['StockQuantity']; ?>">+</button>
                             </td>
                             <td id="total-amount-<?= $orders['OrderID']; ?>"><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
-
-                            <td class="<?= getStatusClass($orders['Status']); ?>"><?= $orders['statusName']; ?></td>
+                            
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -155,7 +158,15 @@ function getStatusClass($status)
         var pricePerUnit = currentTotalAmount / currentQuantity;
 
         var isIncrease = button.classList.contains('increase-quantity');
+        var maxQuantity = parseInt(displayQuantityElement.getAttribute('data-max'), 10); // Lấy số lượng tối đa từ thuộc tính `max`
+
         var newQuantity = isIncrease ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
+
+        // Kiểm tra nếu vượt quá số lượng tối đa
+        if (newQuantity > maxQuantity) {
+            alert("Số lượng vượt quá mức tồn kho cho phép! Số lượng tối đa: " + maxQuantity);
+            return; // Dừng xử lý nếu vượt quá số lượng
+        }
 
         quantityElement.value = newQuantity;
         displayQuantityElement.textContent = newQuantity;
