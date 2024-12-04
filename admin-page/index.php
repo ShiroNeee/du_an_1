@@ -28,6 +28,7 @@ require_once '../controllers/LoginController.php';
 require_once '../controllers/OrderController.php';
 require_once '../controllers/sizes/SizesController.php';
 require_once '../controllers/thongke/ThongKeDonHangController.php';
+require_once '../controllers/thongke/ThongKeSoluongController.php';
 
 // Phải require các file model mà controller sử dụng
 require_once '../models/category.php';
@@ -56,5 +57,6 @@ require_once '../routes/order.php';
 require_once '../routes/sizes/sizes.php';
 // thongke-donhang
 require_once '../routes/thongke/thongkedonhang.php';
+require_once '../routes/thongke/thongkesoluong.php';
 // Xử lí router
 $router->dispatch($act);

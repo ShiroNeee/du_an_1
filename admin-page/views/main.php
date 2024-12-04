@@ -72,7 +72,7 @@
 							<p>Khách hàng vip 005</p>
 						</td>
 						<td>30-4-2024</td>
-						<td><span class="status pending">Hoãn</span></td>
+						<td><span class="status pending">Đang xử lý</span></td>
 					</tr>
 					<tr>
 						<td>
@@ -80,7 +80,7 @@
 							<p>Khách hàng vip 003</p>
 						</td>
 						<td>08-03-2024</td>
-						<td><span class="status pending">Hoãn</span></td>
+						<td><span class="status pending">Đang xử lý</span></td>
 					</tr>
 					<tr>
 						<td>

@@ -129,6 +129,12 @@
 				</a>
 			</li>
 			<li>
+				<a href="?act=thongke-soluong">
+					<i class='bx bxs-doughnut-chart'></i>
+					<span class="text">Thống kê số lượng </span>
+				</a>
+			</li>
+			<li>
 				<a href="?act=list-order">
 				<i class='bx bx-receipt'></i>
 					<span class="text">Quản lý đơn hàng</span>

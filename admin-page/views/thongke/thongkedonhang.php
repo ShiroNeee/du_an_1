@@ -38,14 +38,49 @@
         <canvas class="bieudo1" id="myChart1" style="width:100%;max-width:600px"></canvas>
         <canvas class="bieudo2" id="myChart2" style="width:100%;max-width:600px"></canvas>
         <canvas class="bieudo3" id="myChart3" style="width:100%;max-width:600px"></canvas>
+        <canvas class="bieudo4" id="myChart4" style="width:100%;max-width:600px"></canvas>
     </div>
     <script>
+        // Biểu đồ doanh thu đơn hàng theo năm
+        var xValuesYear = <?php echo json_encode(array_column($data1, 'Year')); ?>;
+        var yValuesYear = <?php echo json_encode(array_column($data1, 'TotalRevenue')); ?>;
+
+        var barColors = ["brown", "green", "red", "orange", "blue"];
+        new Chart("myChart1", {
+            type: "bar",
+            data: {
+                labels: xValuesYear,
+                datasets: [{
+                    backgroundColor: barColors,
+                    data: yValuesYear
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: "Doanh Thu Đơn Hàng Theo Năm",
+                    fontSize: 18,
+                    padding: 20
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Doanh thu (Vnd)'
+                        }
+                    }]
+                }
+            }
+        });
         // Biểu đồ doanh thu đơn hàng theo tháng
-        var xValuesMonth = <?php echo json_encode(array_column($data, 'Month')); ?>;
-        var yValuesMonth = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
+        var xValuesMonth = <?php echo json_encode(array_column($data2, 'Month')); ?>;
+        var yValuesMonth = <?php echo json_encode(array_column($data2, 'TotalRevenue')); ?>;
 
         var barColors = ["blue", "green", "red", "orange", "brown"];
-        new Chart("myChart1", {
+        new Chart("myChart2", {
             type: "bar",
             data: {
                 labels: xValuesMonth,
@@ -75,13 +110,14 @@
             }
         });
         // Biểu đồ doanh thu đơn hàng theo tuần
-        var xValuesWeek = <?php echo json_encode(array_column($data, 'Week')); ?>;
-        var yValuesWeek = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
+        var xValuesWeek = <?php echo json_encode(array_column($data3, 'Week')); ?>;
+        var yValuesWeek = <?php echo json_encode(array_column($data3, 'TotalRevenue')); ?>;
         var barColors = ["green", "blue", "red", "orange", "brown"];
+
         new Chart("myChart3", {
             type: "bar",
             data: {
-                labels: xValuesWeek,
+                labels: xValuesWeek, // Đã hiển thị dạng 'Week 48, 2024'
                 datasets: [{
                     backgroundColor: barColors,
                     data: yValuesWeek
@@ -98,12 +134,6 @@
                     padding: 20
                 },
                 scales: {
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Tuần'
-                        }
-                    }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
@@ -114,11 +144,11 @@
             }
         });
         // Biểu đồ doanh thu đơn hàng theo ngày
-        var xValuesDay = <?php echo json_encode(array_column($data, 'Day')); ?>;
-        var yValuesDay = <?php echo json_encode(array_column($data, 'TotalRevenue')); ?>;
+        var xValuesDay = <?php echo json_encode(array_column($data4, 'Day')); ?>;
+        var yValuesDay = <?php echo json_encode(array_column($data4, 'TotalRevenue')); ?>;
 
         var barColorsDay = ["orange", "green", "red", "blue", "brown"];
-        new Chart("myChart2", {
+        new Chart("myChart4", {
             type: "bar",
             data: {
                 labels: xValuesDay,
@@ -138,12 +168,6 @@
                     padding: 20
                 },
                 scales: {
-                    xAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Ngày'
-                        }
-                    }],
                     yAxes: [{
                         scaleLabel: {
                             display: true,
