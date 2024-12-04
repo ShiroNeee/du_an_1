@@ -21,7 +21,7 @@ class SizesController
         // Yêu cầu hiển thị giao diện
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/sizes/sizeslist.php'; // Trang hiển thị danh sách kích cỡ
-        require_once '../admin-page/views/footer.php';
+        require_once '../admin-page/views/header.php';
     }
 
     public function add()
