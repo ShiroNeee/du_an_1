@@ -158,6 +158,12 @@
 					<span class="text">Quản lý biến thể</span>
 				</a>
 			</li>
+			<li>
+				<a href="?act=comment-list">
+					<i class='bx bx-list-ul'></i>
+					<span class="text">Quản lý bình luận</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>

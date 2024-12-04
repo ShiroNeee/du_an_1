@@ -268,4 +268,40 @@ class Product
         // Trả về kết quả dưới dạng mảng
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getCommentsByProduct($productId) {
+        $stmt = $this->conn->prepare("SELECT comments.*, users.name as userName FROM comments
+                                      JOIN users ON comments.UserID = users.id
+                                      WHERE ProductID = :productId
+                                      ORDER BY CreatedAt DESC");
+        $stmt->bindParam(':productId', $productId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
+// Thêm bình luận
+public function addComment($productId, $content, $orderId) {
+    // Kiểm tra session và lấy UserID từ session
+    if (!isset($_SESSION['user_id'])) {
+        // Nếu người dùng chưa đăng nhập, có thể báo lỗi hoặc chuyển hướng đến trang đăng nhập
+        echo "Vui lòng đăng nhập để thêm bình luận!";
+        exit;
+    }
+
+    $userId = $_SESSION['user_id'];  // Lấy UserID từ session
+    $createdAt = date('Y-m-d H:i:s');
+    
+    // Chuẩn bị và thực thi câu lệnh SQL để thêm bình luận
+    $stmt = $this->conn->prepare("INSERT INTO comments (ProductID, UserID, Content, CreatedAt, OrderID) 
+                                  VALUES (:productId, :userId, :content, :createdAt, :orderId)");
+    $stmt->bindParam(':productId', $productId);
+    $stmt->bindParam(':userId', $userId);
+    $stmt->bindParam(':content', $content);
+    $stmt->bindParam(':createdAt', $createdAt);
+    $stmt->bindParam(':orderId', $orderId);
+    $stmt->execute();
+}
+
+
 }
