@@ -133,7 +133,7 @@ td {
                             <td><?= htmlspecialchars($comment['ProductID'] ?? '') ?></td>
                             <td><?= htmlspecialchars($comment['UserID'] ?? '') ?></td>
                             <td><?= htmlspecialchars($comment['Content'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($comment['CreatdAt'] ?? 'N/A') ?></td> <!-- Nếu không có giá trị, hiển thị "N/A" -->
+                            <td><?= htmlspecialchars($comment['date'] ?? 'N/A') ?></td> <!-- Nếu không có giá trị, hiển thị "N/A" -->
                             <td><?= htmlspecialchars($comment['OrderID'] ?? '') ?></td>
                             <td>
                                 <a href="?act=comment-edit&id=<?= $comment['CommentID'] ?>">
@@ -150,15 +150,17 @@ td {
         </table>
     </div>
     
-    <!-- Phân trang -->
+    <?php if (!empty($totalPages) && $totalPages > 0): ?>
     <div class="pagination">
         <h3>Trang:</h3>
-        <div class="pagination">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="?act=comment-list&page=<?= $i ?>" class="<?= $i == $currentPage ? 'active' : '' ?>">
-                    <?= $i ?>
-                </a>
-            <?php endfor; ?>
-        </div>
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a href="?act=comment-list&page=<?= $i ?>" class="<?= $i == $currentPage ? 'active' : '' ?>">
+                <?= $i ?>
+            </a>
+        <?php endfor; ?>
     </div>
+<?php else: ?>
+    <p>Không có dữ liệu để hiển thị phân trang.</p>
+<?php endif; ?>
+
 </div>

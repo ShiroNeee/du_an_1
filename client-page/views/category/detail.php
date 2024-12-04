@@ -90,7 +90,7 @@
         </div>
     </div>
     </div>
-<?php else: ?>
+    <?php else: ?>
     <div class="container mt-5">
         <div class="alert alert-danger" role="alert">
             Không tìm thấy sản phẩm.
@@ -119,52 +119,6 @@
                 <div class="alert alert-danger"><?= htmlspecialchars($errorMessage); ?></div>
             <?php endif; ?>
 
-<<<<<<< HEAD
-
-
- <!-- Hiển thị bình luận của sản phẩm -->
-<div class="comments-section">
-    <h3>Bình luận:</h3>
-    <?php if (empty($comments)): ?>
-        <p>Chưa có bình luận nào.</p>
-    <?php else: ?>
-        <?php foreach ($comments as $comment): ?>
-            <div class="comment">
-                <p><strong><?php echo htmlspecialchars($comment['userName']); ?>:</strong></p>
-                <p><?php echo nl2br(htmlspecialchars($comment['Content'])); ?></p>
-                <p><small><?php echo date('H:i d/m/Y', strtotime($comment['CreatedAt'])); ?></small></p>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
-</div>
-
-<!-- Form thêm bình luận -->
-<div class="add-comment">
-    <h3>Thêm bình luận</h3>
-    <?php if (!isset($_SESSION['user_id'])): ?>
-        <p class="alert alert-warning">Vui lòng <a href="?act=login">đăng nhập</a> để thêm bình luận!</p>
-    <?php else: ?>
-        <form action="?act=detail&id=<?php echo $id; ?>" method="POST">
-            <textarea name="content" placeholder="Nhập bình luận của bạn" required></textarea>
-            <button type="submit">Thêm bình luận</button>
-        </form>
-    <?php endif; ?>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
             <div class="mb-3">
                 <label for="comment" class="form-label">Viết bình luận của bạn:</label>
                 <textarea name="comment" id="comment" rows="3" class="form-control" required></textarea>
@@ -175,7 +129,6 @@
         <p class="text-danger">Vui lòng <a href="?act=login">đăng nhập</a> để bình luận.</p>
     <?php endif; ?>
 </div>
->>>>>>> origin
 <div class="container mt-5">
     <h4 class="fw-bold">Có thể bạn quan tâm</h4>
     <div class="row g-3">
