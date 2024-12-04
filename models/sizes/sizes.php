@@ -97,7 +97,6 @@ class SizeModel
     }
 
     // Cập nhật kích cỡ
-    // SizeModel.php
     public function updateSize($sizeID, $productID, $size, $stockQuantity)
     {
         // Cập nhật thông tin kích cỡ trong bảng sizes
