@@ -28,6 +28,7 @@ require_once '../controllers/LoginController.php';
 require_once '../controllers/OrderController.php';
 require_once '../controllers/sizes/SizesController.php';
 require_once '../controllers/comment/CommentController.php';
+require_once '../controllers/thongke/ThongKeController.php';
 
 // Phải require các file model mà controller sử dụng
 require_once '../models/category.php';
@@ -36,6 +37,7 @@ require_once '../models/product/product.php';
 require_once '../models/Order.php';
 require_once '../models/sizes/sizes.php';
 require_once '../models/comment/comment.php';
+require_once '../models/thongke/thongke.php';
 // Tạo các đường dẫn để thực hiện điều hướng
 $act = $_GET['act'] ?? '/';
 
@@ -53,5 +55,6 @@ require_once '../routes/order.php';
 //
 require_once '../routes/sizes/sizes.php';
 require_once '../routes/comment/comment.php';
+require_once '../routes/thongke/thongke.php';
 // Xử lí router
 $router->dispatch($act);
