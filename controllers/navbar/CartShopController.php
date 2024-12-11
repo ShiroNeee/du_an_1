@@ -62,12 +62,11 @@ class CartShopController
             $ProductIDs = $_POST['ProductID'] ?? [];
             $UserID = $_SESSION['user']['id'] ?? null;
             $totalAmounts = $_POST['totalAmount'] ?? 0;
-            $Quantity = $_POST['Quantity'] ?? [];
-            $Sizes = $_POST['SizeID'] ?? [];
-
+            $Quantities = $_POST['Quantity'] ?? [];
+            $Sizes = $_POST['SizeID'] ?? [];        
 
             // Kiểm tra thông tin thanh toán
-            if (!$UserID || $totalAmounts <= 0 || empty($Quantity) || empty($Sizes)) {
+            if (!$UserID || $totalAmounts <= 0 || empty($Quantities) || empty($Sizes)) {
                 $_SESSION['error'] = 'Thông tin thanh toán không hợp lệ.';
                 header("Location: ?act=cart-shop");
                 exit();
@@ -78,9 +77,9 @@ class CartShopController
 
             // Xử lý từng sản phẩm trong đơn hàng
             foreach ($ProductIDs as $index => $ProductID) {
-                $quantity = $Quantity[$index] ?? null;
+                $quantity = (int)$Quantities[$index] ?? null;  
                 $size = $Sizes[$index] ?? null;
-                $totalAmount = $totalAmounts[$index] ?? null;
+                $totalAmount = (int)$totalAmounts[$index] ?? null; var_dump($quantity, $totalAmount); die;
 
                 if (!$ProductID || !$quantity || !$size) {
                     $_SESSION['error'] = "Thông tin sản phẩm không hợp lệ.";
@@ -92,14 +91,11 @@ class CartShopController
                 $currentStock = $this->modelSizes->getStockQuantity($ProductID, $size);
                 $currentStock = $currentStock[0]['StockQuantity'] ?? null;
 
-
                 $orderDetail = $this->modelOrder->getOrderDetailByProductSize($ProductID, $size);
-                // var_dump($orderDetail);die;
                 if ($orderDetail) {
                     $OrderID = $orderDetail['OrderID'];
                     $new = $currentStock - $quantity;
 
-                    // Kiểm tra nếu số lượng mới vượt quá tồn kho hiện tại
                     if ($new < 0) {
                         $_SESSION['error'] = "Số lượng không đủ cho sản phẩm. Tồn kho hiện tại sản phẩm.";
                         // Điều hướng người dùng về trang giỏ hàng và thoát
@@ -359,7 +355,7 @@ class CartShopController
             // Kiểm tra nếu không có đơn hàng nào được chọn
             if (empty($OrderIDs)) {
                 $_SESSION['error'] = 'Vui lòng chọn ít nhất một đơn hàng để huỷ.';
-                header("Location: ?act=my-orders");
+                header("Location: ?act=cart-shop");
                 exit();
             }
 

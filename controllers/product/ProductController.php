@@ -194,7 +194,11 @@ class ProductController
                 if ($productDetail['image'] && file_exists($productDetail['image'])) {
                     unlink($productDetail['image']);
                 }
-                $_SESSION['success'] = 'Xóa sản phẩm thành công xong';
+                $_SESSION['success'] = 'Xóa sản phẩm thành công.';
+                header("Location: ?act=list-product");
+                exit();
+            } else {
+                $_SESSION['error'] = 'Không thể xoá sản phẩm. Vui lòng thử lại.';
                 header("Location: ?act=list-product");
                 exit();
             }

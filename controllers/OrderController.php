@@ -11,12 +11,11 @@ class OrderController
 
     public function index()
     {
-        // Xác định số lượng kết quả mỗi trang và trang hiện tại
-        $limit = 5; // Số đơn hàng mỗi trang
+       
+        $limit = 5; 
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($currentPage - 1) * $limit;
 
-        // Lấy dữ liệu đơn hàng với phân trang
         $listOrders = $this->modelOrder->getAllOrders($limit, $offset);
 
         $totalQuantityAfterPayment = $this->modelOrder->getTotalQuantityAfterPayment();
@@ -30,7 +29,7 @@ class OrderController
         $_SESSION['totalQuantityAfterPayment'] = $totalQuantityAfterPayment;
         $_SESSION['totalQuantity'] = $this->modelOrder->getTotalQuantity(); // Tổng số lượng đơn hàng
         $_SESSION['doanhThu'] = $this->modelOrder->doanhThu();
-        
+
         require_once '../admin-page/views/header.php';
         require_once '../admin-page/views/Order/order.php'; // main
         require_once '../admin-page/views/footer.php';
@@ -41,7 +40,7 @@ class OrderController
             $OrderID = $_GET['id'];
             $OrderDetail = $this->modelOrder->getOrderDetail($OrderID);
             $ProductID = $OrderDetail[0]['ProductID'];
-            $siezs = $this ->modelOrder->getAllSizesByProductID($ProductID);
+            $siezs = $this->modelOrder->getAllSizesByProductID($ProductID);
             $statusorder = $this->modelOrder->getAllStatusorder();
             $ProductIdOrder = $this->modelOrder->getAllProduct();
             // Lấy giá sản phẩm từ bảng ProductIdOrder
@@ -81,26 +80,55 @@ class OrderController
             $UserID = $_POST['UserID'];
             $OrderDate = date('Y-m-d H:i:s');
             $Size = $_POST['Size'];
-            $TotalAmount = $_POST['TotalAmount'];
             $Status = $_POST['Status'];
             $ProductID = $_POST['ProductID'];
             $Quantity = $_POST['Quantity'];
 
-            // Kiểm tra nếu thiếu ID đơn hàng
             if (!$OrderID || !$UserID) {
                 $_SESSION['error'] = 'Dữ liệu không hợp lệ.';
                 header("Location: ?act=list-order");
                 exit();
             }
 
-            // Kiểm tra nếu số lượng trống
+            // Kiểm tra trạng thái hiện tại của đơn hàng
+            $currentOrder = $this->modelOrder->getOrderDetail($OrderID);
+            if (!$currentOrder || !isset($currentOrder[0])) {
+                $_SESSION['error'] = 'Đơn hàng không tồn tại.';
+                header("Location: ?act=list-order");
+                exit();
+            }
+            $currentOrder = $currentOrder[0];
+            $currentStatus = $currentOrder['Status'];
+            $Status = (int) $Status; 
+
+            // Chặn cập nhật nếu trạng thái là "Hoàn thành" (0)
+            if ($currentStatus == 0 && $Status != 0) {
+                $_SESSION['error'] = 'Đơn hàng đã hoàn thành. Không thể cập nhật.';
+                header("Location: ?act=edit-order&id=$OrderID");
+                exit();
+            }
+
+            if ($Status < $currentStatus && $Status != 0) {
+                $_SESSION['error'] = 'Không thể cập nhật trạng thái ngược. Vui lòng kiểm tra lại.';
+                header("Location: ?act=edit-order&id=$OrderID");
+                exit();
+            }
+            
+            if (
+                ($currentStatus == 2 && $Status != 3) ||  
+                ($currentStatus == 3 && $Status != 0)
+            ) {
+                $_SESSION['error'] = 'Không thể cập nhật trạng thái này. Vui lòng kiểm tra lại.';
+                header("Location: ?act=edit-order&id=$OrderID");
+                exit();
+            }
+
             if (empty($Quantity) || $Quantity <= 0) {
                 $_SESSION['error'] = 'Vui lòng nhập số lượng sản phẩm.';
                 header("Location: ?act=edit-order&id=$OrderID");
                 exit();
             }
 
-            // Lấy giá sản phẩm từ bảng ProductIdOrder
             $ProductIdOrder = $this->modelOrder->getAllProduct();
             $productPrices = [];
             foreach ($ProductIdOrder as $product) {
@@ -109,7 +137,7 @@ class OrderController
 
             $TotalAmount = isset($productPrices[$ProductID]) ? $productPrices[$ProductID] * $Quantity : 0;
 
-            // Thực hiện cập nhật đơn hàng
+
             $updateResult = $this->modelOrder->updateData($OrderID, $UserID, $OrderDate, $Size, $TotalAmount, $Status, $ProductID, $Quantity);
 
             if ($updateResult) {
@@ -118,7 +146,6 @@ class OrderController
                 $_SESSION['error'] = 'Cập nhật đơn hàng không thành công. Vui lòng thử lại.';
             }
 
-            // Chuyển hướng về danh sách đơn hàng
             header("Location: ?act=list-order");
             exit();
         } else {

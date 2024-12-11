@@ -92,7 +92,7 @@ class PageController
     
                 // Kiểm tra xem tổng số lượng trong giỏ hàng có vượt quá tồn kho không
                 if (($orderQuantity + $Quantity) > $availableStock) {
-                    $_SESSION['error'] = "Số lượng trong giỏ hàng đã vượt quá số lượng tồn kho.";
+                    $_SESSION['error'] = "Số lượng trong giỏ hàng đã vượt quá số lượng tồn kho của chúng tôi.";
                     header("Location: ?act=detail&id=" . $ProductID);
                     exit();
                 }

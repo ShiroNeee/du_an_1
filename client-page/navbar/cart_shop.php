@@ -1,21 +1,3 @@
-<?php
-function getStatusClass($status)
-{
-    switch ($status) {
-        case 0:
-            return 'text-primary';
-        case 1:
-            return 'text-danger';
-        case 2:
-            return 'text-warning';
-        case 3:
-            return 'text-warning';
-        default:
-            return 'text-danger';
-    }
-}
-
-?>
 <div class="container mt-5">
     <div class="row">
         <div class="col">
@@ -79,18 +61,22 @@ function getStatusClass($status)
                                 <button type="button" class="increase-quantity" data-orderid="<?= $orders['OrderID']; ?>"
                                     data-max="<?= $orders['StockQuantity']; ?>">+</button>
                             </td>
-                            <td id="total-amount-<?= $orders['OrderID']; ?>"><?= number_format($orders['TotalAmount'], 0, ',', '.'); ?></td>
-                            
+                            <td id="total-amount-<?= $orders['OrderID']; ?>"><?= number_format($orders['TotalAmount'], 0, ',', '.') . ' VNĐ'; ?></td>
+
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <div class="text-end" style="font-size: 18px; font-weight: bold;">
-                Tổng giá trị tất cả đơn hàng: <span id="total-all-amount"><?= number_format($totalAmountAll, 0, ',', '.'); ?> VNĐ</span>
+            <div class="text-end d-flex justify-content-between mt-3" style="font-size: 18px; font-weight: bold;">
+                <div>
+                    <button type="submit" class="btn btn-danger">Huỷ đơn đã chọn</button>
+                </div>
+                <div>
+                    Tổng giá trị tất cả đơn hàng: <span id="total-all-amount"><?= number_format($totalAmountAll, 0, ',', '.'); ?> VNĐ</span>
+                </div>
             </div>
 
-
-            <button type="submit" class="btn btn-danger">Huỷ đơn đã chọn</button>
         </form>
 
         <div class="text-end mt-4">
@@ -104,7 +90,7 @@ function getStatusClass($status)
                     <input type="hidden" name="Quantity[]" value="<?= $orders['Quantity']; ?>" id="quantity-<?= $orders['OrderID']; ?>">
                     <input type="hidden" name="totalAmount[]" value="<?= $orders['TotalAmount']; ?>" id="total-amount-<?= $orders['OrderID']; ?>">
                 <?php endforeach; ?>
-                <button type="submit" class="btn btn-success">Thanh toán</button>
+                <button type="submit" class="btn btn-success">Chọn phương thức thanh toán</button>
             </form>
         </div>
 
@@ -161,12 +147,6 @@ function getStatusClass($status)
         var maxQuantity = parseInt(displayQuantityElement.getAttribute('data-max'), 10); // Lấy số lượng tối đa từ thuộc tính `max`
 
         var newQuantity = isIncrease ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
-
-        // Kiểm tra nếu vượt quá số lượng tối đa
-        if (newQuantity > maxQuantity) {
-            alert("Số lượng vượt quá mức tồn kho cho phép! Số lượng tối đa: " + maxQuantity);
-            return; // Dừng xử lý nếu vượt quá số lượng
-        }
 
         quantityElement.value = newQuantity;
         displayQuantityElement.textContent = newQuantity;

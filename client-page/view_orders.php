@@ -28,7 +28,7 @@ function getStatusClass($status)
         </div>
     </div>
     <div class="table-responsive">
-        <form action="?act=delete-order-cart" method="POST" id="delete-form">
+        <form action="?act=delete-view-order" method="POST" id="delete-form">
             <table class="table table-bordered table-hover text-center">
                 <thead class="table-secondary">
                     <tr>

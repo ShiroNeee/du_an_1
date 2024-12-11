@@ -62,9 +62,7 @@
                     <div id="quantitySection" style="display: none;">
                         <label for="quantity" class="form-label">Số lượng sản phẩm: </label>
                         <div class="input-group mb-3">
-                            <button type="button" class="btn btn-outline-secondary" id="decreaseQuantity">-</button>
-                            <input type="number" name="Quantity" id="quantity" class="form-control text-center" min="1" value="1" readonly>
-                            <button type="button" class="btn btn-outline-secondary" id="increaseQuantity">+</button>
+                            <input type="number" name="Quantity" id="quantity" class="form-control text-center" min="1" value="1">
                         </div>
                     </div>
                 </div>
@@ -90,7 +88,7 @@
         </div>
     </div>
     </div>
-    <?php else: ?>
+<?php else: ?>
     <div class="container mt-5">
         <div class="alert alert-danger" role="alert">
             Không tìm thấy sản phẩm.
@@ -155,8 +153,6 @@
         const quantitySection = document.getElementById('quantitySection');
         const priceDisplay = document.getElementById('price');
         const totalPriceField = document.getElementById('totalPriceField');
-        const increaseBtn = document.getElementById('increaseQuantity');
-        const decreaseBtn = document.getElementById('decreaseQuantity');
         const form = document.getElementById('add-to-cart-form');
 
         sizeSelect.addEventListener('change', function() {
@@ -171,28 +167,11 @@
 
             quantitySection.style.display = 'block';
             quantityInput.max = stockQuantity;
-            quantityInput.value = Math.min(parseInt(quantityInput.value), stockQuantity);
+            quantityInput.value = 1;
             document.getElementById('selectedSizeID').value = selectedSizeID;
             updateTotalPrice();
         });
-
-        quantityInput.addEventListener('input', function() {
-            const quantity = Math.min(parseInt(this.value), parseInt(this.max));
-            if (quantity !== parseInt(this.value)) alert("Số lượng vượt quá số lượng trong kho.");
-            this.value = quantity;
-            updateTotalPrice();
-        });
-
-        increaseBtn.addEventListener('click', function() {
-            // Không kiểm tra giới hạn kho nữa, chỉ tăng số lượng
-            quantityInput.value++;
-            updateTotalPrice();
-        });
-
-        decreaseBtn.addEventListener('click', function() {
-            if (parseInt(quantityInput.value) > 1) quantityInput.value--;
-            updateTotalPrice();
-        });
+        quantityInput.addEventListener('input', updateTotalPrice);
 
         form.addEventListener('submit', function(event) {
             const selectedSizeID = document.getElementById('selectedSizeID').value;
@@ -211,7 +190,7 @@
         });
 
         function updateTotalPrice() {
-            const quantity = parseInt(quantityInput.value);
+            const quantity = parseInt(quantityInput.value) || 1;
             const basePrice = <?= $product['Price'] ?? 0 ?>;
             const totalPrice = basePrice * quantity;
             priceDisplay.textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';

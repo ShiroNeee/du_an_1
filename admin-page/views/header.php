@@ -123,7 +123,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="?act=thongke">
 					<i class='bx bxs-doughnut-chart'></i>
 					<span class="text">Thống kê</span>
 				</a>

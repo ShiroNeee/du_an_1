@@ -37,7 +37,7 @@
         <input type="number" name="Quantity" class="box" value="<?= $OrderDetail[0]['Quantity'] ?>">
 
         <label>Tổng tiền:</label>
-        <p id="totalAmount"><?= number_format($OrderDetail[0]['TotalAmount'], 0, ',', '.') ?> VND</p> 
+        <p id="totalAmount"><?= number_format($OrderDetail[0]['TotalAmount'], 0, ',', '.') ?> VND</p>
         <td>
             <?php foreach ($ProductIdOrder as $product): ?>
                 <?php if ($OrderDetail[0]['ProductID'] == $product['id']): ?>
@@ -45,11 +45,31 @@
                 <?php endif; ?>
             <?php endforeach; ?>
         </td><br>
-          <!-- Kiểm tra trạng thái đơn hàng và ẩn nút Cập nhật nếu trạng thái là 0 -->
-          <?php if ($OrderDetail[0]['Status'] != 0): ?>
-            <button type="submit" class="add">Cập nhật</button>
-        <?php else: ?>
-            <p style="color: red;">Đơn hàng này không thể cập nhật vì trạng thái là thành công.</p>
+        <?php if (!empty($_SESSION['error'])): ?>
+            <div class="alert alert-error" style="background-color:#f8d7da;border:0.5px solid #ddd;border-radius:6px;color:#721c24;border-color: #f5c6cb; margin-bottom:5px;font-family: Arial, sans-serif;">
+
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+                <small>
+                    <?php
+                    // Kiểm tra xem error có phải là mảng không
+                    if (isset($_SESSION['error'])) {
+                        if (is_array($_SESSION['error'])) {
+                            // Nếu là mảng, lặp qua và hiển thị từng lỗi
+                            foreach ($_SESSION['error'] as $key => $error) {
+                                if (!empty($error)) {
+                                    echo htmlspecialchars($error) . '<br>';
+                                }
+                            }
+                        } else {
+                            // Nếu là chuỗi, hiển thị trực tiếp
+                            echo htmlspecialchars($_SESSION['error']);
+                        }
+                        unset($_SESSION['error']); // Xóa lỗi sau khi hiển thị
+                    }
+                    ?>
+                </small>
+            </div>
         <?php endif; ?>
+        <button type="submit" class="add">Cập nhật</button>
     </form>
 </div>
