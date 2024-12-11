@@ -63,7 +63,7 @@ class CartShopController
             $UserID = $_SESSION['user']['id'] ?? null;
             $totalAmounts = $_POST['totalAmount'] ?? 0;
             $Quantities = $_POST['Quantity'] ?? [];
-            $Sizes = $_POST['SizeID'] ?? [];        
+            $Sizes = $_POST['SizeID'] ?? [];  
 
             // Kiểm tra thông tin thanh toán
             if (!$UserID || $totalAmounts <= 0 || empty($Quantities) || empty($Sizes)) {
@@ -79,7 +79,7 @@ class CartShopController
             foreach ($ProductIDs as $index => $ProductID) {
                 $quantity = (int)$Quantities[$index] ?? null;  
                 $size = $Sizes[$index] ?? null;
-                $totalAmount = (int)$totalAmounts[$index] ?? null; var_dump($quantity, $totalAmount); die;
+                $totalAmount = (int)$totalAmounts[$index] ?? null;
 
                 if (!$ProductID || !$quantity || !$size) {
                     $_SESSION['error'] = "Thông tin sản phẩm không hợp lệ.";
@@ -390,4 +390,49 @@ class CartShopController
             exit();
         }
     }
+    public function destroy_view_order()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $UserID = $_SESSION['user']['id'];
+        $OrderIDs = $_POST['deleteOrders'] ?? [];
+
+        // Kiểm tra nếu không có đơn hàng nào được chọn
+        if (empty($OrderIDs)) {
+            $_SESSION['error'] = 'Vui lòng chọn ít nhất một đơn hàng để huỷ.';
+            header("Location: ?act=my-orders");
+            exit();
+        }
+
+        foreach ($OrderIDs as $OrderID) {
+            // Lấy chi tiết đơn hàng
+            $OrderDetail = $this->modelOrder->getOrderDetail($OrderID, $UserID);
+
+            if ($OrderDetail) {
+                // Kiểm tra trạng thái đơn hàng
+                if ($OrderDetail['Status'] == 3) { // Trạng thái Thành công
+                    $_SESSION['error'] = 'Không thể xoá đơn hàng "' . $OrderID . '" vì đã hoàn thành.';
+                    header("Location: ?act=my-orders");
+                    exit();
+                }
+
+                // Thực hiện xoá đơn hàng
+                $deleteOrder = $this->modelOrder->deleteOrder($OrderID);
+                if (!$deleteOrder) {
+                    $_SESSION['error'] = 'Không thể xoá đơn hàng "' . $OrderID . '". Vui lòng thử lại.';
+                    header("Location: ?act=my-orders");
+                    exit();
+                }
+            } else {
+                $_SESSION['error'] = 'Không tìm thấy đơn hàng với ID "' . $OrderID . '".';
+                header("Location: ?act=my-orders");
+                exit();
+            }
+        }
+
+        $_SESSION['success'] = 'Các đơn hàng đã được huỷ thành công!';
+        header("Location: ?act=my-orders");
+        exit();
+    }
+}
+
 }

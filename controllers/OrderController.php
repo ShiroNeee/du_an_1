@@ -11,8 +11,8 @@ class OrderController
 
     public function index()
     {
-       
-        $limit = 5; 
+
+        $limit = 5;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $offset = ($currentPage - 1) * $limit;
 
@@ -40,6 +40,7 @@ class OrderController
             $OrderID = $_GET['id'];
             $OrderDetail = $this->modelOrder->getOrderDetail($OrderID);
             $ProductID = $OrderDetail[0]['ProductID'];
+            $totalAmounts = $_POST['totalAmount'] ?? 0;
             $siezs = $this->modelOrder->getAllSizesByProductID($ProductID);
             $statusorder = $this->modelOrder->getAllStatusorder();
             $ProductIdOrder = $this->modelOrder->getAllProduct();
@@ -52,10 +53,8 @@ class OrderController
             // Tính tổng tiền ban đầu từ số lượng và giá sản phẩm
             $productID = $OrderDetail[0]['ProductID'];
             $quantity = $OrderDetail[0]['Quantity'];
-            $totalAmount = isset($productPrices[$productID]) ? $productPrices[$productID] * $quantity : 0;
-
             // Cập nhật tổng tiền trong OrderDetail
-            $OrderDetail[0]['TotalAmount'] = $totalAmount;
+            $OrderDetail[0]['totalAmount'] = $totalAmounts;
 
             if (empty($OrderDetail)) {
                 $_SESSION['error'] = 'Không tìm thấy đơn hàng.';
@@ -83,6 +82,7 @@ class OrderController
             $Status = $_POST['Status'];
             $ProductID = $_POST['ProductID'];
             $Quantity = $_POST['Quantity'];
+            $totalAmounts = $_POST['totalAmount'] ?? 0;
 
             if (!$OrderID || !$UserID) {
                 $_SESSION['error'] = 'Dữ liệu không hợp lệ.';
@@ -90,7 +90,6 @@ class OrderController
                 exit();
             }
 
-            // Kiểm tra trạng thái hiện tại của đơn hàng
             $currentOrder = $this->modelOrder->getOrderDetail($OrderID);
             if (!$currentOrder || !isset($currentOrder[0])) {
                 $_SESSION['error'] = 'Đơn hàng không tồn tại.';
@@ -99,7 +98,7 @@ class OrderController
             }
             $currentOrder = $currentOrder[0];
             $currentStatus = $currentOrder['Status'];
-            $Status = (int) $Status; 
+            $Status = (int) $Status;
 
             // Chặn cập nhật nếu trạng thái là "Hoàn thành" (0)
             if ($currentStatus == 0 && $Status != 0) {
@@ -113,9 +112,9 @@ class OrderController
                 header("Location: ?act=edit-order&id=$OrderID");
                 exit();
             }
-            
+
             if (
-                ($currentStatus == 2 && $Status != 3) ||  
+                ($currentStatus == 2 && $Status != 3) ||
                 ($currentStatus == 3 && $Status != 0)
             ) {
                 $_SESSION['error'] = 'Không thể cập nhật trạng thái này. Vui lòng kiểm tra lại.';
@@ -129,17 +128,14 @@ class OrderController
                 exit();
             }
 
-            $ProductIdOrder = $this->modelOrder->getAllProduct();
-            $productPrices = [];
-            foreach ($ProductIdOrder as $product) {
-                $productPrices[$product['id']] = $product['Price'];
+            if ($Quantity != $currentOrder['Quantity'] || $Quantity < $currentOrder['Quantity']) {
+
+                $TotalAmount = ($currentOrder['TotalAmount'] / $currentOrder['Quantity']) * $Quantity;
+            } else {
+                $TotalAmount = $currentOrder['TotalAmount'];
             }
 
-            $TotalAmount = isset($productPrices[$ProductID]) ? $productPrices[$ProductID] * $Quantity : 0;
-
-
             $updateResult = $this->modelOrder->updateData($OrderID, $UserID, $OrderDate, $Size, $TotalAmount, $Status, $ProductID, $Quantity);
-
             if ($updateResult) {
                 $_SESSION['success'] = 'Cập nhật đơn hàng thành công.';
             } else {

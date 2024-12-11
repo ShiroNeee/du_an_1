@@ -5,7 +5,7 @@
         <input type="hidden" name="UserID" value="<?= $OrderDetail[0]['UserID'] ?>">
         <p>Ngày hiện tại: <strong><?= date("d-m-Y", strtotime($OrderDetail[0]['OrderDate'])) ?></strong></p>
         <input type="hidden" name="OrderDate" class="box" value="<?= $OrderDetail[0]['OrderDate'] ?>">
-
+        <input type="hidden" name="totalAmount" class="box" value="<?= $OrderDetail[0]['TotalAmount'] ?>">
         <label>Status:</label>
         <select name="Status" class="box">
             <?php foreach ($statusorder as $status): ?>

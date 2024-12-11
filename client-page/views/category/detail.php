@@ -158,6 +158,7 @@
         sizeSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const stockQuantity = parseInt(selectedOption?.getAttribute('data-stock') || 0);
+            const basePrice = <?= $product['Price'] ?? 0 ?>;
             const selectedSizeID = selectedOption?.getAttribute('data-size-id') || '';
 
             if (!selectedSizeID) {
@@ -192,7 +193,10 @@
         function updateTotalPrice() {
             const quantity = parseInt(quantityInput.value) || 1;
             const basePrice = <?= $product['Price'] ?? 0 ?>;
-            const totalPrice = basePrice * quantity;
+            const randomPercent = Math.floor(Math.random()*(10-5+1))+5;
+            const sizePrice = basePrice *(randomPercent/100);
+            const totalPrice = (basePrice + sizePrice) *quantity;
+
             priceDisplay.textContent = totalPrice > 0 ? totalPrice.toLocaleString() + ' VND' : 'Không có giá';
             totalPriceField.value = totalPrice.toFixed(2);
         }
